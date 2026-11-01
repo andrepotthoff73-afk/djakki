@@ -57,6 +57,7 @@ const config: Config = {
       md: 'var(--radius-md)',
       lg: 'var(--radius-lg)',
       xl: 'var(--radius-xl)',
+      '2xl': 'var(--radius-2xl)',
       full: 'var(--radius-full)',
     },
     boxShadow: {
@@ -87,6 +88,7 @@ const config: Config = {
         600: 'var(--neutral-600)',
         800: 'var(--neutral-800)',
         900: 'var(--neutral-900)',
+        950: 'var(--neutral-950)',
       },
       success: 'var(--success)',
       warning: 'var(--warning)',

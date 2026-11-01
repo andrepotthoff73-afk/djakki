@@ -9,6 +9,7 @@ import Booking from '@/components/Booking'
 import FAQ from '@/components/FAQ'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
+import MobileCta from '@/components/MobileCta'
 
 const strip = [
   'Hochzeiten',
@@ -31,7 +32,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <section aria-label="Anlässe und Musikrichtungen" className="border-b border-border bg-bg py-4 text-text">
+        <section aria-label="Anlässe und Musikrichtungen" className="bg-primary-600 py-5 text-on-primary">
           <Marquee items={strip} speed={40} />
         </section>
         <PinnedServices />
@@ -42,6 +43,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <MobileCta />
     </>
   )
 }

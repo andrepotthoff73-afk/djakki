@@ -35,7 +35,7 @@ function Field({
         required={required}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${name}-error` : undefined}
-        className="h-input w-full rounded-md border border-border bg-bg px-3 text-base text-text transition-[border-color,box-shadow] duration-fast focus:border-primary-600 focus:outline-none focus:shadow-[0_0_0_3px_var(--primary-100)]"
+        className="h-input w-full rounded-xl border border-border bg-bg px-4 text-base text-text transition-[border-color,box-shadow] duration-fast focus:border-primary-600 focus:outline-none focus:shadow-[0_0_0_3px_var(--primary-100)]"
       />
       {error && (
         <p id={`${name}-error`} className="mt-1 text-sm text-error">
@@ -45,6 +45,10 @@ function Field({
     </div>
   )
 }
+
+const cardClass = 'flex items-center gap-4 rounded-2xl border border-neutral-800 p-4 transition-colors duration-card'
+const chipClass = 'grid h-btn-md w-btn-md shrink-0 place-items-center rounded-xl bg-primary-600 text-on-primary'
+const labelClass = 'block text-xs font-semibold uppercase tracking-label text-on-primary-muted'
 
 export default function Contact() {
   const reduce = useReducedMotion()
@@ -81,17 +85,19 @@ export default function Contact() {
   ]
 
   return (
-    <section id="kontakt" className="section bg-surface">
+    <section id="kontakt" className="section bg-dark text-on-primary">
       <div className="container-page grid gap-7 lg:grid-cols-[5fr_7fr] lg:gap-8">
         <div>
           <Reveal>
-            <span className="eyebrow">Kontakt</span>
-            <h2 className="text-3xl md:text-4xl [text-wrap:balance]">Termin frei? Lass uns sprechen.</h2>
-            <p className="mt-3 max-w-measure text-lg text-muted">Unverbindlich anfragen – ich melde mich persönlich bei dir.</p>
+            <span className="eyebrow eyebrow-dark">Kontakt</span>
+            <h2 className="text-3xl text-on-primary md:text-4xl [text-wrap:balance]">Termin frei? Lass uns sprechen.</h2>
+            <p className="mt-3 max-w-measure text-lg text-on-primary-muted">
+              Unverbindlich anfragen – ich melde mich persönlich bei dir.
+            </p>
           </Reveal>
 
           <motion.ul
-            className="mt-6 grid gap-3"
+            className="mt-7 grid gap-3"
             variants={reduce ? undefined : stagger}
             initial={reduce ? false : 'hidden'}
             whileInView={reduce ? undefined : 'show'}
@@ -103,37 +109,37 @@ export default function Contact() {
                   href={item.href}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noreferrer' : undefined}
-                  className="group flex items-center gap-4 rounded-lg bg-bg p-4 shadow-sm transition-shadow duration-card hover:shadow-md"
+                  className={`${cardClass} group hover:border-primary-500 hover:bg-neutral-900`}
                   whileHover={reduce ? undefined : { x: 4 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="grid h-btn-md w-btn-md shrink-0 place-items-center rounded-md bg-primary-50 text-primary-600">
+                  <span className={chipClass}>
                     <item.icon width={24} height={24} />
                   </span>
                   <span>
-                    <span className="block text-xs font-semibold uppercase tracking-label text-muted">{item.label}</span>
-                    <span className="block font-semibold group-hover:text-primary-600">{item.value}</span>
+                    <span className={labelClass}>{item.label}</span>
+                    <span className="block font-semibold group-hover:text-primary-200">{item.value}</span>
                   </span>
                 </motion.a>
               </motion.li>
             ))}
-            <motion.li variants={reduce ? undefined : fadeUp} className="flex items-start gap-4 rounded-lg bg-bg p-4 shadow-sm">
-              <span className="grid h-btn-md w-btn-md shrink-0 place-items-center rounded-md bg-primary-50 text-primary-600">
+            <motion.li variants={reduce ? undefined : fadeUp} className={cardClass}>
+              <span className={chipClass}>
                 <PinIcon width={24} height={24} />
               </span>
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-label text-muted">Adresse</span>
+                <span className={labelClass}>Adresse</span>
                 <span className="block font-semibold">
                   {c.address.street}, {c.address.zip} {c.address.city}
                 </span>
               </span>
             </motion.li>
-            <motion.li variants={reduce ? undefined : fadeUp} className="flex items-start gap-4 rounded-lg bg-bg p-4 shadow-sm">
-              <span className="grid h-btn-md w-btn-md shrink-0 place-items-center rounded-md bg-primary-50 text-primary-600">
+            <motion.li variants={reduce ? undefined : fadeUp} className={cardClass}>
+              <span className={chipClass}>
                 <ClockIcon width={24} height={24} />
               </span>
               <span>
-                <span className="block text-xs font-semibold uppercase tracking-label text-muted">Öffnungszeiten</span>
+                <span className={labelClass}>Öffnungszeiten</span>
                 <span className="block font-semibold">{c.openingHours ?? 'Termine nach Vereinbarung'}</span>
               </span>
             </motion.li>
@@ -141,7 +147,7 @@ export default function Contact() {
         </div>
 
         <Reveal delay={0.1}>
-          <form className="grid gap-5 rounded-lg bg-bg p-5 shadow-md md:p-6" onSubmit={handleSubmit} noValidate>
+          <form className="grid gap-5 rounded-2xl bg-bg p-5 text-text shadow-lg md:p-7" onSubmit={handleSubmit} noValidate>
             <Field name="name" label="Vorname, Name" error={errors.name} />
             <div className="grid gap-5 md:grid-cols-2">
               <Field name="phone" label="Telefonnummer" type="tel" error={errors.phone} />
@@ -156,7 +162,7 @@ export default function Contact() {
                 id="message"
                 name="message"
                 rows={4}
-                className="w-full rounded-md border border-border bg-bg p-3 text-base transition-[border-color,box-shadow] duration-fast focus:border-primary-600 focus:outline-none focus:shadow-[0_0_0_3px_var(--primary-100)]"
+                className="w-full rounded-xl border border-border bg-bg p-4 text-base transition-[border-color,box-shadow] duration-fast focus:border-primary-600 focus:outline-none focus:shadow-[0_0_0_3px_var(--primary-100)]"
               />
             </div>
             <p className="text-xs text-muted">

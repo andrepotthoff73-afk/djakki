@@ -15,10 +15,10 @@
   --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.75rem);
   --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.5rem);
   --text-4xl: clamp(2.25rem, 1.6rem + 3.2vw, 3.75rem);
-  --text-display: clamp(3rem, 1.2rem + 8vw, 8.5rem);
+  --text-display: clamp(3rem, 1.2rem + 6.5vw, 7.5rem);
   --leading-body: 1.6;
   --leading-lead: 1.5;
-  --leading-heading: 1.15;
+  --leading-heading: 1.1;
   --tracking-tight: -0.02em;
   --tracking-label: 0.08em;
   --measure: 680px;
@@ -47,13 +47,14 @@
   --accent-500: #c42021;
   --accent-600: #a51b1c;
   --neutral-0: #ffffff;
-  --neutral-50: #f8f9fb;
+  --neutral-50: #f6f7f9;
   --neutral-100: #eef1f5;
   --neutral-200: #dde2ea;
   --neutral-400: #9aa3b2;
   --neutral-600: #5a6474;
-  --neutral-800: #252b36;
+  --neutral-800: #222834;
   --neutral-900: #141821;
+  --neutral-950: #0b0e14;
   --success: #16a34a;
   --warning: #d97706;
   --error: #dc2626;
@@ -65,18 +66,19 @@
   --color-text-muted: var(--neutral-600);
   --color-border: var(--neutral-200);
   --color-on-primary: var(--neutral-0);
-  --color-on-primary-muted: var(--primary-200);
-  --color-dark: var(--neutral-900);
+  --color-on-primary-muted: var(--neutral-400);
+  --color-dark: var(--neutral-950);
 
   /* Radius & Schatten */
   --radius-sm: 4px;
   --radius-md: 8px;
   --radius-lg: 12px;
   --radius-xl: 16px;
+  --radius-2xl: 24px;
   --radius-full: 9999px;
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
   --shadow-md: 0 4px 12px rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.12);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.16);
 
   /* Komponenten-Maße */
   --btn-sm: 36px;
@@ -135,33 +137,52 @@
   .scrim {
     background: linear-gradient(
       to top,
-      color-mix(in srgb, var(--neutral-900) 90%, transparent) 0%,
-      color-mix(in srgb, var(--neutral-900) 45%, transparent) 50%,
-      color-mix(in srgb, var(--neutral-900) 15%, transparent) 100%
+      color-mix(in srgb, var(--neutral-950) 92%, transparent) 0%,
+      color-mix(in srgb, var(--neutral-950) 50%, transparent) 45%,
+      color-mix(in srgb, var(--neutral-950) 10%, transparent) 100%
     );
   }
 
-  .eyebrow {
-    @apply mb-3 block text-xs font-semibold uppercase tracking-label text-primary-600;
+  /* Schwebende Flächen über Fotos: halbtransparent, unscharf */
+  .glass {
+    background-color: color-mix(in srgb, var(--color-dark) 84%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
   }
 
-  /* Buttons: primary / secondary / ghost in sm / md / lg */
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-label text-primary-600;
+  }
+
+  .eyebrow-dark {
+    @apply text-primary-200;
+  }
+
+  .eyebrow-dark::before {
+    content: '';
+    @apply h-px w-6 bg-accent-500;
+  }
+
+  /* Buttons: primary / light / outline in sm / md / lg */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-md border border-transparent font-semibold no-underline transition-[background-color,transform,box-shadow,border-color] duration-fast ease-out;
-    @apply min-h-btn-md px-4 text-base;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent font-semibold no-underline transition-[background-color,transform,box-shadow,border-color] duration-fast ease-out;
+    @apply min-h-btn-md px-5 text-base;
     @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
   }
   .btn-sm {
-    @apply min-h-btn-sm px-3 text-sm;
+    @apply min-h-btn-sm px-4 text-sm;
   }
   .btn-lg {
-    @apply min-h-btn-lg px-4 text-lg;
+    @apply min-h-btn-lg px-6 text-lg;
   }
   .btn-primary {
-    @apply bg-primary-600 text-on-primary hover:-translate-y-lift-sm hover:bg-primary-700 hover:shadow-md active:translate-y-0 active:bg-primary-800 active:shadow-none;
+    @apply bg-primary-600 text-on-primary hover:-translate-y-lift-sm hover:bg-primary-500 hover:shadow-md active:translate-y-0 active:bg-primary-700 active:shadow-none;
   }
-  .btn-secondary {
-    @apply border-primary-600 bg-transparent text-primary-600 hover:-translate-y-lift-sm hover:bg-primary-50 active:translate-y-0;
+  .btn-light {
+    @apply bg-bg text-dark hover:-translate-y-lift-sm hover:bg-primary-50 hover:shadow-md active:translate-y-0 active:shadow-none;
+  }
+  .btn-outline {
+    @apply border-neutral-800 bg-transparent text-on-primary hover:border-on-primary-muted hover:bg-neutral-800 active:bg-neutral-900;
   }
   .btn-ghost {
     @apply bg-transparent px-2 text-primary-600 hover:bg-primary-50;

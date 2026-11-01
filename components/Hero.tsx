@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { site } from '@/lib/site'
 import { ease } from '@/lib/motion'
-import { ArrowRightIcon, PhoneIcon, StarIcon } from './Icons'
+import { ArrowRightIcon, PhoneIcon } from './Icons'
 import DiscOrbit from './DiscOrbit'
 
 // Headline Wort für Wort, damit jedes Wort einzeln einblenden kann
@@ -20,11 +20,17 @@ export default function Hero() {
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
   const rating = site.reviews?.rating
 
+  const stats = [
+    { value: '30+', label: 'Jahre Erfahrung' },
+    { value: rating ? rating.toFixed(1).replace('.', ',') : '–', label: `${site.reviews?.count ?? 0} Kundenstimmen` },
+    { value: String(site.serviceArea.length), label: 'Städte am Niederrhein' },
+  ]
+
   return (
     <section
       ref={ref}
       id="top"
-      className="relative isolate flex min-h-svh items-end overflow-hidden bg-dark text-on-primary"
+      className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-dark text-on-primary"
     >
       <motion.div
         className="absolute inset-0 -z-10"
@@ -45,22 +51,22 @@ export default function Hero() {
       <div className="scrim absolute inset-0 -z-10" aria-hidden />
       <DiscOrbit />
 
-      {/* Der Text lässt Klicks durch, damit die CDs dahinter anklickbar bleiben. Nur die Buttons fangen Klicks ab. */}
+      {/* Der Text lässt Klicks durch, damit die CDs dahinter anklickbar bleiben. Nur Buttons fangen Klicks ab. */}
       <motion.div
-        className="container-page pointer-events-none relative pb-8 pt-10 lg:pb-9"
+        className="container-page pointer-events-none relative flex flex-col gap-6 pb-8 pt-28 lg:pb-9"
         style={{ opacity: reduce ? 1 : contentOpacity }}
       >
         <motion.span
-          className="mb-5 inline-flex items-center gap-2 rounded-full border border-on-primary-muted px-3 py-1 text-xs font-semibold uppercase tracking-label text-on-primary"
+          className="glass hidden w-fit items-center gap-2 rounded-full border border-neutral-800 px-4 py-2 text-xs font-semibold uppercase tracking-label text-on-primary sm:inline-flex"
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease }}
         >
           <span className="h-2 w-2 rounded-full bg-accent-500" aria-hidden />
-          Event-DJ aus Duisburg · seit über 30 Jahren
+          Event-DJ aus Duisburg
         </motion.span>
 
-        <h1 className="max-w-[16ch] text-display [text-wrap:balance]">
+        <h1 className="max-w-[20ch] text-display [text-wrap:balance]">
           {words.map((w, i) => (
             <span key={w + i}>
               <motion.span
@@ -76,21 +82,21 @@ export default function Hero() {
           ))}
         </h1>
 
-        <div className="mt-7 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
           <motion.div
-            className="flex flex-col gap-5"
+            className="flex max-w-measure flex-col gap-6"
             initial={reduce ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease, delay: 1 }}
           >
-            <p className="max-w-measure text-lg text-on-primary-muted [text-wrap:pretty]">
+            <p className="text-lg text-on-primary-muted [text-wrap:pretty]">
               DJ Akki legt seit über drei Jahrzehnten in Duisburg und am Niederrhein auf – mit House, R’n’B und
               Partyclassics. Jede Feier wird im Vorgespräch individuell geplant.
             </p>
             <div className="flex flex-wrap items-center gap-3">
               <motion.a
                 href="#kontakt"
-                className="pointer-events-auto btn btn-primary btn-lg group"
+                className="pointer-events-auto btn btn-light btn-lg group"
                 whileHover={reduce ? undefined : { y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -99,36 +105,30 @@ export default function Hero() {
               </motion.a>
               <motion.a
                 href={site.contact.phoneHref}
-                className="pointer-events-auto btn btn-lg border border-on-primary-muted text-on-primary hover:bg-neutral-800"
+                className="pointer-events-auto btn btn-outline btn-lg"
                 whileHover={reduce ? undefined : { y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
                 <PhoneIcon width={20} height={20} />
-                {site.contact.phone}
+                Anrufen
               </motion.a>
             </div>
           </motion.div>
 
-          {rating && (
-            <motion.div
-              className="flex items-center gap-3 text-sm text-on-primary-muted"
-              initial={reduce ? false : { opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-            >
-              <span className="flex gap-1 text-accent-500" role="img" aria-label={`${rating} von 5 Sternen`}>
-                {Array.from({ length: Math.round(rating) }, (_, i) => (
-                  <StarIcon key={i} width={16} height={16} />
-                ))}
-              </span>
-              <span>
-                <strong className="font-semibold text-on-primary">{rating.toFixed(1).replace('.', ',')}</strong> aus{' '}
-                {site.reviews.count} Kundenbewertungen
-              </span>
-            </motion.div>
-          )}
+          <motion.dl
+            className="glass grid w-full grid-cols-3 divide-x divide-neutral-800 overflow-hidden rounded-2xl border border-neutral-800 lg:w-auto lg:min-w-[28rem]"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+          >
+            {stats.map((s) => (
+              <div key={s.label} className="flex flex-col gap-1 px-4 py-4 md:px-5">
+                <dt className="order-2 text-xs text-on-primary-muted">{s.label}</dt>
+                <dd className="text-2xl font-bold tracking-tight text-on-primary md:text-3xl">{s.value}</dd>
+              </div>
+            ))}
+          </motion.dl>
         </div>
-
       </motion.div>
     </section>
   )

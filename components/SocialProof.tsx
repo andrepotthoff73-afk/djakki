@@ -68,56 +68,52 @@ export default function SocialProof() {
   ]
 
   return (
-    <section id="bewertungen" className="section bg-dark text-on-primary">
+    <section id="bewertungen" className="section bg-bg">
       <div className="container-page">
-        {/* Zahlenleiste */}
+        {/* Kennzahlen als Karten */}
         <motion.dl
-          className="grid grid-cols-2 gap-x-3 gap-y-5 border-b border-neutral-800 pb-7 lg:grid-cols-4"
+          className="grid grid-cols-2 gap-3 lg:grid-cols-4"
           variants={reduce ? undefined : stagger}
           initial={reduce ? false : 'hidden'}
           whileInView={reduce ? undefined : 'show'}
           viewport={{ once: true, amount: 0.4 }}
         >
           {facts.map((f) => (
-            <motion.div key={f.label} variants={reduce ? undefined : fadeUp} className="flex flex-col-reverse gap-1">
-              <dt className="text-sm text-on-primary-muted">{f.label}</dt>
-              <dd className="text-3xl font-bold tracking-tight">{f.value}</dd>
+            <motion.div key={f.label} variants={reduce ? undefined : fadeUp} className="flex flex-col justify-between gap-6 rounded-2xl bg-surface p-5 md:p-6">
+              <dd className="text-4xl font-bold tracking-tight text-primary-600">{f.value}</dd>
+              <dt className="text-sm text-muted">{f.label}</dt>
             </motion.div>
           ))}
         </motion.dl>
 
-        <div className="mt-7 grid gap-6 lg:grid-cols-[5fr_7fr] lg:gap-7">
+        <div className="mt-3 grid gap-3 lg:grid-cols-[7fr_5fr]">
           {/* Großes Zitat */}
-          <Reveal>
-            <span className="eyebrow text-on-primary-muted">Kundenstimmen</span>
-            <h2 className="text-3xl">Das sagen Brautpaare &amp; Gastgeber</h2>
-
-            <figure className="mt-6">
-              <Stars count={featured.stars} />
-              <blockquote className="mt-3 text-2xl font-semibold leading-lead tracking-tight [text-wrap:pretty]">
-                „{featured.text.split('!')[0]}!“
-              </blockquote>
-              <figcaption className="mt-4 flex items-center gap-3 text-sm">
-                <Image
-                  src={avatars[featured.author]}
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="h-6 w-6 rounded-full object-cover"
-                />
-                <div>
-                  <strong className="block font-semibold">{featured.author}</strong>
-                  <span className="text-on-primary-muted">
-                    {featured.event} · {formatDate(featured.date)}
-                  </span>
-                </div>
-              </figcaption>
-            </figure>
+          <Reveal className="flex flex-col justify-between gap-8 rounded-2xl bg-dark p-6 text-on-primary md:p-8 lg:p-9">
+            <div>
+              <span className="eyebrow eyebrow-dark">Kundenstimmen</span>
+              <figure className="mt-2">
+                <blockquote className="text-3xl font-bold leading-heading tracking-tight [text-wrap:balance]">
+                  „{featured.text.split('!')[0]}!“
+                </blockquote>
+              </figure>
+            </div>
+            <figcaption className="flex items-center gap-3 text-sm">
+              <Image src={avatars[featured.author]} alt="" width={48} height={48} className="h-10 w-10 rounded-full object-cover" />
+              <div>
+                <strong className="flex items-center gap-2 font-semibold">
+                  {featured.author}
+                  <Stars count={featured.stars} size={14} />
+                </strong>
+                <span className="text-on-primary-muted">
+                  {featured.event} · {formatDate(featured.date)}
+                </span>
+              </div>
+            </figcaption>
           </Reveal>
 
           {/* Weitere Bewertungen */}
           <motion.div
-            className="grid content-start gap-3 md:gap-4"
+            className="grid gap-3"
             variants={reduce ? undefined : stagger}
             initial={reduce ? false : 'hidden'}
             whileInView={reduce ? undefined : 'show'}
@@ -127,13 +123,12 @@ export default function SocialProof() {
               <motion.figure
                 key={r.author}
                 variants={reduce ? undefined : fadeUp}
-                whileHover={reduce ? undefined : { y: -2 }}
-                className="rounded-lg bg-bg p-4 text-text shadow-md transition-shadow duration-card hover:shadow-lg md:p-5"
+                className="flex flex-col gap-4 rounded-2xl border border-border bg-bg p-5 md:p-6"
               >
                 <Stars count={r.stars} size={16} />
-                <blockquote className="mt-3">{r.text}</blockquote>
-                <figcaption className="mt-4 flex items-center gap-3 text-sm">
-                  <Image src={avatars[r.author]} alt="" width={48} height={48} className="h-6 w-6 rounded-full object-cover" />
+                <blockquote className="text-text">{r.text}</blockquote>
+                <figcaption className="mt-auto flex items-center gap-3 text-sm">
+                  <Image src={avatars[r.author]} alt="" width={48} height={48} className="h-8 w-8 rounded-full object-cover" />
                   <div>
                     <strong className="block font-semibold">{r.author}</strong>
                     <span className="text-muted">
@@ -144,12 +139,9 @@ export default function SocialProof() {
               </motion.figure>
             ))}
 
-            <p className="text-sm text-on-primary-muted">
+            <p className="px-1 text-sm text-muted">
               Alle Bewertungen auf{' '}
-              <a
-                href="https://www.djakki.de/13/zu-den-kundenstimmen.html"
-                className="font-semibold text-on-primary underline-offset-4 hover:underline"
-              >
+              <a href="https://www.djakki.de/13/zu-den-kundenstimmen.html" className="font-semibold text-primary-600 underline-offset-4 hover:underline">
                 djakki.de
               </a>
             </p>
@@ -157,11 +149,9 @@ export default function SocialProof() {
         </div>
 
         {/* Referenz-Locations */}
-        <Reveal className="mt-7 border-t border-neutral-800 pt-6">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-label text-on-primary-muted">
-            Hier habe ich schon aufgelegt
-          </p>
-          <div className="text-on-primary">
+        <Reveal className="mt-8 border-t border-border pt-6">
+          <p className="eyebrow mb-4">Hier habe ich schon aufgelegt</p>
+          <div className="text-text">
             <Marquee items={site.referenceLocations} speed={45} />
           </div>
         </Reveal>

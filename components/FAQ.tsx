@@ -51,7 +51,7 @@ export default function FAQ() {
         </Reveal>
 
         <motion.ul
-          className="border-y border-border"
+          className="grid content-start gap-3"
           variants={reduce ? undefined : stagger}
           initial={reduce ? false : 'hidden'}
           whileInView={reduce ? undefined : 'show'}
@@ -60,7 +60,11 @@ export default function FAQ() {
           {faqs.map((f, i) => {
             const isOpen = open === i
             return (
-              <motion.li key={f.q} variants={reduce ? undefined : fadeUp} className="border-b border-border last:border-b-0">
+              <motion.li
+                key={f.q}
+                variants={reduce ? undefined : fadeUp}
+                className={`rounded-2xl px-5 transition-colors duration-card md:px-6 ${isOpen ? 'bg-surface' : 'bg-bg ring-1 ring-inset ring-border'}`}
+              >
                 <h3>
                   <button
                     type="button"
@@ -72,7 +76,7 @@ export default function FAQ() {
                   >
                     {f.q}
                     <motion.span
-                      className="grid h-6 w-6 shrink-0 place-items-center text-primary-600"
+                      className="grid h-btn-sm w-btn-sm shrink-0 place-items-center rounded-full bg-primary-50 text-primary-600"
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.25, ease }}
                       aria-hidden

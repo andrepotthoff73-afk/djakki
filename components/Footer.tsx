@@ -6,16 +6,18 @@ export default function Footer() {
 
   return (
     <footer className="bg-dark text-on-primary-muted">
-      <div className="container-page grid gap-6 py-7 md:grid-cols-[1fr_auto] md:items-end">
-        <div>
-          <p className="text-xl font-bold text-on-primary">{site.companyName}</p>
-          <p className="mt-2 text-sm">
+      <div className="container-page grid gap-7 pb-24 pt-9 md:grid-cols-[1fr_auto] md:items-end md:pb-9">
+        <div className="flex flex-col gap-4">
+          <p className="text-4xl font-bold tracking-tight text-on-primary">{site.companyName}</p>
+          <p className="max-w-measure text-sm">
             {site.legalEntity} · {address.street}, {address.zip} {address.city}
           </p>
-          <p className="mt-4 text-xs">© {year} {site.companyName}</p>
+          <p className="text-xs">
+            © {year} {site.companyName}
+          </p>
         </div>
 
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-5 gap-y-3 text-sm">
+        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
           {nav.map((item) => (
             <a key={item.href} href={item.href} className="transition-colors duration-fast hover:text-on-primary">
               {item.label}

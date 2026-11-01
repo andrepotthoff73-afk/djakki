@@ -77,29 +77,37 @@ function Panel({
   const Icon = s.icon
 
   return (
-    <motion.div className="absolute inset-0 grid lg:grid-cols-2" style={{ opacity }}>
-      <div className="relative overflow-hidden">
+    <motion.div
+      className="absolute inset-0 grid items-center gap-6 px-3 pb-8 pt-28 lg:grid-cols-[1.1fr_1fr] lg:gap-9 lg:px-5"
+      style={{ opacity }}
+    >
+      <div className="relative h-[30svh] overflow-hidden rounded-2xl md:h-[40svh] lg:h-[min(72svh,640px)]">
         <motion.div className="absolute inset-0" style={{ scale }}>
-          <Image src={s.image.src} alt={s.image.alt} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+          <Image src={s.image.src} alt={s.image.alt} fill sizes="(min-width: 1024px) 55vw, 100vw" className="object-cover" />
         </motion.div>
+        <span className="glass absolute bottom-4 left-4 rounded-full border border-neutral-800 px-4 py-2 text-sm font-semibold text-on-primary">
+          {s.no} / 0{services.length}
+        </span>
       </div>
 
-      <motion.div className="flex flex-col justify-center gap-5 px-4 py-8 md:px-7 lg:px-9" style={{ y: textY }}>
-        <span className="text-sm font-semibold tracking-label text-primary-200">{s.no} / 0{services.length}</span>
-        <div className="grid h-btn-lg w-btn-lg place-items-center rounded-md bg-primary-600 text-on-primary">
+      <motion.div className="flex flex-col gap-5 px-1 lg:px-0" style={{ y: textY }}>
+        <div className="grid h-btn-lg w-btn-lg place-items-center rounded-2xl bg-primary-600 text-on-primary">
           <Icon width={24} height={24} />
         </div>
-        <h2 className="text-4xl text-on-primary md:text-display">{s.title}</h2>
+        <h2 className="text-4xl text-on-primary">{s.title}</h2>
         <p className="max-w-measure text-lg text-on-primary-muted">{s.text}</p>
-        <ul className="grid gap-2">
+        <ul className="grid gap-3 border-t border-neutral-800 pt-5">
           {s.points.map((p) => (
-            <li key={p} className="flex items-start gap-2 font-semibold text-on-primary">
-              <CheckIcon width={20} height={20} className="mt-px shrink-0 text-primary-200" />
+            <li key={p} className="flex items-start gap-3 font-semibold text-on-primary">
+              <CheckIcon width={20} height={20} className="mt-px shrink-0 text-accent-500" />
               {p}
             </li>
           ))}
         </ul>
-        <a href={s.href} className="group mt-2 inline-flex w-fit items-center gap-2 font-semibold text-on-primary underline-offset-4 hover:underline">
+        <a
+          href={s.href}
+          className="btn btn-light group mt-2 w-fit"
+        >
           Mehr erfahren
           <ArrowRightIcon width={18} height={18} className="transition-transform duration-fast group-hover:translate-x-1" />
         </a>
@@ -138,7 +146,7 @@ export default function PinnedServices() {
   return (
     <section id="leistungen" ref={ref} className="relative h-[300svh] bg-dark text-on-primary">
       <div className="sticky top-0 h-svh overflow-hidden">
-        <div className="container-page absolute left-0 right-0 top-0 z-10 flex items-center justify-between pt-5">
+        <div className="container-page absolute left-0 right-0 top-0 z-10 flex items-center justify-between pt-24">
           <span className="eyebrow mb-0 text-on-primary-muted">Leistungen</span>
           <motion.span
             className="h-px w-24 origin-left bg-on-primary-muted"
