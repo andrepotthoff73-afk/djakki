@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import SpotlightCursor from '@/components/SpotlightCursor'
 import Hero from '@/components/Hero'
 import Marquee from '@/components/Marquee'
 import PinnedServices from '@/components/PinnedServices'
@@ -26,6 +27,7 @@ const strip = [
 export default function Home() {
   return (
     <>
+      <SpotlightCursor />
       <Navbar />
       <main>
         <Hero />
