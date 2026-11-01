@@ -1,9 +1,16 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import { Cormorant_Garamond, Inter } from 'next/font/google'
 import './globals.css'
 
-// next/font hostet Inter selbst: kein Layout-Shift, kein externer Font-Request
+// next/font hostet beide Schriften selbst: kein Layout-Shift, kein externer Font-Request
 const inter = Inter({ subsets: ['latin'], weight: ['400', '600', '700'], display: 'swap', variable: '--font-inter' })
+const serif = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+  variable: '--font-serif',
+})
 
 export const metadata: Metadata = {
   title: 'DJ Akki & Friends – Event-DJ für Hochzeiten & Firmenfeiern in Duisburg',
@@ -12,11 +19,11 @@ export const metadata: Metadata = {
   icons: { icon: 'https://www.djakki.de/assets/icons/favicon-32x32.png' },
 }
 
-export const viewport: Viewport = { themeColor: '#24457a' }
+export const viewport: Viewport = { themeColor: '#f6f5f2' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={inter.variable}>
+    <html lang="de" className={`${inter.variable} ${serif.variable}`}>
       <body>{children}</body>
     </html>
   )

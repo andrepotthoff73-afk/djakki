@@ -1,7 +1,6 @@
 import type { Config } from 'tailwindcss'
 
-// Design-Tokens aus design-focused.md. Die Skalen ERSETZEN die Tailwind-Defaults,
-// damit keine Werte außerhalb des Systems verwendet werden können.
+// Design-Tokens für den Stil „Editorial Monochrom“. Die Skalen ERSETZEN die Tailwind-Defaults.
 const config: Config = {
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}'],
   theme: {
@@ -34,10 +33,12 @@ const config: Config = {
       '2xl': ['var(--text-2xl)', { lineHeight: 'var(--leading-heading)' }],
       '3xl': ['var(--text-3xl)', { lineHeight: 'var(--leading-heading)' }],
       '4xl': ['var(--text-4xl)', { lineHeight: 'var(--leading-heading)' }],
-      display: ['var(--text-display)', { lineHeight: '0.95', letterSpacing: '-0.03em' }],
+      title: ['var(--text-title)', { lineHeight: 'var(--leading-display)', letterSpacing: '-0.01em' }],
+      display: ['var(--text-display)', { lineHeight: 'var(--leading-display)', letterSpacing: '-0.01em' }],
     },
     fontWeight: {
       normal: '400',
+      medium: '500',
       semibold: '600',
       bold: '700',
     },
@@ -50,25 +51,19 @@ const config: Config = {
       body: 'var(--leading-body)',
       lead: 'var(--leading-lead)',
       heading: 'var(--leading-heading)',
+      display: 'var(--leading-display)',
     },
     borderRadius: {
       none: '0',
-      sm: 'var(--radius-sm)',
-      md: 'var(--radius-md)',
-      lg: 'var(--radius-lg)',
-      xl: 'var(--radius-xl)',
-      '2xl': 'var(--radius-2xl)',
-      full: 'var(--radius-full)',
+      full: '9999px',
     },
     boxShadow: {
       none: 'none',
-      sm: 'var(--shadow-sm)',
-      md: 'var(--shadow-md)',
-      lg: 'var(--shadow-lg)',
     },
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
+      white: '#ffffff',
       primary: {
         50: 'var(--primary-50)',
         100: 'var(--primary-100)',
@@ -81,15 +76,14 @@ const config: Config = {
       accent: { 500: 'var(--accent-500)', 600: 'var(--accent-600)' },
       neutral: {
         0: 'var(--neutral-0)',
-        50: 'var(--neutral-50)',
-        100: 'var(--neutral-100)',
-        200: 'var(--neutral-200)',
-        400: 'var(--neutral-400)',
-        600: 'var(--neutral-600)',
-        800: 'var(--neutral-800)',
-        900: 'var(--neutral-900)',
-        950: 'var(--neutral-950)',
+        400: 'var(--gray-400)',
+        600: 'var(--gray-600)',
+        900: 'var(--ink)',
       },
+      paper: 'var(--paper)',
+      'paper-2': 'var(--paper-2)',
+      ink: 'var(--ink)',
+      'ink-2': 'var(--ink-2)',
       success: 'var(--success)',
       warning: 'var(--warning)',
       error: 'var(--error)',
@@ -104,9 +98,12 @@ const config: Config = {
       dark: 'var(--color-dark)',
     },
     extend: {
-      fontFamily: { sans: ['var(--font-inter)', 'system-ui', 'sans-serif'] },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-serif)', 'Georgia', 'serif'],
+      },
       maxWidth: { container: 'var(--container)', measure: 'var(--measure)' },
-      transitionDuration: { fast: '150ms', card: '200ms', image: '500ms' },
+      transitionDuration: { fast: '150ms', card: '250ms', image: '900ms' },
       translate: { 'lift-sm': 'var(--lift-sm)', 'lift-md': 'var(--lift-md)' },
     },
   },

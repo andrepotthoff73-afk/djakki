@@ -19,9 +19,9 @@ export default function ScrollWords() {
   const words = text.split(' ')
 
   return (
-    <section className="section bg-dark">
-      <div className="container-page">
-        <p ref={ref} className="max-w-[24ch] text-4xl font-bold leading-heading tracking-tight text-on-primary [text-wrap:balance]">
+    <section className="section bg-ink">
+      <div className="container-page flex justify-center">
+        <p ref={ref} className="max-w-[26ch] text-center font-display text-4xl font-normal leading-heading text-on-primary [text-wrap:balance]">
           {reduce
             ? text
             : words.map((w, i) => {

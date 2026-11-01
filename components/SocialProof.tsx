@@ -31,7 +31,7 @@ function CountUp({ to, decimals = 0, suffix = '' }: { to: number; decimals?: num
       return
     }
     const controls = animate(0, to, {
-      duration: 0.8,
+      duration: 1.2,
       ease,
       onUpdate: (v) => {
         if (ref.current) ref.current.textContent = format(v)
@@ -44,9 +44,9 @@ function CountUp({ to, decimals = 0, suffix = '' }: { to: number; decimals?: num
   return <span ref={ref}>{format(to)}</span>
 }
 
-function Stars({ count, size = 20 }: { count: number; size?: number }) {
+function Stars({ count, size = 16 }: { count: number; size?: number }) {
   return (
-    <span className="flex gap-1 text-accent-500" role="img" aria-label={`${count} von 5 Sternen`}>
+    <span className="flex justify-center gap-1 text-primary-600" role="img" aria-label={`${count} von 5 Sternen`}>
       {Array.from({ length: Math.round(count) }, (_, i) => (
         <StarIcon key={i} width={size} height={size} />
       ))}
@@ -63,96 +63,86 @@ export default function SocialProof() {
   const facts = [
     { value: <CountUp to={30} suffix="+" />, label: 'Jahre Erfahrung' },
     { value: <CountUp to={reviews.rating} decimals={1} />, label: `Sterne aus ${reviews.count} Bewertungen` },
-    { value: '2022', label: 'Wedding Award Gewinner' },
+    { value: '2022', label: 'Wedding Award' },
     { value: <CountUp to={site.serviceArea.length} />, label: 'Städte am Niederrhein' },
   ]
 
   return (
-    <section id="bewertungen" className="section bg-bg">
+    <section id="bewertungen" className="section">
       <div className="container-page">
-        {/* Kennzahlen als Karten */}
+        <Reveal className="mb-16 flex flex-col items-center text-center">
+          <span className="eyebrow">Stimmen</span>
+          <h2 className="text-4xl md:text-title">Kundenstimmen</h2>
+        </Reveal>
+
+        {/* Kennzahlen als feine Spalten */}
         <motion.dl
-          className="grid grid-cols-2 gap-3 lg:grid-cols-4"
+          className="rule grid grid-cols-2 gap-y-12 pt-12 md:grid-cols-4"
           variants={reduce ? undefined : stagger}
           initial={reduce ? false : 'hidden'}
           whileInView={reduce ? undefined : 'show'}
           viewport={{ once: true, amount: 0.4 }}
         >
           {facts.map((f) => (
-            <motion.div key={f.label} variants={reduce ? undefined : fadeUp} className="flex flex-col justify-between gap-6 rounded-2xl bg-surface p-5 md:p-6">
-              <dd className="text-4xl font-bold tracking-tight text-primary-600">{f.value}</dd>
-              <dt className="text-sm text-muted">{f.label}</dt>
+            <motion.div key={f.label} variants={reduce ? undefined : fadeUp} className="flex flex-col items-center gap-4 text-center">
+              <dd className="font-display text-5xl font-normal leading-none md:text-title">{f.value}</dd>
+              <dt className="text-xs font-semibold uppercase tracking-label text-muted">{f.label}</dt>
             </motion.div>
           ))}
         </motion.dl>
 
-        <div className="mt-3 grid gap-3 lg:grid-cols-[7fr_5fr]">
-          {/* Großes Zitat */}
-          <Reveal className="flex flex-col justify-between gap-8 rounded-2xl bg-dark p-6 text-on-primary md:p-8 lg:p-9">
-            <div>
-              <span className="eyebrow eyebrow-dark">Kundenstimmen</span>
-              <figure className="mt-2">
-                <blockquote className="text-3xl font-bold leading-heading tracking-tight [text-wrap:balance]">
-                  „{featured.text.split('!')[0]}!“
-                </blockquote>
-              </figure>
-            </div>
-            <figcaption className="flex items-center gap-3 text-sm">
-              <Image src={avatars[featured.author]} alt="" width={48} height={48} className="h-10 w-10 rounded-full object-cover" />
-              <div>
-                <strong className="flex items-center gap-2 font-semibold">
-                  {featured.author}
-                  <Stars count={featured.stars} size={14} />
-                </strong>
-                <span className="text-on-primary-muted">
-                  {featured.event} · {formatDate(featured.date)}
-                </span>
-              </div>
-            </figcaption>
-          </Reveal>
+        {/* Großes Zitat */}
+        <Reveal className="mx-auto mt-28 flex max-w-[34ch] flex-col items-center gap-8 text-center">
+          <Stars count={featured.stars} size={18} />
+          <blockquote className="font-display text-4xl italic leading-heading [text-wrap:balance] md:text-title md:leading-display">
+            „{featured.text.split('!')[0]}!“
+          </blockquote>
+          <figcaption className="flex flex-col items-center gap-3 text-xs font-semibold uppercase tracking-label">
+            <Image src={avatars[featured.author]} alt="" width={48} height={48} className="h-12 w-12 rounded-full object-cover grayscale" />
+            <span>{featured.author}</span>
+            <span className="font-normal normal-case tracking-normal text-muted">
+              {featured.event} · {formatDate(featured.date)}
+            </span>
+          </figcaption>
+        </Reveal>
 
-          {/* Weitere Bewertungen */}
-          <motion.div
-            className="grid gap-3"
-            variants={reduce ? undefined : stagger}
-            initial={reduce ? false : 'hidden'}
-            whileInView={reduce ? undefined : 'show'}
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {rest.map((r) => (
-              <motion.figure
-                key={r.author}
-                variants={reduce ? undefined : fadeUp}
-                className="flex flex-col gap-4 rounded-2xl border border-border bg-bg p-5 md:p-6"
-              >
-                <Stars count={r.stars} size={16} />
-                <blockquote className="text-text">{r.text}</blockquote>
-                <figcaption className="mt-auto flex items-center gap-3 text-sm">
-                  <Image src={avatars[r.author]} alt="" width={48} height={48} className="h-8 w-8 rounded-full object-cover" />
-                  <div>
-                    <strong className="block font-semibold">{r.author}</strong>
-                    <span className="text-muted">
-                      {r.event} · {formatDate(r.date)}
-                    </span>
-                  </div>
-                </figcaption>
-              </motion.figure>
-            ))}
+        {/* Weitere Stimmen */}
+        <motion.div
+          className="mt-32 grid gap-16 md:grid-cols-2 md:gap-12"
+          variants={reduce ? undefined : stagger}
+          initial={reduce ? false : 'hidden'}
+          whileInView={reduce ? undefined : 'show'}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {rest.map((r) => (
+            <motion.figure key={r.author} variants={reduce ? undefined : fadeUp} className="rule flex flex-col gap-6 pt-10">
+              <Stars count={r.stars} />
+              <blockquote className="font-display text-2xl leading-heading">{r.text}</blockquote>
+              <figcaption className="mt-auto flex items-center gap-4 text-sm">
+                <Image src={avatars[r.author]} alt="" width={40} height={40} className="h-10 w-10 rounded-full object-cover grayscale" />
+                <div>
+                  <strong className="block font-semibold">{r.author}</strong>
+                  <span className="text-muted">
+                    {r.event} · {formatDate(r.date)}
+                  </span>
+                </div>
+              </figcaption>
+            </motion.figure>
+          ))}
+        </motion.div>
 
-            <p className="px-1 text-sm text-muted">
-              Alle Bewertungen auf{' '}
-              <a href="https://www.djakki.de/13/zu-den-kundenstimmen.html" className="font-semibold text-primary-600 underline-offset-4 hover:underline">
-                djakki.de
-              </a>
-            </p>
-          </motion.div>
-        </div>
+        <p className="mt-16 text-center text-sm text-muted">
+          Alle Bewertungen auf{' '}
+          <a href="https://www.djakki.de/13/zu-den-kundenstimmen.html" className="text-ink underline underline-offset-4">
+            djakki.de
+          </a>
+        </p>
 
         {/* Referenz-Locations */}
-        <Reveal className="mt-8 border-t border-border pt-6">
-          <p className="eyebrow mb-4">Hier habe ich schon aufgelegt</p>
-          <div className="text-text">
-            <Marquee items={site.referenceLocations} speed={45} />
+        <Reveal className="rule mt-28 pt-12">
+          <p className="eyebrow text-center">Hier habe ich schon aufgelegt</p>
+          <div className="text-ink">
+            <Marquee items={site.referenceLocations} speed={50} />
           </div>
         </Reveal>
       </div>

@@ -1,43 +1,21 @@
 'use client'
 
-import { useRef } from 'react'
 import Image from 'next/image'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { site } from '@/lib/site'
 import { ease } from '@/lib/motion'
-import { ArrowRightIcon, PhoneIcon } from './Icons'
-import DiscOrbit from './DiscOrbit'
 
-// Headline Wort für Wort, damit jedes Wort einzeln einblenden kann
-const words = ['Volle', 'Tanzfläche', 'für', 'eure', 'Hochzeit,', 'Firmenfeier', '&', 'Party.']
-
+// Vollbild-Foto in Graustufen, darüber eine große Serifen-Headline
 export default function Hero() {
   const reduce = useReducedMotion()
-  const ref = useRef<HTMLElement>(null)
-  // Beim Scrollen wandert das Foto langsamer als der Text, der Text verblasst
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const photoY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
-  const rating = site.reviews?.rating
-
-  const stats = [
-    { value: '30+', label: 'Jahre Erfahrung' },
-    { value: rating ? rating.toFixed(1).replace('.', ',') : '–', label: `${site.reviews?.count ?? 0} Kundenstimmen` },
-    { value: String(site.serviceArea.length), label: 'Städte am Niederrhein' },
-  ]
 
   return (
-    <section
-      ref={ref}
-      id="top"
-      className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden bg-dark text-on-primary"
-    >
+    <section id="top" className="relative flex min-h-svh items-center justify-center overflow-hidden bg-ink text-paper">
       <motion.div
-        className="absolute inset-0 -z-10"
-        style={{ y: reduce ? '0%' : photoY }}
-        initial={reduce ? false : { scale: 1.12 }}
+        className="absolute inset-0"
+        initial={reduce ? false : { scale: 1.08 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 1.8, ease }}
+        transition={{ duration: 2.4, ease }}
       >
         <Image
           src="https://www.djakki.de/bilder/k641930-1208_b112906.jpg/dj-akki-plastique-revival.jpg"
@@ -45,91 +23,52 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_30%]"
+          className="object-cover object-[center_30%] grayscale"
         />
       </motion.div>
-      <div className="scrim absolute inset-0 -z-10" aria-hidden />
-      <DiscOrbit />
+      <div className="veil absolute inset-0" aria-hidden />
 
-      {/* Der Text lässt Klicks durch, damit die CDs dahinter anklickbar bleiben. Nur Buttons fangen Klicks ab. */}
-      <motion.div
-        className="container-page pointer-events-none relative flex flex-col gap-6 pb-8 pt-28 lg:pb-9"
-        style={{ opacity: reduce ? 1 : contentOpacity }}
-      >
+      <div className="container-page relative flex flex-col items-center pb-24 pt-32 text-center">
         <motion.span
-          className="glass hidden w-fit items-center gap-2 rounded-full border border-neutral-800 px-4 py-2 text-xs font-semibold uppercase tracking-label text-on-primary sm:inline-flex"
-          initial={reduce ? false : { opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease }}
+          className="mb-10 text-xs font-semibold uppercase tracking-label text-on-primary"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
         >
-          <span className="h-2 w-2 rounded-full bg-accent-500" aria-hidden />
-          Event-DJ aus Duisburg
+          Event-DJ · Duisburg · seit über 30 Jahren
         </motion.span>
 
-        <h1 className="max-w-[20ch] text-display [text-wrap:balance]">
-          {words.map((w, i) => (
-            <span key={w + i}>
-              <motion.span
-                className={`inline-block ${w === 'Hochzeit,' ? 'text-primary-200' : ''}`}
-                initial={reduce ? false : { opacity: 0, y: '0.4em' }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease, delay: 0.2 + i * 0.08 }}
-              >
-                {w}
-              </motion.span>
-              {i < words.length - 1 && ' '}
-            </span>
-          ))}
-        </h1>
+        <motion.h1
+          className="font-display text-display font-medium uppercase"
+          initial={reduce ? false : { opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, ease, delay: 0.4 }}
+        >
+          DJ Akki
+          <span className="block font-normal normal-case italic text-on-primary-muted">&amp; Friends</span>
+        </motion.h1>
 
-        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
-          <motion.div
-            className="flex max-w-measure flex-col gap-6"
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease, delay: 1 }}
-          >
-            <p className="text-lg text-on-primary-muted [text-wrap:pretty]">
-              DJ Akki legt seit über drei Jahrzehnten in Duisburg und am Niederrhein auf – mit House, R’n’B und
-              Partyclassics. Jede Feier wird im Vorgespräch individuell geplant.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <motion.a
-                href="#kontakt"
-                className="pointer-events-auto btn btn-light btn-lg group"
-                whileHover={reduce ? undefined : { y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Wunschtermin anfragen
-                <ArrowRightIcon width={20} height={20} className="transition-transform duration-fast group-hover:translate-x-1" />
-              </motion.a>
-              <motion.a
-                href={site.contact.phoneHref}
-                className="pointer-events-auto btn btn-outline btn-lg"
-                whileHover={reduce ? undefined : { y: -2 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <PhoneIcon width={20} height={20} />
-                Anrufen
-              </motion.a>
-            </div>
-          </motion.div>
+        <motion.p
+          className="mt-10 max-w-measure text-lg text-on-primary [text-wrap:pretty]"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+        >
+          Volle Tanzfläche für eure Hochzeit, Firmenfeier oder Party – mit House, R’n’B und Partyclassics.
+        </motion.p>
 
-          <motion.dl
-            className="glass grid w-full grid-cols-3 divide-x divide-neutral-800 overflow-hidden rounded-2xl border border-neutral-800 lg:w-auto lg:min-w-[28rem]"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.2 }}
-          >
-            {stats.map((s) => (
-              <div key={s.label} className="flex flex-col gap-1 px-4 py-4 md:px-5">
-                <dt className="order-2 text-xs text-on-primary-muted">{s.label}</dt>
-                <dd className="text-2xl font-bold tracking-tight text-on-primary md:text-3xl">{s.value}</dd>
-              </div>
-            ))}
-          </motion.dl>
-        </div>
-      </motion.div>
+        <motion.div
+          className="mt-12 flex flex-wrap justify-center gap-4"
+          initial={reduce ? false : { opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+        >
+          <a href="#kontakt" className="btn btn-light btn-lg">
+            Termin anfragen
+          </a>
+        </motion.div>
+      </div>
+
     </section>
   )
 }

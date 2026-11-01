@@ -1,41 +1,42 @@
 import { nav, site } from '@/lib/site'
 
+// Ruhiger Abschluss: Name in Serife, Navigation und rechtliches in einer Zeile
 export default function Footer() {
   const year = new Date().getFullYear()
   const { social, address } = site.contact
 
   return (
-    <footer className="bg-dark text-on-primary-muted">
-      <div className="container-page grid gap-7 pb-24 pt-9 md:grid-cols-[1fr_auto] md:items-end md:pb-9">
-        <div className="flex flex-col gap-4">
-          <p className="text-4xl font-bold tracking-tight text-on-primary">{site.companyName}</p>
-          <p className="max-w-measure text-sm">
-            {site.legalEntity} · {address.street}, {address.zip} {address.city}
-          </p>
-          <p className="text-xs">
-            © {year} {site.companyName}
-          </p>
-        </div>
+    <footer className="rule bg-bg">
+      <div className="container-page flex flex-col items-center gap-12 py-20 text-center">
+        <p className="font-display text-5xl font-normal uppercase leading-none md:text-title">{site.companyName}</p>
 
-        <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+        <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-xs font-semibold uppercase tracking-label">
           {nav.map((item) => (
-            <a key={item.href} href={item.href} className="transition-colors duration-fast hover:text-on-primary">
+            <a key={item.href} href={item.href} className="transition-opacity duration-fast hover:opacity-60">
               {item.label}
             </a>
           ))}
-          <a href={social.instagram} target="_blank" rel="noreferrer" className="transition-colors duration-fast hover:text-on-primary">
+          <a href={social.instagram} target="_blank" rel="noreferrer" className="transition-opacity duration-fast hover:opacity-60">
             Instagram
           </a>
-          <a href={social.facebook} target="_blank" rel="noreferrer" className="transition-colors duration-fast hover:text-on-primary">
+          <a href={social.facebook} target="_blank" rel="noreferrer" className="transition-opacity duration-fast hover:opacity-60">
             Facebook
           </a>
-          <a href="https://www.djakki.de/8/impressum.html" className="transition-colors duration-fast hover:text-on-primary">
+        </nav>
+
+        <p className="text-sm text-muted">
+          {site.legalEntity} · {address.street}, {address.zip} {address.city}
+        </p>
+
+        <p className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted">
+          <span>© {year} {site.companyName}</span>
+          <a href="https://www.djakki.de/8/impressum.html" className="underline underline-offset-4">
             Impressum
           </a>
-          <a href="https://www.djakki.de/7/datenschutz.html" className="transition-colors duration-fast hover:text-on-primary">
+          <a href="https://www.djakki.de/7/datenschutz.html" className="underline underline-offset-4">
             Datenschutz
           </a>
-        </nav>
+        </p>
       </div>
     </footer>
   )

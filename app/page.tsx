@@ -1,15 +1,15 @@
 import Navbar from '@/components/Navbar'
 import SpotlightCursor from '@/components/SpotlightCursor'
 import Hero from '@/components/Hero'
+import Intro from '@/components/Intro'
 import Marquee from '@/components/Marquee'
-import PinnedServices from '@/components/PinnedServices'
+import Services from '@/components/Services'
 import ScrollWords from '@/components/ScrollWords'
 import SocialProof from '@/components/SocialProof'
 import Booking from '@/components/Booking'
 import FAQ from '@/components/FAQ'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
-import MobileCta from '@/components/MobileCta'
 
 const strip = [
   'Hochzeiten',
@@ -28,14 +28,15 @@ const strip = [
 export default function Home() {
   return (
     <>
-      <SpotlightCursor />
+      <SpotlightCursor brightness={0.5} />
       <Navbar />
       <main>
         <Hero />
-        <section aria-label="Anlässe und Musikrichtungen" className="bg-primary-600 py-5 text-on-primary">
-          <Marquee items={strip} speed={40} />
+        <Intro />
+        <section aria-label="Anlässe und Musikrichtungen" className="rule py-8 text-ink">
+          <Marquee items={strip} speed={45} />
         </section>
-        <PinnedServices />
+        <Services />
         <ScrollWords />
         <SocialProof />
         <Booking />
@@ -43,7 +44,6 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <MobileCta />
     </>
   )
 }

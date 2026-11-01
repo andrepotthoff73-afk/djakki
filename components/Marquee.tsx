@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 
-// Endlos-Laufband: der Inhalt wird einmal verdoppelt, dann um die Hälfte verschoben
+// Endlos-Laufband in Serifen-Kursiv: der Inhalt wird einmal verdoppelt, dann um die Hälfte verschoben
 export default function Marquee({ items, speed = 35 }: { items: string[]; speed?: number }) {
   const reduce = useReducedMotion()
   const doubled = [...items, ...items]
@@ -18,11 +18,11 @@ export default function Marquee({ items, speed = 35 }: { items: string[]; speed?
           <li
             key={`${text}-${i}`}
             aria-hidden={i >= items.length}
-            className="flex items-center whitespace-nowrap text-2xl font-semibold tracking-tight"
+            className="flex items-center whitespace-nowrap font-display text-3xl italic leading-none md:text-4xl"
           >
             {text}
-            <span aria-hidden className="mx-8 text-primary-200">
-              •
+            <span aria-hidden className="mx-10 not-italic text-muted">
+              —
             </span>
           </li>
         ))}

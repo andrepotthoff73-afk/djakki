@@ -3,25 +3,28 @@
 @tailwind utilities;
 
 /* ------------------------------------------------------------------
-   Design-Tokens (design-focused.md) — einzige Stelle mit Rohwerten
+   Design-Tokens — Stil „Editorial Monochrom“: S/W-Fotografie, Serife,
+   viel Weißraum, ein einziger Akzent. Einzige Stelle mit Rohwerten.
    ------------------------------------------------------------------ */
 :root {
-  /* Typografie — Ratio 1.25, Basis 16px */
+  /* Typografie */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.75rem);
-  --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.5rem);
-  --text-4xl: clamp(2.25rem, 1.6rem + 3.2vw, 3.75rem);
-  --text-display: clamp(3rem, 1.2rem + 6.5vw, 7.5rem);
-  --leading-body: 1.6;
+  --text-lg: 1.1875rem;
+  --text-xl: 1.375rem;
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.6vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
+  --text-title: clamp(3rem, 1.4rem + 6vw, 7.5rem);
+  --text-display: clamp(3.75rem, 1rem + 11vw, 11rem);
+  --leading-body: 1.65;
   --leading-lead: 1.5;
-  --leading-heading: 1.1;
-  --tracking-tight: -0.02em;
-  --tracking-label: 0.08em;
-  --measure: 680px;
+  --leading-heading: 1.08;
+  --leading-display: 0.9;
+  --tracking-tight: -0.01em;
+  --tracking-label: 0.28em;
+  --measure: 620px;
 
   /* Spacing — 8px-Raster */
   --space-1: 4px;
@@ -34,9 +37,15 @@
   --space-8: 80px;
   --space-9: 96px;
   --space-10: 128px;
-  --container: 1200px;
+  --container: 1280px;
 
-  /* Farbskala — Primär aus site-analysis.json (#24457a) */
+  /* Farben */
+  --paper: #f6f5f2;
+  --paper-2: #ecebe6;
+  --ink: #111214;
+  --ink-2: #26282e;
+  --gray-400: #a8a6a0;
+  --gray-600: #6b6963;
   --primary-50: #eef2f8;
   --primary-100: #dbe4f1;
   --primary-200: #b5c7e1;
@@ -47,48 +56,34 @@
   --accent-500: #c42021;
   --accent-600: #a51b1c;
   --neutral-0: #ffffff;
-  --neutral-50: #f6f7f9;
-  --neutral-100: #eef1f5;
-  --neutral-200: #dde2ea;
-  --neutral-400: #9aa3b2;
-  --neutral-600: #5a6474;
-  --neutral-800: #222834;
-  --neutral-900: #141821;
-  --neutral-950: #0b0e14;
+  --neutral-400: var(--gray-400);
+  --neutral-600: var(--gray-600);
+  --neutral-900: var(--ink);
   --success: #16a34a;
   --warning: #d97706;
   --error: #dc2626;
 
   /* Rollen-Tokens */
-  --color-bg: var(--neutral-0);
-  --color-surface: var(--neutral-50);
-  --color-text: var(--neutral-900);
-  --color-text-muted: var(--neutral-600);
-  --color-border: var(--neutral-200);
-  --color-on-primary: var(--neutral-0);
-  --color-on-primary-muted: var(--neutral-400);
-  --color-dark: var(--neutral-950);
+  --color-bg: var(--paper);
+  --color-surface: var(--paper-2);
+  --color-text: var(--ink);
+  --color-text-muted: var(--gray-600);
+  --color-border: #d6d4cd;
+  --color-on-primary: var(--paper);
+  --color-on-primary-muted: #a9a79f;
+  --color-dark: var(--ink);
 
-  /* Radius & Schatten */
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-full: 9999px;
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
-  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.08);
-  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.16);
+  /* Linien: fein statt fett */
+  --border-w: 1px;
 
   /* Komponenten-Maße */
-  --btn-sm: 36px;
-  --btn-md: 44px;
-  --btn-lg: 52px;
-  --input-h: 48px;
+  --btn-sm: 40px;
+  --btn-md: 52px;
+  --btn-lg: 60px;
+  --input-h: 52px;
   --icon: 24px;
-  --icon-stroke: 1.75;
+  --icon-stroke: 1.25;
   --focus-ring: 2px;
-  --ring-width: 3px;
   --lift-sm: -1px;
   --lift-md: -2px;
 }
@@ -111,80 +106,72 @@
 
   h1,
   h2 {
-    @apply font-bold leading-heading tracking-tight;
+    @apply font-display font-medium uppercase leading-heading tracking-tight;
   }
 
   h3 {
-    @apply font-semibold leading-heading;
+    @apply font-display text-2xl font-medium leading-heading;
   }
 
   :focus-visible {
     outline: var(--focus-ring) solid var(--primary-500);
-    outline-offset: var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: var(--ink);
+    color: var(--paper);
   }
 }
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-container px-3 md:px-4 lg:px-5;
+    @apply mx-auto w-full max-w-container px-4 md:px-6 lg:px-8;
   }
 
   .section {
-    @apply py-8 md:py-9 lg:py-10;
+    @apply py-9 md:py-10 lg:py-10;
   }
 
-  /* Einzige erlaubte Verlaufsfläche: Lesbarkeit auf Fotos */
-  .scrim {
-    background: linear-gradient(
-      to top,
-      color-mix(in srgb, var(--neutral-950) 92%, transparent) 0%,
-      color-mix(in srgb, var(--neutral-950) 50%, transparent) 45%,
-      color-mix(in srgb, var(--neutral-950) 10%, transparent) 100%
-    );
-  }
-
-  /* Schwebende Flächen über Fotos: halbtransparent, unscharf */
-  .glass {
-    background-color: color-mix(in srgb, var(--color-dark) 84%, transparent);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
-    backdrop-filter: blur(16px) saturate(140%);
-  }
-
+  /* Kleines, weit gesperrtes Etikett */
   .eyebrow {
-    @apply mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-label text-primary-600;
+    @apply mb-6 block text-xs font-semibold uppercase tracking-label text-muted;
   }
 
-  .eyebrow-dark {
-    @apply text-primary-200;
-  }
-
-  .eyebrow-dark::before {
-    content: '';
-    @apply h-px w-6 bg-accent-500;
-  }
-
-  /* Buttons: primary / light / outline in sm / md / lg */
+  /* Buttons: schmale Linie, weit gesperrte Versalien, Füllung beim Hover */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-transparent font-semibold no-underline transition-[background-color,transform,box-shadow,border-color] duration-fast ease-out;
-    @apply min-h-btn-md px-5 text-base;
-    @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
+    @apply inline-flex items-center justify-center gap-3 border font-semibold uppercase tracking-label no-underline;
+    @apply min-h-btn-md px-7 text-xs transition-colors duration-card ease-out;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-sm {
-    @apply min-h-btn-sm px-4 text-sm;
+    @apply min-h-btn-sm px-5;
   }
   .btn-lg {
-    @apply min-h-btn-lg px-6 text-lg;
+    @apply min-h-btn-lg px-8;
   }
-  .btn-primary {
-    @apply bg-primary-600 text-on-primary hover:-translate-y-lift-sm hover:bg-primary-500 hover:shadow-md active:translate-y-0 active:bg-primary-700 active:shadow-none;
+  .btn-ink {
+    @apply border-ink bg-ink text-paper hover:bg-transparent hover:text-ink;
+  }
+  .btn-line {
+    @apply border-ink bg-transparent text-ink hover:bg-ink hover:text-paper;
   }
   .btn-light {
-    @apply bg-bg text-dark hover:-translate-y-lift-sm hover:bg-primary-50 hover:shadow-md active:translate-y-0 active:shadow-none;
+    @apply border-paper bg-transparent text-paper hover:bg-paper hover:text-ink;
   }
-  .btn-outline {
-    @apply border-neutral-800 bg-transparent text-on-primary hover:border-on-primary-muted hover:bg-neutral-800 active:bg-neutral-900;
+
+  /* Dünne Trennlinie in Textfarbe */
+  .rule {
+    border-top: var(--border-w) solid var(--color-border);
   }
-  .btn-ghost {
-    @apply bg-transparent px-2 text-primary-600 hover:bg-primary-50;
+
+  /* Dünne Linie auf dunklem Grund */
+  .rule-light {
+    border-top: var(--border-w) solid color-mix(in srgb, var(--paper) 22%, transparent);
+  }
+
+  /* Abdunkelung über Fotos, damit Text lesbar bleibt */
+  .veil {
+    background: color-mix(in srgb, var(--ink) 42%, transparent);
   }
 }

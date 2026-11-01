@@ -9,6 +9,9 @@ import { ChatIcon, ClockIcon, MailIcon, PhoneIcon, PinIcon } from './Icons'
 
 type Errors = Partial<Record<'name' | 'phone' | 'email', string>>
 
+const fieldClass =
+  'w-full border-b border-paper bg-transparent py-3 text-base text-paper placeholder:text-on-primary-muted focus:border-b-2 focus:outline-none'
+
 function Field({
   name,
   label,
@@ -24,7 +27,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-2 block text-sm font-semibold">
+      <label htmlFor={name} className="mb-1 block text-xs font-semibold uppercase tracking-label text-on-primary-muted">
         {label}
         {required && ' *'}
       </label>
@@ -35,20 +38,16 @@ function Field({
         required={required}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${name}-error` : undefined}
-        className="h-input w-full rounded-xl border border-border bg-bg px-4 text-base text-text transition-[border-color,box-shadow] duration-fast focus:border-primary-600 focus:outline-none focus:shadow-[0_0_0_3px_var(--primary-100)]"
+        className={fieldClass}
       />
       {error && (
-        <p id={`${name}-error`} className="mt-1 text-sm text-error">
+        <p id={`${name}-error`} className="mt-2 text-sm text-on-primary-muted">
           {error}
         </p>
       )}
     </div>
   )
 }
-
-const cardClass = 'flex items-center gap-4 rounded-2xl border border-neutral-800 p-4 transition-colors duration-card'
-const chipClass = 'grid h-btn-md w-btn-md shrink-0 place-items-center rounded-xl bg-primary-600 text-on-primary'
-const labelClass = 'block text-xs font-semibold uppercase tracking-label text-on-primary-muted'
 
 export default function Contact() {
   const reduce = useReducedMotion()
@@ -85,100 +84,85 @@ export default function Contact() {
   ]
 
   return (
-    <section id="kontakt" className="section bg-dark text-on-primary">
-      <div className="container-page grid gap-7 lg:grid-cols-[5fr_7fr] lg:gap-8">
+    <section id="kontakt" className="section bg-ink text-paper">
+      <div className="container-page grid gap-20 lg:grid-cols-2 lg:gap-24">
         <div>
           <Reveal>
-            <span className="eyebrow eyebrow-dark">Kontakt</span>
-            <h2 className="text-3xl text-on-primary md:text-4xl [text-wrap:balance]">Termin frei? Lass uns sprechen.</h2>
-            <p className="mt-3 max-w-measure text-lg text-on-primary-muted">
+            <span className="eyebrow text-on-primary-muted">Kontakt</span>
+            <h2 className="text-4xl md:text-title">
+              Termin frei?
+              <span className="block font-normal normal-case italic text-on-primary-muted">Lass uns sprechen.</span>
+            </h2>
+            <p className="mt-8 max-w-measure text-lg text-on-primary-muted">
               Unverbindlich anfragen – ich melde mich persönlich bei dir.
             </p>
           </Reveal>
 
           <motion.ul
-            className="mt-7 grid gap-3"
+            className="mt-14"
             variants={reduce ? undefined : stagger}
             initial={reduce ? false : 'hidden'}
             whileInView={reduce ? undefined : 'show'}
             viewport={{ once: true, amount: 0.3 }}
           >
             {contacts.map((item) => (
-              <motion.li key={item.label} variants={reduce ? undefined : fadeUp}>
-                <motion.a
+              <motion.li key={item.label} variants={reduce ? undefined : fadeUp} className="rule-light">
+                <a
                   href={item.href}
                   target={item.external ? '_blank' : undefined}
                   rel={item.external ? 'noreferrer' : undefined}
-                  className={`${cardClass} group hover:border-primary-500 hover:bg-neutral-900`}
-                  whileHover={reduce ? undefined : { x: 4 }}
-                  transition={{ duration: 0.2 }}
+                  className="group flex items-center gap-6 py-6 transition-opacity duration-fast hover:opacity-70"
                 >
-                  <span className={chipClass}>
-                    <item.icon width={24} height={24} />
-                  </span>
+                  <item.icon width={24} height={24} className="shrink-0" />
                   <span>
-                    <span className={labelClass}>{item.label}</span>
-                    <span className="block font-semibold group-hover:text-primary-200">{item.value}</span>
+                    <span className="block text-xs font-semibold uppercase tracking-label text-on-primary-muted">{item.label}</span>
+                    <span className="block font-display text-2xl">{item.value}</span>
                   </span>
-                </motion.a>
+                </a>
               </motion.li>
             ))}
-            <motion.li variants={reduce ? undefined : fadeUp} className={cardClass}>
-              <span className={chipClass}>
-                <PinIcon width={24} height={24} />
-              </span>
+            <motion.li variants={reduce ? undefined : fadeUp} className="rule-light flex items-center gap-6 py-6">
+              <PinIcon width={24} height={24} className="shrink-0" />
               <span>
-                <span className={labelClass}>Adresse</span>
-                <span className="block font-semibold">
+                <span className="block text-xs font-semibold uppercase tracking-label text-on-primary-muted">Adresse</span>
+                <span className="block font-display text-2xl">
                   {c.address.street}, {c.address.zip} {c.address.city}
                 </span>
               </span>
             </motion.li>
-            <motion.li variants={reduce ? undefined : fadeUp} className={cardClass}>
-              <span className={chipClass}>
-                <ClockIcon width={24} height={24} />
-              </span>
+            <motion.li variants={reduce ? undefined : fadeUp} className="rule-light flex items-center gap-6 py-6">
+              <ClockIcon width={24} height={24} className="shrink-0" />
               <span>
-                <span className={labelClass}>Öffnungszeiten</span>
-                <span className="block font-semibold">{c.openingHours ?? 'Termine nach Vereinbarung'}</span>
+                <span className="block text-xs font-semibold uppercase tracking-label text-on-primary-muted">Öffnungszeiten</span>
+                <span className="block font-display text-2xl">{c.openingHours ?? 'Termine nach Vereinbarung'}</span>
               </span>
             </motion.li>
           </motion.ul>
         </div>
 
         <Reveal delay={0.1}>
-          <form className="grid gap-5 rounded-2xl bg-bg p-5 text-text shadow-lg md:p-7" onSubmit={handleSubmit} noValidate>
+          <form className="flex flex-col gap-8" onSubmit={handleSubmit} noValidate>
             <Field name="name" label="Vorname, Name" error={errors.name} />
-            <div className="grid gap-5 md:grid-cols-2">
+            <div className="grid gap-8 md:grid-cols-2">
               <Field name="phone" label="Telefonnummer" type="tel" error={errors.phone} />
               <Field name="email" label="E-Mail-Adresse" type="email" error={errors.email} />
             </div>
             <Field name="date" label="Datum der Veranstaltung" type="date" required={false} />
             <div>
-              <label htmlFor="message" className="mb-2 block text-sm font-semibold">
+              <label htmlFor="message" className="mb-1 block text-xs font-semibold uppercase tracking-label text-on-primary-muted">
                 Nachricht
               </label>
-              <textarea
-                id="message"
-                name="message"
-                rows={4}
-                className="w-full rounded-xl border border-border bg-bg p-4 text-base transition-[border-color,box-shadow] duration-fast focus:border-primary-600 focus:outline-none focus:shadow-[0_0_0_3px_var(--primary-100)]"
-              />
+              <textarea id="message" name="message" rows={4} className={`${fieldClass} resize-none`} />
             </div>
-            <p className="text-xs text-muted">
+            <p className="text-xs text-on-primary-muted">
               Deine Daten werden ausschließlich zur Bearbeitung der Anfrage verwendet.{' '}
               <a href="https://www.djakki.de/7/datenschutz.html" className="underline underline-offset-4">
                 Datenschutzerklärung
               </a>
             </p>
-            <motion.button
-              type="submit"
-              className="btn btn-primary btn-lg w-full"
-              whileHover={reduce ? undefined : { y: -2 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <button type="submit" className="btn btn-light btn-lg w-full">
               Anfrage senden
-            </motion.button>
+            </button>
           </form>
         </Reveal>
       </div>
