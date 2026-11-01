@@ -23,7 +23,7 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-[center_30%] grayscale"
+          className="object-cover object-[center_30%] opacity-70 grayscale"
         />
       </motion.div>
       <div className="veil absolute inset-0" aria-hidden />
