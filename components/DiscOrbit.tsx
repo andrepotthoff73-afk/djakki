@@ -1,6 +1,5 @@
 'use client'
 
-import { useRef, useState } from 'react'
 import Image from 'next/image'
 import {
   motion,
@@ -10,6 +9,7 @@ import {
   useTransform,
   type MotionValue,
 } from 'framer-motion'
+import { useRef } from 'react'
 
 // Vier Leistungen als CDs, die flach unter dem Kinn von rechts nach links rollen.
 const discs = [
@@ -39,9 +39,9 @@ const discs = [
   },
 ]
 
-const LOOP_SECONDS = 18 // eine Runde von rechts nach links und zurück an den Anfang
+const LOOP_SECONDS = 18 // eine Runde von rechts nach links
 const LANE_Y = 64 // Höhe der Bahn in % der Hero-Fläche, knapp unter dem Kinn
-const TRAVEL = 130 // Strecke in %, damit die CDs ganz außerhalb ein- und austreten
+const TRAVEL = 130 // Strecke in %, damit die CDs außerhalb ein- und austreten
 const CENTER_X = 50
 
 const hole = 'radial-gradient(circle closest-side, transparent 0 14%, #000 15%)'
@@ -59,10 +59,8 @@ function RollingDisc({
   reduce: boolean | null
   setPaused: (p: boolean) => void
 }) {
-  const [hovered, setHovered] = useState(false)
-
   // Position auf der Bahn: 0 rechts außen, 1 links außen, versetzt pro CD
-  const p = useTransform(progress, (v) => ((v + index * 0.25) % 1 + 1) % 1)
+  const p = useTransform(progress, (v) => (((v + index * 0.25) % 1) + 1) % 1)
   const left = useTransform(p, (v) => `${CENTER_X + (0.5 - v) * TRAVEL}%`)
   const top = useTransform(p, (v) => `${LANE_Y - Math.sin(Math.PI * v) * 3}%`)
   const rotate = useTransform(progress, (v) => -v * 360 * 4)
@@ -79,31 +77,19 @@ function RollingDisc({
         initial={reduce ? false : { opacity: 0, scale: 0.4 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ type: 'spring', stiffness: 160, damping: 18, delay: 0.7 + index * 0.12 }}
-        whileHover={reduce ? undefined : { scale: 1.12 }}
-        onHoverStart={() => {
-          setHovered(true)
-          setPaused(true)
-        }}
-        onHoverEnd={() => {
-          setHovered(false)
-          setPaused(false)
-        }}
-        onFocus={() => {
-          setHovered(true)
-          setPaused(true)
-        }}
-        onBlur={() => {
-          setHovered(false)
-          setPaused(false)
-        }}
+        whileHover={reduce ? undefined : { scale: 1.1 }}
+        onHoverStart={() => setPaused(true)}
+        onHoverEnd={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
       >
         <motion.div className="absolute inset-0 rounded-full" style={{ rotate: reduce ? 0 : rotate }}>
           <div
             className="absolute inset-0 rounded-full bg-[#15171b]"
-            style={{ boxShadow: '0 10px 20px -8px rgba(0,0,0,.65), inset 0 0 0 1px rgba(255,255,255,.35)' }}
+            style={{ boxShadow: '0 12px 24px -8px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.35)' }}
           />
           <div className="absolute inset-0 rounded-full" style={{ WebkitMaskImage: hole, maskImage: hole }}>
-            <Image src={disc.image} alt="" fill sizes="110px" className="object-cover" />
+            <Image src={disc.image} alt="" fill sizes="160px" className="object-cover" />
           </div>
           <div
             className="pointer-events-none absolute inset-0 rounded-full"
@@ -120,14 +106,14 @@ function RollingDisc({
           />
         </motion.div>
 
+        {/* Beschriftung immer sichtbar, sitzt unter der CD und folgt ihr */}
         <motion.span
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-bg px-3 py-1 text-xs font-semibold text-text shadow-md"
-          initial={false}
-          animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 6 }}
-          transition={{ duration: 0.2, ease: 'easeOut' }}
+          className="pointer-events-none absolute left-1/2 top-full mt-3 -translate-x-1/2 whitespace-nowrap rounded-md bg-bg px-3 py-1.5 text-sm font-semibold text-text shadow-md"
+          initial={reduce ? false : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.1 + index * 0.12, ease: 'easeOut' }}
         >
-          {disc.label} →
+          {disc.label}
         </motion.span>
       </motion.a>
     </motion.div>
@@ -146,7 +132,7 @@ export default function DiscOrbit() {
   })
 
   return (
-    <div className="pointer-events-none absolute inset-0" style={{ ['--disc' as string]: 'clamp(72px, 9vmin, 110px)' }}>
+    <div className="pointer-events-none absolute inset-0 z-20" style={{ ['--disc' as string]: 'clamp(100px, 13vmin, 160px)' }}>
       {discs.map((d, i) => (
         <RollingDisc
           key={d.label}
