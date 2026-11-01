@@ -1,0 +1,169 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------
+   Design-Tokens (design-focused.md) — einzige Stelle mit Rohwerten
+   ------------------------------------------------------------------ */
+:root {
+  /* Typografie — Ratio 1.25, Basis 16px */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.75rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.8vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.6rem + 3.2vw, 3.75rem);
+  --text-display: clamp(3rem, 1.2rem + 8vw, 8.5rem);
+  --leading-body: 1.6;
+  --leading-lead: 1.5;
+  --leading-heading: 1.15;
+  --tracking-tight: -0.02em;
+  --tracking-label: 0.08em;
+  --measure: 680px;
+
+  /* Spacing — 8px-Raster */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+  --space-5: 32px;
+  --space-6: 48px;
+  --space-7: 64px;
+  --space-8: 80px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --container: 1200px;
+
+  /* Farbskala — Primär aus site-analysis.json (#24457a) */
+  --primary-50: #eef2f8;
+  --primary-100: #dbe4f1;
+  --primary-200: #b5c7e1;
+  --primary-500: #3461a8;
+  --primary-600: #24457a;
+  --primary-700: #1d3863;
+  --primary-800: #172c4e;
+  --accent-500: #c42021;
+  --accent-600: #a51b1c;
+  --neutral-0: #ffffff;
+  --neutral-50: #f8f9fb;
+  --neutral-100: #eef1f5;
+  --neutral-200: #dde2ea;
+  --neutral-400: #9aa3b2;
+  --neutral-600: #5a6474;
+  --neutral-800: #252b36;
+  --neutral-900: #141821;
+  --success: #16a34a;
+  --warning: #d97706;
+  --error: #dc2626;
+
+  /* Rollen-Tokens */
+  --color-bg: var(--neutral-0);
+  --color-surface: var(--neutral-50);
+  --color-text: var(--neutral-900);
+  --color-text-muted: var(--neutral-600);
+  --color-border: var(--neutral-200);
+  --color-on-primary: var(--neutral-0);
+  --color-on-primary-muted: var(--primary-200);
+  --color-dark: var(--neutral-900);
+
+  /* Radius & Schatten */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.12);
+
+  /* Komponenten-Maße */
+  --btn-sm: 36px;
+  --btn-md: 44px;
+  --btn-lg: 52px;
+  --input-h: 48px;
+  --icon: 24px;
+  --icon-stroke: 1.75;
+  --focus-ring: 2px;
+  --ring-width: 3px;
+  --lift-sm: -1px;
+  --lift-md: -2px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--space-8);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-bg font-sans text-base text-text antialiased;
+  }
+
+  h1,
+  h2 {
+    @apply font-bold leading-heading tracking-tight;
+  }
+
+  h3 {
+    @apply font-semibold leading-heading;
+  }
+
+  :focus-visible {
+    outline: var(--focus-ring) solid var(--primary-500);
+    outline-offset: var(--focus-ring);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-3 md:px-4 lg:px-5;
+  }
+
+  .section {
+    @apply py-8 md:py-9 lg:py-10;
+  }
+
+  /* Einzige erlaubte Verlaufsfläche: Lesbarkeit auf Fotos */
+  .scrim {
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--neutral-900) 90%, transparent) 0%,
+      color-mix(in srgb, var(--neutral-900) 45%, transparent) 50%,
+      color-mix(in srgb, var(--neutral-900) 15%, transparent) 100%
+    );
+  }
+
+  .eyebrow {
+    @apply mb-3 block text-xs font-semibold uppercase tracking-label text-primary-600;
+  }
+
+  /* Buttons: primary / secondary / ghost in sm / md / lg */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-transparent font-semibold no-underline transition-[background-color,transform,box-shadow,border-color] duration-fast ease-out;
+    @apply min-h-btn-md px-4 text-base;
+    @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
+  }
+  .btn-sm {
+    @apply min-h-btn-sm px-3 text-sm;
+  }
+  .btn-lg {
+    @apply min-h-btn-lg px-4 text-lg;
+  }
+  .btn-primary {
+    @apply bg-primary-600 text-on-primary hover:-translate-y-lift-sm hover:bg-primary-700 hover:shadow-md active:translate-y-0 active:bg-primary-800 active:shadow-none;
+  }
+  .btn-secondary {
+    @apply border-primary-600 bg-transparent text-primary-600 hover:-translate-y-lift-sm hover:bg-primary-50 active:translate-y-0;
+  }
+  .btn-ghost {
+    @apply bg-transparent px-2 text-primary-600 hover:bg-primary-50;
+  }
+}

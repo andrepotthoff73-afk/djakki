@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vorher / Nachher – DJ Akki Redesign</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --space-2: 8px;
+        --space-3: 16px;
+        --label-h: 48px;
+        --text-sm: 0.875rem;
+        --neutral-0: #ffffff;
+        --neutral-100: #eef1f5;
+        --neutral-200: #dde2ea;
+        --neutral-400: #9aa3b2;
+        --neutral-900: #141821;
+        --primary-600: #24457a;
+        --radius-full: 9999px;
+        --border: 1px;
+        --weight-semibold: 600;
+        --weight-regular: 400;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; }
+      body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        font-family: 'Inter', system-ui, sans-serif;
+        background: var(--neutral-0);
+      }
+      .pane { display: flex; flex-direction: column; min-width: 0; height: 100vh; }
+      .pane--before { background: var(--neutral-200); border-right: var(--border) solid var(--neutral-400); }
+      .label {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        height: var(--label-h);
+        padding: 0 var(--space-3);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-semibold);
+        color: var(--neutral-900);
+      }
+      .pill {
+        padding: 0 var(--space-3);
+        border-radius: var(--radius-full);
+        line-height: 1.75;
+        color: var(--neutral-0);
+        background: var(--neutral-400);
+      }
+      .pane--after .pill { background: var(--primary-600); }
+      .label a { margin-left: auto; color: inherit; font-weight: var(--weight-regular); }
+      iframe { flex: 1; width: 100%; border: 0; background: var(--neutral-0); }
+      .pane--before iframe { opacity: 0.92; }
+      @media (max-width: 767px) {
+        body { grid-template-columns: 1fr; }
+        .pane { height: 100vh; }
+        .pane--before { border-right: 0; border-bottom: var(--border) solid var(--neutral-400); }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="pane pane--before">
+      <div class="label"><span class="pill">Vorher</span> djakki.de (Nachbildung) <a href="/old-site-screenshot.html" target="_blank">öffnen ↗</a></div>
+      <iframe src="/old-site-screenshot.html" title="Vorher: aktuelle Website"></iframe>
+    </section>
+    <section class="pane pane--after">
+      <div class="label"><span class="pill">Nachher</span> Redesign <a href="/" target="_blank">öffnen ↗</a></div>
+      <iframe src="/" title="Nachher: Redesign"></iframe>
+    </section>
+  </body>
+</html>

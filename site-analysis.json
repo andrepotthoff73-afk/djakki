@@ -1,0 +1,94 @@
+{
+  "url": "https://www.djakki.de/",
+  "analyzedAt": "2026-11-01",
+  "companyName": "DJ Akki & Friends",
+  "legalEntity": "Agentur Weyand",
+  "owner": "Axel Michael Weyand (DJ Akki)",
+  "industry": "Event-DJ / Veranstaltungsservice (Hochzeiten, Firmenfeiern, Private Events)",
+  "tagline": "DJ AKKI & FRIENDS bringen Duisburg zum Beben",
+  "heroHeadline": "DJ Duisburg: Musik für PArty`s, Clubs & Events",
+  "heroText": "DJ Akki sorgt seit über 30 Jahren für unvergessliche Feiern in Duisburg und Umgebung. Von Hochzeiten bis Firmenfeiern.",
+  "services": [
+    { "name": "DJ für Hochzeiten", "description": "Speziell abgestimmtes Hochzeitskonzept – individuell geplant, perfekt umgesetzt, volle Tanzfläche.", "url": "https://www.djakki.de/3/dj-fuer-hochzeiten.html" },
+    { "name": "DJ für Firmenfeier", "description": "Musik passend zur Firmenkultur – für jeden Geschmack etwas dabei.", "url": "https://www.djakki.de/11/dj-fuer-firmenfeier.html" },
+    { "name": "DJ für Veranstaltung", "description": "Event-DJ für Veranstaltungen in Duisburg und Umgebung.", "url": "https://www.djakki.de/12/dj-fuer-veranstaltung.html" },
+    { "name": "DJ für Private Events", "description": "Geburtstage und private Feiern.", "url": "https://www.djakki.de/10/dj-fuer-private-events.html" },
+    { "name": "Licht & Musik / Full Service", "description": "Booking DJ oder Full Service inkl. Ton- und Lichtanlage.", "url": "https://www.djakki.de/5/lich-musik.html" }
+  ],
+  "usps": [
+    "30 Jahre Erfahrung auf Hochzeiten & Events",
+    "Das passende Lied zum passenden Zeitpunkt",
+    "Hochzeit-Experte mit Tanzausbildung",
+    "Sound & Light mit dem gewissen Etwas",
+    "Wedding Award Gewinner 2022",
+    "DJ Mixing mit Club Feeling"
+  ],
+  "musicGenres": ["House", "R'n'B", "Partyclassics", "70er", "80er", "90er", "Charts", "Schlager"],
+  "about": "Seit über 30 Jahren einer der bekanntesten DJs in Duisburg, bekannt aus dem legendären „Club Plastique“. Mix aus aktuellen Housetunes, R'n'B und Partyclassics.",
+  "referenceLocations": ["Villa Rheinperle", "viersieben", "Summer Night Lounge 2026", "Golf and more", "Gleis drei", "Bolero", "Club Raffelberg", "Coupé 1900", "Feinkost Kersten Catering"],
+  "serviceArea": ["Duisburg", "Moers", "Krefeld", "Neukirchen-Vluyn", "Rheinberg"],
+  "colors": {
+    "primary": "#24457a",
+    "dark": "#282626",
+    "accent": "#c42021",
+    "background": "#ffffff",
+    "textLight": "#cecece",
+    "other": ["#1e1e1e", "#a668a8", "#2fccff", "#eeeeee"],
+    "source": "CSS-Variablen --color-1/2/3 in index.html + Häufigkeit in css/sim89.css"
+  },
+  "fonts": {
+    "headings": "Julius Sans One",
+    "body": "Open Sans",
+    "icons": "Font Awesome (font.simdesign.de)",
+    "source": "--font-head / --font-text, selbst gehostet über font.simdesign.de"
+  },
+  "logoUrl": "https://www.djakki.de/bilder/k641930-1208_b112890.svg/logo.svg",
+  "images": [
+    "https://www.djakki.de/bilder/k641930-1208_b117501.png/117501.png",
+    "https://www.djakki.de/bilder/k641930-1208_b117496.png/dj-akki-plastique-revival.png",
+    "https://www.djakki.de/bilder/k641930-1208_b112906.jpg/dj-akki-plastique-revival.jpg",
+    "https://www.djakki.de/bilder/k641930-1208_b112906.jpg_w535_q85_s0.2/dj-akki-aus-duisburg-axel-weyand.jpg",
+    "https://www.djakki.de/bilder/k641930-1208_b117489.png_h400/altweiber-bolero-mit-dj-akki.png",
+    "https://www.djakki.de/bilder/k641930-1208_b117490.jpg_h400/bolero-terasse.jpg",
+    "https://www.djakki.de/bilder/k641930-1208_b117493.png_h400/dj-akki-bolero.png",
+    "https://www.djakki.de/bilder/k641930-1208_b117499.png_h400/dj-akki-vs-dj-kosmonova.png",
+    "https://www.djakki.de/bilder/k641930-1208_b117505.png_h400/hochzeit-dj-akki-old-daddy-axel-weyand.png",
+    "https://www.djakki.de/bilder/k641930-1208_b117512.jpg_h400/summer-night-lounge-3.jpg",
+    "https://www.djakki.de/bilder/k641930-1208_b117514.png_h400/villa-rheinperle.png",
+    "https://www.djakki.de/bilder/k641930-1208_b113278.jpg_w90_h90/113278.jpg",
+    "https://www.djakki.de/bilder/k641930-1208_b113279.jpg_w90_h90/113279.jpg",
+    "https://www.djakki.de/bilder/k641930-1208_b113280.jpg_w90_h90/113280.jpg"
+  ],
+  "contact": {
+    "phone": "+49 2841 8854469",
+    "phoneHref": "tel:+4928418854469",
+    "whatsapp": "https://wa.me/491722604182",
+    "email": "info@agentur-weyand.de",
+    "address": {
+      "street": "Gabelsbergerstr. 5",
+      "zip": "47441",
+      "city": "Moers",
+      "country": "DE"
+    },
+    "openingHours": null,
+    "openingHoursNote": "Keine Öffnungszeiten auf der Website (Startseite, Leistungen, Impressum, JSON-LD) gefunden. Termine auf Anfrage.",
+    "social": {
+      "facebook": "https://www.facebook.com/p/DJ-Akki-Friends-100048135444593/",
+      "instagram": "https://www.instagram.com/akkersson"
+    }
+  },
+  "reviews": {
+    "rating": 5.0,
+    "count": 3,
+    "source": "Website",
+    "note": "Drei Kundenstimmen auf djakki.de, je 5 Sterne. Kein aggregateRating im JSON-LD. Google-Maps-Bewertungen nicht abgefragt (Apify-Actor compass/crawler-google-places in dieser Sitzung nicht aufrufbar).",
+    "items": [
+      { "author": "Matthias & Ari", "date": "2023-02-15", "event": "Hochzeit", "stars": 5, "text": "DJ Akki war der absolute Knaller auf unserer Hochzeit! Von der ersten Minute an hat er die Stimmung perfekt getroffen und die Tanzfläche war bis zum Schluss voll. Die Musikauswahl war einfach top. Er ist auf unsere Musikwünsche super eingegangen. Danke!" },
+      { "author": "Dennis", "date": "2022-09-17", "event": "Firmenfeier", "stars": 5, "text": "DJ Akki hat unsere Firmenfeier zu einem unvergesslichen Erlebnis gemacht! Die Musik war perfekt auf unsere Firmenkultur abgestimmt und es war für jeden Geschmack etwas dabei. Wir sind alle begeistert!" },
+      { "author": "Svenja", "date": "2024-04-18", "event": "Geburtstag", "stars": 5, "text": "Es war wirklich eine tolle Party, besonders dass ein Vinyl-Mix aufgelegt wurde. Die Musik war großartig, und auch der Sound. Vielen Dank, DJ Akki!" }
+    ]
+  },
+  "navigation": ["Startseite", "Über mich", "Referenzen", "Event", "DJ für Hochzeiten", "DJ für Firmenfeier", "DJ für Veranstaltung", "DJ für Private Events", "Licht & Musik", "Buchen", "Ticket-Shop"],
+  "platform": "DJ-Baukasten / simdesign CMS",
+  "fetchMethod": "curl (HTML vollständig, kein Fallback nötig)"
+}
