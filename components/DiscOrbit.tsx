@@ -132,7 +132,7 @@ export default function DiscOrbit() {
   })
 
   return (
-    <div className="pointer-events-none absolute inset-0 z-20" style={{ ['--disc' as string]: 'clamp(100px, 13vmin, 160px)' }}>
+    <div className="pointer-events-none absolute inset-0 hidden md:block" style={{ ['--disc' as string]: 'clamp(100px, 13vmin, 160px)' }}>
       {discs.map((d, i) => (
         <RollingDisc
           key={d.label}

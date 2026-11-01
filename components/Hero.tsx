@@ -45,7 +45,11 @@ export default function Hero() {
       <div className="scrim absolute inset-0 -z-10" aria-hidden />
       <DiscOrbit />
 
-      <motion.div className="container-page relative pb-8 pt-10 lg:pb-9" style={{ opacity: reduce ? 1 : contentOpacity }}>
+      {/* Der Text lässt Klicks durch, damit die CDs dahinter anklickbar bleiben. Nur die Buttons fangen Klicks ab. */}
+      <motion.div
+        className="container-page pointer-events-none relative pb-8 pt-10 lg:pb-9"
+        style={{ opacity: reduce ? 1 : contentOpacity }}
+      >
         <motion.span
           className="mb-5 inline-flex items-center gap-2 rounded-full border border-on-primary-muted px-3 py-1 text-xs font-semibold uppercase tracking-label text-on-primary"
           initial={reduce ? false : { opacity: 0, y: 12 }}
@@ -86,7 +90,7 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-3">
               <motion.a
                 href="#kontakt"
-                className="btn btn-primary btn-lg group"
+                className="pointer-events-auto btn btn-primary btn-lg group"
                 whileHover={reduce ? undefined : { y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -95,7 +99,7 @@ export default function Hero() {
               </motion.a>
               <motion.a
                 href={site.contact.phoneHref}
-                className="btn btn-lg border border-on-primary-muted text-on-primary hover:bg-neutral-800"
+                className="pointer-events-auto btn btn-lg border border-on-primary-muted text-on-primary hover:bg-neutral-800"
                 whileHover={reduce ? undefined : { y: -2 }}
                 whileTap={{ scale: 0.98 }}
               >
