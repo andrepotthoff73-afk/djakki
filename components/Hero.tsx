@@ -6,6 +6,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { site } from '@/lib/site'
 import { ease } from '@/lib/motion'
 import { ArrowRightIcon, PhoneIcon, StarIcon } from './Icons'
+import DiscOrbit from './DiscOrbit'
 
 // Headline Wort für Wort, damit jedes Wort einzeln einblenden kann
 const words = ['Volle', 'Tanzfläche', 'für', 'eure', 'Hochzeit,', 'Firmenfeier', '&', 'Party.']
@@ -42,6 +43,7 @@ export default function Hero() {
         />
       </motion.div>
       <div className="scrim absolute inset-0 -z-10" aria-hidden />
+      <DiscOrbit />
 
       <motion.div className="container-page relative pb-8 pt-10 lg:pb-9" style={{ opacity: reduce ? 1 : contentOpacity }}>
         <motion.span
