@@ -1,49 +1,30 @@
-import Navbar from '@/components/Navbar'
-import SpotlightCursor from '@/components/SpotlightCursor'
+import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Intro from '@/components/Intro'
-import Marquee from '@/components/Marquee'
 import Services from '@/components/Services'
-import ScrollWords from '@/components/ScrollWords'
-import SocialProof from '@/components/SocialProof'
-import Booking from '@/components/Booking'
+import Voices from '@/components/Voices'
+import Steps from '@/components/Steps'
 import FAQ from '@/components/FAQ'
-import Contact from '@/components/Contact'
+import Request from '@/components/Request'
 import Footer from '@/components/Footer'
+import RevealObserver from '@/components/RevealObserver'
 
-const strip = [
-  'Hochzeiten',
-  'Firmenfeiern',
-  'Private Feiern',
-  'House',
-  'R’n’B',
-  'Partyclassics',
-  'Charts',
-  '70er',
-  '80er',
-  '90er',
-  'Schlager',
-]
-
+// Die Seite als Folge von Farbkapiteln, die ohne Abstand aneinanderstoßen
 export default function Home() {
   return (
     <>
-      <SpotlightCursor brightness={0.5} />
-      <Navbar />
+      <Header />
       <main>
         <Hero />
         <Intro />
-        <section aria-label="Anlässe und Musikrichtungen" className="rule py-8 text-ink">
-          <Marquee items={strip} speed={45} />
-        </section>
         <Services />
-        <ScrollWords />
-        <SocialProof />
-        <Booking />
+        <Voices />
+        <Steps />
         <FAQ />
-        <Contact />
+        <Request />
       </main>
       <Footer />
+      <RevealObserver />
     </>
   )
 }

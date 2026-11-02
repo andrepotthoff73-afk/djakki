@@ -1,109 +1,70 @@
-'use client'
-
-import Image from 'next/image'
-import { motion, useReducedMotion } from 'framer-motion'
-import { fadeUp } from '@/lib/motion'
-import Reveal from './Reveal'
-
-// Texte gekürzt aus djakki.de
-const services = [
+// Leistungen als Kapitel: jedes Feld eine Farbe, eine Aussage, ein kurzer Text
+const fields = [
   {
-    no: '01',
-    tag: 'Hochzeiten',
-    title: 'Hochzeiten',
-    text: 'Ein eigenes Hochzeitskonzept – vom Sektempfang über den Eröffnungstanz bis zur letzten Zugabe.',
-    points: ['Hochzeits-Experte mit Tanzausbildung', 'Musikwünsche im Vorgespräch', 'Wedding Award 2022'],
-    href: 'https://www.djakki.de/3/dj-fuer-hochzeiten.html',
-    image: {
-      src: 'https://www.djakki.de/bilder/k641930-1208_b117514.png_w900/villa-rheinperle.png',
-      alt: 'Villa Rheinperle, eine Location, in der DJ Akki aufgelegt hat',
-    },
+    phrase: 'Hochzeiten',
+    text: 'Ein Hochzeitskonzept, individuell geplant und perfekt umgesetzt. Von einem Hochzeit-Experten mit Tanzausbildung und Wedding Award Gewinner 2022.',
+    bg: 'var(--primary-600)',
+    fg: 'var(--paper)',
+    className: 'bg-primary-600 text-paper',
   },
   {
-    no: '02',
-    tag: 'Firmenfeiern',
-    title: 'Firmenfeiern & Events',
-    text: 'Musik, die zur Firmenkultur passt – vom entspannten Dinner bis zur Party auf der Tanzfläche.',
-    points: ['Für jeden Geschmack etwas dabei', 'Clubabende & Revival-Partys', 'Sound & Light mit dem gewissen Etwas'],
-    href: 'https://www.djakki.de/11/dj-fuer-firmenfeier.html',
-    image: {
-      src: 'https://www.djakki.de/bilder/k641930-1208_b117493.png_w900/dj-akki-bolero.png',
-      alt: 'DJ Akki am DJ-Pult im Bolero',
-    },
+    phrase: 'Firmenfeiern',
+    text: 'Musik passend zur Firmenkultur, damit für jeden Geschmack etwas dabei ist. Als DJ allein oder mit eigener Ton- und Lichtanlage.',
+    bg: 'var(--paper-2)',
+    fg: 'var(--ink)',
+    className: 'bg-paper-2 text-ink',
   },
   {
-    no: '03',
-    tag: 'Private Feiern',
-    title: 'Private Feiern',
-    text: 'Geburtstag, Jubiläum oder Gartenparty – auf Wunsch auch mit Vinyl-Mix.',
-    points: ['House, R’n’B, Partyclassics & Charts', '70er, 80er, 90er und Schlager', 'DJ-Mixing mit Club-Feeling'],
-    href: 'https://www.djakki.de/10/dj-fuer-private-events.html',
-    image: {
-      src: 'https://www.djakki.de/bilder/k641930-1208_b117512.jpg_w1000/summer-night-lounge-3.jpg',
-      alt: 'Gäste feiern bei der Summer Night Lounge',
-    },
+    phrase: 'Partys & Events',
+    text: 'Geburtstage, private Feiern und Veranstaltungen in Duisburg und Umgebung. DJ Mixing mit Club Feeling.',
+    bg: 'var(--ink)',
+    fg: 'var(--paper)',
+    className: 'bg-ink text-paper',
+  },
+  {
+    phrase: 'Licht & Ton',
+    text: 'Nur den DJ buchen oder Full Service mit Ton- und Lichtanlage: Sound & Light mit dem gewissen Etwas.',
+    bg: 'var(--primary-100)',
+    fg: 'var(--ink)',
+    className: 'bg-primary-100 text-ink',
   },
 ]
 
-// Drei Leistungen als Fotozeilen, abwechselnd links und rechts
 export default function Services() {
-  const reduce = useReducedMotion()
-
   return (
-    <section id="leistungen" className="section">
-      <div className="container-page">
-        <Reveal className="mb-20 flex flex-col items-center text-center md:mb-28">
-          <span className="eyebrow">Leistungen</span>
-          <h2 className="text-4xl md:text-title">
-            Drei Anlässe.
-            <span className="block font-normal normal-case italic text-muted">Eine Tanzfläche.</span>
-          </h2>
-        </Reveal>
-
-        <div className="flex flex-col gap-24 md:gap-36">
-          {services.map((s, i) => (
-            <motion.article
-              key={s.no}
-              className="grid items-center gap-10 md:grid-cols-2 md:gap-14"
-              variants={reduce ? undefined : fadeUp}
-              initial={reduce ? false : 'hidden'}
-              whileInView={reduce ? undefined : 'show'}
-              viewport={{ once: true, amount: 0.2 }}
-            >
-              <div className={`group relative aspect-[4/5] min-w-0 overflow-hidden ${i % 2 ? 'md:order-2' : ''}`}>
-                <Image
-                  src={s.image.src}
-                  alt={s.image.alt}
-                  fill
-                  sizes="(min-width: 768px) 58vw, 100vw"
-                  className="object-cover grayscale transition-transform duration-image ease-out group-hover:scale-105"
-                />
-              </div>
-
-              <div className={`flex min-w-0 flex-col ${i % 2 ? 'md:order-1' : ''}`}>
-                <span className="text-xs font-semibold uppercase tracking-label text-muted">
-                  {s.no} — {s.tag}
-                </span>
-                <h3 className="mt-6 font-display text-5xl font-normal uppercase leading-heading md:text-4xl lg:text-5xl">
-                  {s.title}
-                </h3>
-                <p className="mt-6 text-lg text-muted">{s.text}</p>
-                <ul className="rule mt-10 flex flex-col gap-4 pt-8 text-sm">
-                  {s.points.map((p) => (
-                    <li key={p}>{p}</li>
-                  ))}
-                </ul>
-                <a
-                  href={s.href}
-                  className="group/link mt-12 inline-flex w-fit items-center gap-3 text-xs font-semibold uppercase tracking-label underline decoration-1 underline-offset-8"
-                >
-                  Mehr erfahren
-                </a>
-              </div>
-            </motion.article>
-          ))}
-        </div>
-      </div>
+    <section id="leistungen" aria-label="Leistungen">
+      {fields.map((f, i) => {
+        const mirror = i % 2 === 1
+        const Heading = i === 0 ? 'h2' : 'h3'
+        return (
+          <div
+            key={f.phrase}
+            data-bg={f.bg}
+            data-fg={f.fg}
+            className={`chapter flex min-h-[64svh] flex-col md:min-h-[76svh] ${f.className}`}
+          >
+            <div className="container-page flex flex-1 flex-col justify-between gap-8 py-7 md:gap-x-3 md:grid md:grid-cols-12 md:py-8">
+              <p
+                data-reveal
+                className={`max-w-[34ch] text-lg md:row-start-1 md:self-start ${
+                  mirror ? 'text-right md:col-span-4 md:col-start-2 md:text-left' : 'md:col-span-4 md:col-start-8'
+                }`}
+              >
+                {f.text}
+              </p>
+              <Heading
+                data-reveal
+                style={{ '--i': 1 } as React.CSSProperties}
+                className={`font-display text-title font-semibold uppercase leading-[0.9] tracking-[-0.02em] md:col-span-12 md:row-start-2 md:self-end ${
+                  mirror ? 'md:text-right' : ''
+                }`}
+              >
+                {f.phrase}
+              </Heading>
+            </div>
+          </div>
+        )
+      })}
     </section>
   )
 }

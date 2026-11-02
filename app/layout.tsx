@@ -19,11 +19,15 @@ export const metadata: Metadata = {
   icons: { icon: 'https://www.djakki.de/assets/icons/favicon-32x32.png' },
 }
 
-export const viewport: Viewport = { themeColor: '#f6f5f2' }
+export const viewport: Viewport = { themeColor: '#c42021' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={`${inter.variable} ${serif.variable}`}>
+    <html lang="de" className={`${inter.variable} ${serif.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Einblende-Animationen nur mit Script, sonst bleibt alles sichtbar */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
       <body>{children}</body>
     </html>
   )

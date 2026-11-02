@@ -14,10 +14,10 @@
   --text-lg: 1.1875rem;
   --text-xl: 1.375rem;
   --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
-  --text-3xl: clamp(1.875rem, 1.5rem + 1.6vw, 2.5rem);
+  --text-3xl: clamp(1.75rem, 1.45rem + 0.8vw, 2.25rem);
   --text-4xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
-  --text-title: clamp(3rem, 1.4rem + 6vw, 7.5rem);
-  --text-display: clamp(3.75rem, 1rem + 11vw, 11rem);
+  --text-title: clamp(3.25rem, 0.6rem + 8.4vw, 9rem);
+  --text-display: clamp(4rem, 16vw, 13rem);
   --leading-body: 1.65;
   --leading-lead: 1.5;
   --leading-heading: 1.08;
@@ -86,6 +86,10 @@
   --focus-ring: 2px;
   --lift-sm: -1px;
   --lift-md: -2px;
+
+  /* Easing nach Emil Kowalski: kräftiges ease-out für Einblendungen */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 @layer base {
@@ -126,52 +130,95 @@
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-container px-4 md:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-container px-3 md:px-5 lg:px-6;
   }
 
-  .section {
-    @apply py-9 md:py-10 lg:py-10;
+  /* Ein Kapitel: ein vollflächiges Farbfeld, Kanten stoßen ohne Abstand aneinander */
+  .chapter {
+    @apply relative w-full;
   }
 
-  /* Kleines, weit gesperrtes Etikett */
-  .eyebrow {
-    @apply mb-6 block text-xs font-semibold uppercase tracking-label text-muted;
-  }
-
-  /* Buttons: schmale Linie, weit gesperrte Versalien, Füllung beim Hover */
+  /* Buttons: flach, eckig, Satzschreibung. Ein Button-Typ für die ganze Seite */
   .btn {
-    @apply inline-flex items-center justify-center gap-3 border font-semibold uppercase tracking-label no-underline;
-    @apply min-h-btn-md px-7 text-xs transition-colors duration-card ease-out;
-    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex min-h-btn-md items-center justify-center gap-3 px-6 text-base font-semibold no-underline;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      transform 160ms var(--ease-out);
+  }
+  .btn:active {
+    transform: scale(0.97);
   }
   .btn-sm {
-    @apply min-h-btn-sm px-5;
-  }
-  .btn-lg {
-    @apply min-h-btn-lg px-8;
+    @apply min-h-btn-sm px-4;
   }
   .btn-ink {
-    @apply border-ink bg-ink text-paper hover:bg-transparent hover:text-ink;
+    @apply bg-ink text-paper hover:bg-ink-2;
   }
-  .btn-line {
-    @apply border-ink bg-transparent text-ink hover:bg-ink hover:text-paper;
+  .btn-paper {
+    @apply bg-paper text-ink hover:bg-white;
   }
-  .btn-light {
-    @apply border-paper bg-transparent text-paper hover:bg-paper hover:text-ink;
-  }
-
-  /* Dünne Trennlinie in Textfarbe */
-  .rule {
-    border-top: var(--border-w) solid var(--color-border);
+  .btn-red {
+    @apply bg-accent-500 text-paper hover:bg-accent-600;
   }
 
-  /* Dünne Linie auf dunklem Grund */
-  .rule-light {
-    border-top: var(--border-w) solid color-mix(in srgb, var(--paper) 22%, transparent);
+  /* Textlink mit Unterstreichung, die beim Hover dicker wird */
+  .link {
+    @apply underline decoration-1 underline-offset-4;
+    transition: text-decoration-thickness 150ms ease;
   }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+}
 
-  /* Abdunkelung über Fotos, damit Text lesbar bleibt */
-  .veil {
-    background: color-mix(in srgb, var(--ink) 42%, transparent);
+/* Einblenden beim Scrollen: nur mit Script versteckt, ohne Script bleibt alles sichtbar */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 700ms var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 80ms);
+}
+.js [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Fotostreifen im Kontakt: läuft langsam durch, pausiert bei Hover */
+@keyframes drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.drift {
+  animation: drift 60s linear infinite;
+}
+.drift:hover {
+  animation-play-state: paused;
+}
+
+/* Langsamer Zoom auf einem Foto, solange es sichtbar ist */
+@keyframes breathe {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.breathe {
+  animation: breathe 9s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal] {
+    transform: none;
+    transition: opacity 300ms ease;
+  }
+  .drift,
+  .breathe {
+    animation: none;
   }
 }

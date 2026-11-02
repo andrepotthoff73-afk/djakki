@@ -1,42 +1,77 @@
 import { nav, site } from '@/lib/site'
 
-// Ruhiger Abschluss: Name in Serife, Navigation und rechtliches in einer Zeile
+// Der Name als Konstruktion: jeder Buchstabe aus einem eigenen Farbblock ausgespart
+const blocks = [
+  { letter: 'A', bg: 'bg-accent-500', h: 'h-full' },
+  { letter: 'K', bg: 'bg-primary-600', h: 'h-[84%]' },
+  { letter: 'K', bg: 'bg-primary-100', h: 'h-[94%]' },
+  { letter: 'I', bg: 'bg-paper', h: 'h-[78%]' },
+]
+
 export default function Footer() {
   const year = new Date().getFullYear()
   const { social, address } = site.contact
 
   return (
-    <footer className="rule bg-bg">
-      <div className="container-page flex flex-col items-center gap-12 py-20 text-center">
-        <p className="font-display text-5xl font-normal uppercase leading-none md:text-title">{site.companyName}</p>
-
-        <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-10 gap-y-4 text-xs font-semibold uppercase tracking-label">
-          {nav.map((item) => (
-            <a key={item.href} href={item.href} className="transition-opacity duration-fast hover:opacity-60">
-              {item.label}
-            </a>
+    <footer data-bg="var(--ink)" data-fg="var(--paper)" className="chapter bg-ink pb-6 pt-9 text-paper">
+      <div className="container-page">
+        <div aria-hidden className="flex h-[22svh] items-end gap-1 md:h-[34svh]">
+          {blocks.map((b, i) => (
+            <div
+              key={i}
+              data-reveal
+              style={{ '--i': i } as React.CSSProperties}
+              className={`flex flex-1 items-end justify-center overflow-hidden ${b.bg} ${b.h}`}
+            >
+              <span className="translate-y-[16%] font-display text-[24vw] font-semibold leading-none text-ink md:text-[26svh]">
+                {b.letter}
+              </span>
+            </div>
           ))}
-          <a href={social.instagram} target="_blank" rel="noreferrer" className="transition-opacity duration-fast hover:opacity-60">
-            Instagram
-          </a>
-          <a href={social.facebook} target="_blank" rel="noreferrer" className="transition-opacity duration-fast hover:opacity-60">
-            Facebook
-          </a>
-        </nav>
+        </div>
+        <p className="sr-only">{site.companyName}</p>
 
-        <p className="text-sm text-muted">
-          {site.legalEntity} · {address.street}, {address.zip} {address.city}
-        </p>
+        <div className="mt-8 grid grid-cols-2 gap-6 md:grid-cols-12">
+          <nav aria-label="Footer" className="flex flex-col gap-2 md:col-span-2">
+            {nav.map((item) => (
+              <a key={item.href} href={item.href} className="link decoration-transparent hover:decoration-current">
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <div className="flex flex-col gap-2 md:col-span-2">
+            <a href={social.instagram} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
+              Instagram
+            </a>
+            <a href={social.facebook} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
+              Facebook
+            </a>
+            <a href="https://www.djakki.de/8/impressum.html" className="link decoration-transparent hover:decoration-current">
+              Impressum
+            </a>
+            <a href="https://www.djakki.de/7/datenschutz.html" className="link decoration-transparent hover:decoration-current">
+              Datenschutz
+            </a>
+          </div>
+          <address className="col-span-2 flex flex-col gap-2 not-italic md:col-span-4 md:col-start-9">
+            <span>{site.legalEntity}</span>
+            <span>
+              {address.street}, {address.zip} {address.city}
+            </span>
+            <a href={site.contact.phoneHref} className="link">
+              {site.contact.phone}
+            </a>
+          </address>
+        </div>
 
-        <p className="flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted">
-          <span>© {year} {site.companyName}</span>
-          <a href="https://www.djakki.de/8/impressum.html" className="underline underline-offset-4">
-            Impressum
+        <div className="mt-8 flex items-center justify-between gap-4">
+          <p className="text-neutral-400">
+            © {year} {site.companyName}
+          </p>
+          <a href="#top" className="btn btn-sm btn-paper whitespace-nowrap">
+            Nach oben
           </a>
-          <a href="https://www.djakki.de/7/datenschutz.html" className="underline underline-offset-4">
-            Datenschutz
-          </a>
-        </p>
+        </div>
       </div>
     </footer>
   )
