@@ -106,6 +106,16 @@
 
   body {
     @apply bg-bg font-sans text-base text-text antialiased;
+    caret-color: var(--accent-500);
+    scrollbar-color: var(--ink) var(--paper-2);
+  }
+
+  /* Fokus-Farbe je Kapitel: auf dunklen und roten Feldern Papier, sonst Tinte */
+  .bg-ink,
+  .bg-accent-500,
+  .bg-primary-600 {
+    --focus: var(--paper);
+    caret-color: var(--paper);
   }
 
   h1,
@@ -118,12 +128,12 @@
   }
 
   :focus-visible {
-    outline: var(--focus-ring) solid var(--primary-500);
+    outline: var(--focus-ring) solid var(--focus, var(--ink));
     outline-offset: 3px;
   }
 
   ::selection {
-    background: var(--ink);
+    background: var(--accent-500);
     color: var(--paper);
   }
 }

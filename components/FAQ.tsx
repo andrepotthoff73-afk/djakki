@@ -31,7 +31,7 @@ export default function FAQ() {
   return (
     <section id="faq" data-bg="var(--paper-2)" data-fg="var(--ink)" className="chapter bg-paper-2 py-10">
       <div className="container-page grid gap-6 md:grid-cols-12 md:gap-5">
-        <h2 data-reveal className="text-4xl md:sticky md:top-[120px] md:col-span-4 md:self-start">
+        <h2 className="text-4xl md:sticky md:top-[120px] md:col-span-4 md:self-start">
           Häufige Fragen
         </h2>
 
@@ -41,8 +41,6 @@ export default function FAQ() {
               key={f.q}
               name="faq"
               open={i === 0}
-              data-reveal
-              style={{ '--i': i } as React.CSSProperties}
               className="group bg-paper transition-colors duration-fast open:bg-accent-500 open:text-paper"
             >
               <summary className="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-5 px-4 py-3 text-xl font-semibold [&::-webkit-details-marker]:hidden">

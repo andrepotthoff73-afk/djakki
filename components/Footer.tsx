@@ -3,7 +3,7 @@ import { nav, site } from '@/lib/site'
 // Der Name als Konstruktion: jeder Buchstabe aus einem eigenen Farbblock ausgespart
 const blocks = [
   { letter: 'A', bg: 'bg-accent-500', h: 'h-full' },
-  { letter: 'K', bg: 'bg-primary-600', h: 'h-[84%]' },
+  { letter: 'K', bg: 'bg-primary-600', h: 'h-[84%]', ink: 'text-paper' },
   { letter: 'K', bg: 'bg-primary-100', h: 'h-[94%]' },
   { letter: 'I', bg: 'bg-paper', h: 'h-[78%]' },
 ]
@@ -23,7 +23,7 @@ export default function Footer() {
               style={{ '--i': i } as React.CSSProperties}
               className={`flex flex-1 items-end justify-center overflow-hidden ${b.bg} ${b.h}`}
             >
-              <span className="translate-y-[16%] font-display text-[24vw] font-semibold leading-none text-ink md:text-[26svh]">
+              <span className={`translate-y-[16%] font-display text-[24vw] font-semibold leading-none md:text-[26svh] ${b.ink ?? 'text-ink'}`}>
                 {b.letter}
               </span>
             </div>

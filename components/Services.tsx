@@ -45,7 +45,6 @@ export default function Services() {
           >
             <div className="container-page flex flex-1 flex-col justify-between gap-8 py-7 md:gap-x-3 md:grid md:grid-cols-12 md:py-8">
               <p
-                data-reveal
                 className={`max-w-[34ch] text-lg md:row-start-1 md:self-start ${
                   mirror ? 'text-right md:col-span-4 md:col-start-2 md:text-left' : 'md:col-span-4 md:col-start-8'
                 }`}
@@ -53,8 +52,6 @@ export default function Services() {
                 {f.text}
               </p>
               <Heading
-                data-reveal
-                style={{ '--i': 1 } as React.CSSProperties}
                 className={`font-display text-title font-semibold uppercase leading-[0.9] tracking-[-0.02em] md:col-span-12 md:row-start-2 md:self-end ${
                   mirror ? 'md:text-right' : ''
                 }`}

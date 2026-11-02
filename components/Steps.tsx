@@ -39,7 +39,7 @@ export default function Steps() {
   return (
     <section id="ablauf" data-bg="var(--paper)" data-fg="var(--ink)" className="chapter bg-paper py-10">
       <div className="container-page relative">
-        <h2 data-reveal className="text-4xl md:absolute md:left-5 md:top-0 md:w-5/12 lg:left-6">
+        <h2 className="text-4xl md:absolute md:left-5 md:top-0 md:w-5/12 lg:left-6">
           So läuft eine Buchung
         </h2>
 

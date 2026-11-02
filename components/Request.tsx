@@ -11,7 +11,7 @@ const chip =
   'flex min-h-btn-sm cursor-pointer items-center px-4 transition-colors duration-fast bg-primary-700 text-paper hover:bg-primary-800 has-[:checked]:bg-paper has-[:checked]:text-ink has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-paper'
 
 const cell =
-  'min-h-[60px] w-full bg-primary-700 px-4 text-center text-lg text-paper placeholder:text-primary-200 transition-colors duration-fast focus:bg-primary-500 focus:outline-none md:min-h-[96px]'
+  'min-h-[60px] w-full bg-primary-700 px-4 text-center text-lg text-paper placeholder:text-primary-200 transition-colors duration-fast [color-scheme:dark] focus:bg-primary-500 focus:outline-none md:min-h-[96px]'
 
 // Anfrage als Plattenkiste: Anlass und Musik antippen, daraus wird die Nachricht
 export default function Request() {
@@ -54,7 +54,7 @@ export default function Request() {
       data-fg="var(--paper)"
       className="chapter overflow-hidden bg-primary-600 pb-9 pt-10 text-paper"
     >
-      <div className="overflow-x-auto md:overflow-hidden" aria-label="Fotos von Auftritten">
+      <div className="overflow-x-auto [scrollbar-width:none] md:overflow-hidden [&::-webkit-scrollbar]:hidden" aria-label="Fotos von Auftritten">
         <ul className="drift flex w-max gap-2">
           {[...strip, ...strip].map((p, i) => (
             <li key={i} aria-hidden={i >= strip.length} className="shrink-0">
@@ -68,10 +68,10 @@ export default function Request() {
       </div>
 
       <div className="container-page mt-8">
-        <h2 data-reveal className="text-4xl">
+        <h2 className="text-4xl">
           Wunschtermin anfragen
         </h2>
-        <p data-reveal style={{ '--i': 1 } as React.CSSProperties} className="mt-3 max-w-[48ch] text-lg">
+        <p className="mt-3 max-w-[48ch] text-lg">
           Pack deine Plattenkiste: Anlass und Musik antippen, Datum und Ort eintragen. Daraus wird deine Anfrage, Preise
           gibt es dann persönlich.
         </p>
@@ -83,7 +83,7 @@ export default function Request() {
           onSubmit={handleSubmit}
           className="mt-6 flex flex-col gap-5"
         >
-          <fieldset data-reveal style={{ '--i': 2 } as React.CSSProperties}>
+          <fieldset>
             <legend className="mb-3 text-lg font-semibold">Anlass</legend>
             <div className="flex flex-wrap gap-2">
               {occasions.map((o) => (
@@ -102,7 +102,7 @@ export default function Request() {
             </div>
           </fieldset>
 
-          <fieldset data-reveal style={{ '--i': 3 } as React.CSSProperties}>
+          <fieldset>
             <legend className="mb-3 text-lg font-semibold">Musik</legend>
             <div className="flex flex-wrap gap-2">
               {site.musicGenres.map((g) => (
@@ -121,7 +121,7 @@ export default function Request() {
             </div>
           </fieldset>
 
-          <div data-reveal style={{ '--i': 4 } as React.CSSProperties} className="grid gap-2 md:grid-cols-3">
+          <div className="grid gap-2 md:grid-cols-3">
             <label className="sr-only" htmlFor="datum">
               Datum
             </label>

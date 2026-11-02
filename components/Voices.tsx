@@ -16,12 +16,12 @@ export default function Voices() {
       <div
         data-bg="var(--primary-600)"
         data-fg="var(--paper)"
-        className="chapter order-1 flex flex-col bg-primary-600 px-3 pb-8 pt-10 text-paper md:order-2 md:col-span-7 md:px-6 md:pt-10"
+        className="chapter order-1 flex flex-col bg-primary-600 px-3 pb-8 pt-8 text-paper md:order-2 md:col-span-7 md:px-6 md:pt-10"
       >
         <h2 id="stimmen-titel" className="sr-only">
           Kundenstimmen
         </h2>
-        <blockquote key={active} data-reveal className="is-in max-w-[30ch] font-display text-3xl font-medium leading-[1.2]">
+        <blockquote key={active} className="max-w-[30ch] font-display text-3xl font-medium leading-[1.2]">
           <p className="-indent-[0.4em]">„{r.text}“</p>
         </blockquote>
       </div>
