@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import IntroButton from '@/components/IntroButton'
 import { photos } from '@/lib/site'
 
 // Erstes Kapitel: ein rotes Feld, der Name in zwei Tinten, darunter die volle Tanzfläche in Rot getönt
@@ -39,9 +40,12 @@ export default function Hero() {
             <p data-reveal style={{ '--i': 4 } as React.CSSProperties} className="max-w-[34ch] text-lg text-paper md:text-right">
               Event-DJ für Hochzeiten, Firmenfeiern und private Partys in Duisburg und Umgebung.
             </p>
-            <a data-reveal style={{ '--i': 5 } as React.CSSProperties} href="#kontakt" className="btn btn-ink w-full md:w-auto">
-              Wunschtermin anfragen
-            </a>
+            <div data-reveal style={{ '--i': 5 } as React.CSSProperties} className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row-reverse">
+              <a href="#kontakt" className="btn btn-ink w-full md:w-auto">
+                Wunschtermin anfragen
+              </a>
+              <IntroButton className="text-sm text-paper" />
+            </div>
           </div>
         </div>
       </div>
