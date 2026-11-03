@@ -31,7 +31,7 @@ export default function Hero() {
           ref={faceRef}
           className="order-1 aspect-square w-full max-h-[56svh] justify-self-center md:order-2 md:col-span-7 md:max-h-[78svh]"
         >
-          <p className="sr-only">Porträt von DJ Akki, zusammengesetzt aus Schallplatten, CDs und Noten</p>
+          <p className="sr-only">Porträt von DJ Akki</p>
         </div>
 
         <div className="hero-copy order-2 flex flex-col gap-5 md:order-1 md:col-span-5">
