@@ -8,7 +8,6 @@ export default function IntroButton({ className = '' }: { className?: string }) 
     <button
       type="button"
       onClick={() => {
-        window.scrollTo({ top: 0 })
         window.dispatchEvent(new Event(REPLAY_EVENT))
       }}
       className={`inline-flex items-center gap-2 ${className}`}

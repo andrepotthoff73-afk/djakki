@@ -231,3 +231,10 @@
     radial-gradient(ellipse 80% 70% at 50% 45%, transparent 55%, rgba(0, 0, 0, 0.55) 100%),
     linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent 30%);
 }
+/* Das fliegende Logo landet auf dem Kopfzeilen-Logo, das bis dahin verborgen bleibt */
+.site-intro #header-logo {
+  visibility: hidden;
+}
+.intro-disc {
+  will-change: transform, opacity;
+}
