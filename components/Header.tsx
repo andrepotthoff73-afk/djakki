@@ -5,7 +5,7 @@ import { nav } from '@/lib/site'
 
 type Ink = { bg: string; fg: string }
 
-const first: Ink = { bg: 'var(--accent-500)', fg: 'var(--paper)' }
+const first: Ink = { bg: 'var(--ink)', fg: 'var(--paper)' }
 
 // Feste Kopfzeile, die Grund und Schrift des Kapitels darunter annimmt
 export default function Header() {

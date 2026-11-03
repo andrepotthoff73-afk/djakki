@@ -1,47 +1,57 @@
-import Image from 'next/image'
-import { photos } from '@/lib/site'
+'use client'
 
-// Erstes Kapitel: ein rotes Feld, der Name in zwei Tinten, darunter die volle Tanzfläche in Rot getönt
+import { useCallback, useRef, useState } from 'react'
+import FaceVortex from '@/components/FaceVortex'
+
+// Erstes Kapitel: dunkle Bühne, auf der sich Akkis Gesicht aus Platten, CDs und Noten zusammensetzt
 export default function Hero() {
+  const faceRef = useRef<HTMLDivElement>(null)
+  const [done, setDone] = useState(false)
+  const [replay, setReplay] = useState(0)
+
+  const handleDone = useCallback(() => setDone(true), [])
+
+  function replayIntro() {
+    setDone(false)
+    setReplay((n) => n + 1)
+  }
+
   return (
     <section
       id="top"
-      data-bg="var(--accent-500)"
+      data-bg="var(--ink)"
       data-fg="var(--paper)"
-      className="chapter flex min-h-svh flex-col bg-accent-500"
+      data-intro={done ? 'done' : 'playing'}
+      className="chapter hero-stage relative flex min-h-svh flex-col overflow-hidden bg-ink text-paper"
     >
-      <div className="container-page flex flex-1 flex-col gap-5 pb-6 pt-9 md:pb-7 md:pt-10">
-        <h1 className="text-display font-semibold">
-          <span data-reveal className="block text-paper">
-            DJ Akki
-          </span>
-          <span data-reveal style={{ '--i': 1 } as React.CSSProperties} className="block text-ink">
-            Duisburg
-          </span>
-        </h1>
+      <FaceVortex targetRef={faceRef} onDone={handleDone} replayToken={replay} />
 
-        <div data-reveal style={{ '--i': 2 } as React.CSSProperties} className="relative min-h-[34svh] flex-1 overflow-hidden">
-          <Image
-            src={photos.crowd.src}
-            alt={photos.crowd.alt}
-            fill
-            priority
-            sizes="(min-width: 1280px) 1184px, 100vw"
-            className="object-cover object-[center_40%] mix-blend-multiply grayscale"
-          />
+      <div className="container-page relative grid flex-1 gap-5 pb-6 pt-9 md:grid-cols-12 md:items-center md:pb-7 md:pt-10">
+        <div
+          ref={faceRef}
+          className="order-1 aspect-square w-full max-h-[56svh] justify-self-center md:order-2 md:col-span-7 md:max-h-[78svh]"
+        >
+          <p className="sr-only">Porträt von DJ Akki, zusammengesetzt aus Schallplatten, CDs und Noten</p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-12 md:items-end">
-          <p data-reveal style={{ '--i': 3 } as React.CSSProperties} className="max-w-[22ch] font-display text-3xl font-medium text-paper md:col-span-6">
+        <div className="hero-copy order-2 flex flex-col gap-5 md:order-1 md:col-span-5">
+          <h1 className="font-display text-title font-semibold">
+            <span className="block">DJ Akki</span>
+            <span className="block text-accent-500">Duisburg</span>
+          </h1>
+          <p className="max-w-[24ch] font-display text-3xl font-medium">
             Seit über 30 Jahren am Pult. Wedding Award Gewinner 2022.
           </p>
-          <div className="flex flex-col gap-4 md:col-span-6 md:items-end">
-            <p data-reveal style={{ '--i': 4 } as React.CSSProperties} className="max-w-[34ch] text-lg text-paper md:text-right">
-              Event-DJ für Hochzeiten, Firmenfeiern und private Partys in Duisburg und Umgebung.
-            </p>
-            <a data-reveal style={{ '--i': 5 } as React.CSSProperties} href="#kontakt" className="btn btn-ink w-full md:w-auto">
+          <p className="max-w-[36ch] text-lg text-paper">
+            Event-DJ für Hochzeiten, Firmenfeiern und private Partys in Duisburg und Umgebung.
+          </p>
+          <div className="flex flex-wrap items-center gap-4">
+            <a href="#kontakt" className="btn btn-red w-full sm:w-auto">
               Wunschtermin anfragen
             </a>
+            <button type="button" onClick={replayIntro} className="link text-sm text-gray-400 hover:text-paper">
+              Intro nochmal ansehen
+            </button>
           </div>
         </div>
       </div>

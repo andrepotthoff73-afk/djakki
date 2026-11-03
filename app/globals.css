@@ -184,6 +184,18 @@
   transform: none;
 }
 
+/* Hero-Text erscheint erst, wenn sich das Gesicht zusammengesetzt hat */
+.js .hero-copy {
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 900ms var(--ease-out);
+}
+.js [data-intro='playing'] .hero-copy {
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+}
+
 /* Langsamer Zoom auf einem Foto, solange es sichtbar ist */
 @keyframes breathe {
   from {
