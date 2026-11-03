@@ -2,10 +2,10 @@ import { nav, site } from '@/lib/site'
 
 // Der Name als Konstruktion: jeder Buchstabe aus einem eigenen Farbblock ausgespart
 const blocks = [
-  { letter: 'A', bg: 'bg-accent-500', h: 'h-full' },
-  { letter: 'K', bg: 'bg-primary-600', h: 'h-[84%]', ink: 'text-paper' },
-  { letter: 'K', bg: 'bg-primary-100', h: 'h-[94%]' },
-  { letter: 'I', bg: 'bg-paper', h: 'h-[78%]' },
+  { letter: 'A', bg: 'bg-accent-500', h: 'h-full', ink: 'text-paper' },
+  { letter: 'K', bg: 'bg-paper-2', h: 'h-[84%]' },
+  { letter: 'K', bg: 'bg-paper', h: 'h-[94%]' },
+  { letter: 'I', bg: 'bg-accent-500', h: 'h-[78%]', ink: 'text-paper' },
 ]
 
 export default function Footer() {
@@ -65,7 +65,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-8 flex items-center justify-between gap-4">
-          <p className="text-neutral-400">
+          <p className="text-gray-400">
             © {year} {site.companyName}
           </p>
           <a href="#top" className="btn btn-sm btn-paper whitespace-nowrap">

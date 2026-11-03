@@ -42,9 +42,14 @@ export default function Header() {
   return (
     <header
       className="fixed inset-x-0 top-0 z-50"
-      style={{ backgroundColor: ink.bg, color: ink.fg, transition: 'background-color 300ms ease, color 300ms ease' }}
+      style={{
+        backgroundColor: ink.bg,
+        color: ink.fg,
+        borderBottom: '1px solid color-mix(in srgb, currentColor 18%, transparent)',
+        transition: 'background-color 200ms ease, color 200ms ease',
+      }}
     >
-      <div className="container-page flex h-[72px] items-center justify-between gap-5">
+      <div className="container-page flex h-header items-center justify-between gap-5">
         <a href="#top" className="font-display text-xl font-semibold uppercase leading-none">
           DJ Akki
         </a>
@@ -58,7 +63,7 @@ export default function Header() {
         <a
           href="#kontakt"
           className="btn btn-sm"
-          style={{ backgroundColor: ink.fg, color: ink.bg, transition: 'background-color 300ms ease, color 300ms ease, transform 160ms var(--ease-out)' }}
+          style={{ backgroundColor: ink.fg, color: ink.bg, transition: 'background-color 200ms ease, color 200ms ease, transform 160ms var(--ease-out)' }}
         >
           Termin anfragen
         </a>

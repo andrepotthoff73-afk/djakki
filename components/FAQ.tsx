@@ -31,7 +31,7 @@ export default function FAQ() {
   return (
     <section id="faq" data-bg="var(--paper-2)" data-fg="var(--ink)" className="chapter bg-paper-2 py-10">
       <div className="container-page grid gap-6 md:grid-cols-12 md:gap-5">
-        <h2 className="text-4xl md:sticky md:top-[120px] md:col-span-4 md:self-start">
+        <h2 className="text-4xl md:sticky md:top-9 md:col-span-4 md:self-start">
           Häufige Fragen
         </h2>
 
@@ -41,9 +41,9 @@ export default function FAQ() {
               key={f.q}
               name="faq"
               open={i === 0}
-              className="group bg-paper transition-colors duration-fast open:bg-accent-500 open:text-paper"
+              className="group bg-paper"
             >
-              <summary className="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-5 px-4 py-3 text-xl font-semibold [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-btn-lg cursor-pointer list-none items-center justify-between gap-5 px-4 py-3 text-xl font-semibold transition-colors duration-fast hover:text-accent-500 group-open:text-accent-500 [&::-webkit-details-marker]:hidden">
                 {f.q}
                 <span aria-hidden className="relative h-4 w-4 shrink-0">
                   <span className="absolute left-0 top-1/2 h-[3px] w-4 -translate-y-1/2 bg-current" />

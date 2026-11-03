@@ -12,25 +12,24 @@ export default function Voices() {
   const r = items[active]
 
   return (
-    <section id="stimmen" aria-labelledby="stimmen-titel" className="grid md:min-h-[78svh] md:grid-cols-12">
-      <div
-        data-bg="var(--primary-600)"
-        data-fg="var(--paper)"
-        className="chapter order-1 flex flex-col bg-primary-600 px-3 pb-8 pt-8 text-paper md:order-2 md:col-span-7 md:px-6 md:pt-10"
-      >
-        <h2 id="stimmen-titel" className="sr-only">
-          Kundenstimmen
-        </h2>
-        <blockquote key={active} className="max-w-[30ch] font-display text-3xl font-medium leading-[1.2]">
-          <p className="-indent-[0.4em]">„{r.text}“</p>
-        </blockquote>
-      </div>
+    <section
+      id="stimmen"
+      aria-labelledby="stimmen-titel"
+      data-bg="var(--paper-2)"
+      data-fg="var(--ink)"
+      className="chapter bg-paper-2 py-10 text-ink"
+    >
+      <div className="container-page grid gap-8 md:grid-cols-12 md:gap-5">
+        <div className="flex flex-col gap-6 md:col-span-7 md:col-start-6 md:row-start-1">
+          <h2 id="stimmen-titel" className="text-4xl">
+            Kundenstimmen
+          </h2>
+          <blockquote key={active} className="max-w-[30ch] font-display text-3xl font-medium leading-lead">
+            <p className="-indent-[0.4em]">„{r.text}“</p>
+          </blockquote>
+        </div>
 
-      <div
-        data-bg="var(--ink)"
-        data-fg="var(--paper)"
-        className="chapter order-2 flex flex-col justify-end gap-5 bg-ink px-3 py-6 text-paper md:order-1 md:col-span-5 md:px-6 md:py-7"
-      >
+        <div className="flex flex-col justify-end gap-4 md:col-span-4 md:row-start-1">
         <p className="text-lg">5 von 5 Sternen auf djakki.de</p>
         <div role="group" aria-label="Kundenstimme wählen" className="flex flex-col gap-2">
           {items.map((it, i) => (
@@ -39,8 +38,8 @@ export default function Voices() {
               type="button"
               aria-pressed={i === active}
               onClick={() => setActive(i)}
-              className={`flex min-h-btn-md flex-col items-start justify-center gap-1 px-4 py-2 text-left md:flex-row md:items-center md:justify-between md:gap-4 transition-colors duration-fast ${
-                i === active ? 'bg-paper text-ink' : 'bg-ink-2 text-paper hover:bg-primary-800'
+              className={`flex min-h-btn-md flex-col items-start justify-center gap-1 px-4 py-2 text-left transition-colors duration-fast ${
+                i === active ? 'bg-ink text-paper' : 'bg-paper text-ink hover:bg-white'
               }`}
             >
               <span className="whitespace-nowrap text-lg font-semibold">{it.author}</span>
@@ -49,6 +48,7 @@ export default function Voices() {
               </span>
             </button>
           ))}
+        </div>
         </div>
       </div>
     </section>

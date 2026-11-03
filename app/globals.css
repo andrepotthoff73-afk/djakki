@@ -21,8 +21,9 @@
   --leading-body: 1.65;
   --leading-lead: 1.5;
   --leading-heading: 1.08;
-  --leading-display: 0.9;
+  --leading-display: 0.86;
   --tracking-tight: -0.01em;
+  --tracking-display: -0.02em;
   --tracking-label: 0.28em;
   --measure: 620px;
 
@@ -39,53 +40,27 @@
   --space-10: 128px;
   --container: 1280px;
 
-  /* Farben */
+  /* Farben: Papier, Tinte und Rot als einziger Akzent */
   --paper: #f6f5f2;
   --paper-2: #ecebe6;
   --ink: #111214;
   --ink-2: #26282e;
   --gray-400: #a8a6a0;
-  --gray-600: #6b6963;
-  --primary-50: #eef2f8;
-  --primary-100: #dbe4f1;
-  --primary-200: #b5c7e1;
-  --primary-500: #3461a8;
-  --primary-600: #24457a;
-  --primary-700: #1d3863;
-  --primary-800: #172c4e;
+  --accent-100: #f2c4c0;
   --accent-500: #c42021;
   --accent-600: #a51b1c;
-  --neutral-0: #ffffff;
-  --neutral-400: var(--gray-400);
-  --neutral-600: var(--gray-600);
-  --neutral-900: var(--ink);
-  --success: #16a34a;
-  --warning: #d97706;
-  --error: #dc2626;
+  --accent-700: #8a1617;
 
   /* Rollen-Tokens */
   --color-bg: var(--paper);
-  --color-surface: var(--paper-2);
   --color-text: var(--ink);
-  --color-text-muted: var(--gray-600);
-  --color-border: #d6d4cd;
-  --color-on-primary: var(--paper);
-  --color-on-primary-muted: #a9a79f;
-  --color-dark: var(--ink);
-
-  /* Linien: fein statt fett */
-  --border-w: 1px;
 
   /* Komponenten-Maße */
+  --header-h: 72px;
   --btn-sm: 40px;
   --btn-md: 52px;
   --btn-lg: 60px;
-  --input-h: 52px;
-  --icon: 24px;
-  --icon-stroke: 1.25;
   --focus-ring: 2px;
-  --lift-sm: -1px;
-  --lift-md: -2px;
 
   /* Easing nach Emil Kowalski: kräftiges ease-out für Einblendungen */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
@@ -112,8 +87,7 @@
 
   /* Fokus-Farbe je Kapitel: auf dunklen und roten Feldern Papier, sonst Tinte */
   .bg-ink,
-  .bg-accent-500,
-  .bg-primary-600 {
+  .bg-accent-500 {
     --focus: var(--paper);
     caret-color: var(--paper);
   }
@@ -124,7 +98,21 @@
   }
 
   h3 {
-    @apply font-display text-2xl font-medium leading-heading;
+    @apply font-display text-3xl font-medium leading-heading;
+  }
+
+  /* Cormorant setzt sonst Mediävalziffern, die neben Versalien zu klein wirken */
+  .font-display,
+  h1,
+  h2,
+  h3 {
+    font-variant-numeric: lining-nums;
+  }
+
+  p,
+  li,
+  blockquote {
+    text-wrap: pretty;
   }
 
   :focus-visible {
@@ -196,19 +184,6 @@
   transform: none;
 }
 
-/* Fotostreifen im Kontakt: läuft langsam durch, pausiert bei Hover */
-@keyframes drift {
-  to {
-    transform: translateX(-50%);
-  }
-}
-.drift {
-  animation: drift 60s linear infinite;
-}
-.drift:hover {
-  animation-play-state: paused;
-}
-
 /* Langsamer Zoom auf einem Foto, solange es sichtbar ist */
 @keyframes breathe {
   from {
@@ -227,7 +202,6 @@
     transform: none;
     transition: opacity 300ms ease;
   }
-  .drift,
   .breathe {
     animation: none;
   }
