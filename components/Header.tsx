@@ -51,7 +51,6 @@ export default function Header() {
     >
       <div className="container-page flex h-header items-center justify-between gap-5">
         <a href="#top" className="flex items-center gap-3 font-display text-xl font-semibold uppercase leading-none">
-          {/* Das runde Logo ist zugleich das Label der Platte aus dem Intro, die hier landet */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img id="header-logo" src="/logo/dj-akki-friends.png" alt="" width={44} height={44} className="h-[44px] w-[44px] rounded-full bg-paper" />
           {/* Auf dem Handy reicht das Logo, der Name bleibt für Screenreader erhalten */}

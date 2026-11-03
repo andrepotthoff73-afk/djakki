@@ -1,8 +1,8 @@
 'use client'
 
-import { REPLAY_EVENT } from '@/components/RecordIntro'
+import { REPLAY_EVENT } from '@/components/VideoIntro'
 
-// Spielt das Platten-Intro erneut ab
+// Spielt das Video-Intro erneut ab
 export default function IntroButton({ className = '' }: { className?: string }) {
   return (
     <button

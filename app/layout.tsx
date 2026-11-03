@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
-import RecordIntro from '@/components/RecordIntro'
+import VideoIntro from '@/components/VideoIntro'
 import './globals.css'
 
 // next/font hostet beide Schriften selbst: kein Layout-Shift, kein externer Font-Request
@@ -28,17 +28,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Einblende-Animationen nur mit Script, sonst bleibt alles sichtbar */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-        {/* Platten-Intro nur beim ersten Besuch und ohne „Bewegung reduzieren“; vor dem ersten Bild entschieden, damit nichts aufblitzt */}
+        {/* Video-Intro nur beim ersten Besuch, nicht bei „Bewegung reduzieren“ oder Datensparmodus; vor dem ersten Bild entschieden, damit nichts aufblitzt */}
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{if(!localStorage.getItem('djakki-record-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('record-intro')}catch(e){}",
+              "try{var c=navigator.connection;if(!localStorage.getItem('djakki-video-intro')&&!(c&&c.saveData)&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('site-intro')}catch(e){}",
           }}
         />
       </head>
       <body>
         {children}
-        <RecordIntro />
+        <VideoIntro />
       </body>
     </html>
   )
