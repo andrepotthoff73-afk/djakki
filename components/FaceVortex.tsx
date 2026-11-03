@@ -2,37 +2,48 @@
 
 import { useEffect, useRef } from 'react'
 
-// Platten, CDs, Kassetten und Noten fliegen von außen ein, verwirbeln und setzen sich zu Akkis Gesicht zusammen.
-// Das Gesicht ist ein Raster aus Objekten: helle Bildpunkte werden größer, dunkle kleiner.
+// Platten, CDs, Kassetten und Noten liegen am Boden, ein Wirbelsturm reißt sie hoch und setzt sie zu Akkis Gesicht zusammen.
+// Das Gesicht ist ein dichtes Raster aus diesen Objekten: Art, Größe und Deckkraft folgen der Helligkeit des Porträts.
 
-const SPRITES = ['/intro/vinyl.webp', '/intro/cd.webp', '/intro/note.webp', '/intro/tape.webp']
+const SPRITES = ['/intro/vinyl.webp', '/intro/note.webp', '/intro/tape.webp', '/intro/cd.webp']
 const FACE = '/intro/akki-face.webp'
 const SEEN_KEY = 'djakki-intro-seen'
 
+// Reihenfolge von dunkel nach hell, so wie die Objekte auf dunklem Grund wirken
 const VINYL = 0
-const CD = 1
-const NOTE = 2
-const TAPE = 3
+const NOTE = 1
+const TAPE = 2
+const CD = 3
 
-const DURATION = 4.2 // Flugzeit eines Objekts in Sekunden
-const MAX_DELAY = 1.4 // Objekte starten gestaffelt
-const SWIRL_END = 0.6 // Anteil der Flugzeit im Wirbel, danach geht es ins Raster
+// Ausschnitt des Porträts (Anteile der Bildbreite): Kopf und Hals, ohne viel Schulter
+const CROP = { x: 0.11, y: 0, size: 0.78 }
+
+const CALM = 0.9 // so lange liegt alles still am Boden
+const MAX_PICKUP = 1.7 // die Objekte am Rand werden zuletzt erfasst
+const DURATION = 3.6 // Flugzeit eines Objekts vom Boden bis in sein Raster-Feld
+const STORM_END = 0.8 // Anteil der Flugzeit im Sturm, danach geht es an den Bildpunkt
+const TOTAL = CALM + MAX_PICKUP + 0.3 + DURATION
+const FLAT = 0.62 // am Boden liegende Objekte sind perspektivisch gestaucht
+
+type Sprite = { big: HTMLCanvasElement; small: HTMLCanvasElement }
 
 type Particle = {
   tx: number
   ty: number
   ts: number
+  ta: number
   final: number
-  swirl: number
-  r0: number
-  rv: number
-  a0: number
-  turns: number
+  kind: number
+  gx: number
+  gy: number
   s0: number
-  sv: number
+  rg: number
+  ag: number
+  hp: number
+  turns: number
   rot0: number
   spin: number
-  delay: number
+  pickup: number
 }
 
 type Props = {
@@ -42,8 +53,8 @@ type Props = {
   replayToken?: number
 }
 
-const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3)
 const easeInOutCubic = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2)
+const smoothstep = (x: number) => x * x * (3 - 2 * x)
 const clamp01 = (x: number) => Math.min(1, Math.max(0, x))
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 
@@ -57,7 +68,7 @@ function loadImage(src: string) {
   })
 }
 
-// Kleine Vorab-Kopie jedes Sprites, damit drawImage pro Frame weniger skalieren muss
+// Vorab verkleinerte Kopien, damit drawImage pro Frame wenig skalieren muss
 function prerender(img: HTMLImageElement, size: number) {
   const c = document.createElement('canvas')
   c.width = size
@@ -86,9 +97,32 @@ function markSeen() {
   }
 }
 
+// Kastenunschärfe auf einem Graustufen-Raster, Grundlage für die Schärfung
+function blur(src: Float32Array, n: number) {
+  const out = new Float32Array(src.length)
+  for (let y = 0; y < n; y++) {
+    for (let x = 0; x < n; x++) {
+      let sum = 0
+      let count = 0
+      for (let dy = -2; dy <= 2; dy++) {
+        const yy = y + dy
+        if (yy < 0 || yy >= n) continue
+        for (let dx = -2; dx <= 2; dx++) {
+          const xx = x + dx
+          if (xx < 0 || xx >= n) continue
+          sum += src[yy * n + xx]
+          count++
+        }
+      }
+      out[y * n + x] = sum / count
+    }
+  }
+  return out
+}
+
 export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const assets = useRef<{ face: HTMLImageElement; sprites: HTMLCanvasElement[] } | null>(null)
+  const assets = useRef<{ face: HTMLImageElement; sprites: Sprite[] } | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -102,9 +136,9 @@ export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props
     let particles: Particle[] = []
     let start = 0
     let playing = false
-    let width = 0
-    let height = 0
     let dpr = 1
+    // Geometrie des Sturms: Achse über dem Gesicht, Fuß am unteren Rand der Bühne
+    let storm = { cx: 0, ground: 0, height: 0, rBase: 0, rTop: 0, size: 0 }
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const animate = !reduced && (replayToken > 0 || !seenBefore())
@@ -114,42 +148,45 @@ export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props
       const host = canvas!.getBoundingClientRect()
       const box = target!.getBoundingClientRect()
       dpr = Math.min(window.devicePixelRatio || 1, 2)
-      width = host.width
-      height = host.height
+      const width = host.width
+      const height = host.height
       canvas!.width = Math.round(width * dpr)
       canvas!.height = Math.round(height * dpr)
 
       const size = Math.min(box.width, box.height)
       const left = box.left - host.left + (box.width - size) / 2
       const top = box.top - host.top + (box.height - size) / 2
-      const cols = Math.round(Math.min(72, Math.max(48, size / 7)))
+      const cols = Math.round(Math.min(96, Math.max(64, size / 6.5)))
       const cell = size / cols
 
-      // Porträt auf das Raster herunterrechnen und Helligkeit je Zelle ablesen
+      // Porträt-Ausschnitt auf das Raster herunterrechnen
       const sample = document.createElement('canvas')
       sample.width = cols
       sample.height = cols
       const sctx = sample.getContext('2d', { willReadFrequently: true })!
-      sctx.drawImage(face, 0, 0, cols, cols)
+      sctx.imageSmoothingQuality = 'high'
+      const cs = face.width * CROP.size
+      sctx.drawImage(face, face.width * CROP.x, face.height * CROP.y, cs, cs, 0, 0, cols, cols)
       const data = sctx.getImageData(0, 0, cols, cols).data
+      const lum = new Float32Array(cols * cols)
+      for (let i = 0; i < lum.length; i++) {
+        lum[i] = (0.2126 * data[i * 4] + 0.7152 * data[i * 4 + 1] + 0.0722 * data[i * 4 + 2]) / 255
+      }
 
-      const cx = left + size / 2
-      const cy = top + size / 2
-      const far = Math.hypot(width, height) * 0.6
-      const next: Particle[] = []
+      // Unscharfe Maske: Augen, Brauen, Nase und Mund treten deutlicher hervor
+      const soft = blur(lum, cols)
+      const sharp = lum.map((v, i) => v + 1.1 * (v - soft[i]))
 
-      // Helligkeit je Zelle; der schwarze Hintergrund fällt weg
-      const cells: { x: number; y: number; raw: number }[] = []
+      const cells: { x: number; y: number; v: number }[] = []
       for (let y = 0; y < cols; y++) {
         for (let x = 0; x < cols; x++) {
-          const i = (y * cols + x) * 4
-          const raw = (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255
-          if (raw > 0.09) cells.push({ x, y, raw })
+          const i = y * cols + x
+          if (lum[i] > 0.08) cells.push({ x, y, v: sharp[i] })
         }
       }
 
-      // Histogramm-Ausgleich: jede Helligkeitsstufe kommt gleich oft vor, so bleiben Augen, Nase und Mund lesbar
-      const ranked = cells.map((c) => c.raw).sort((a, b) => a - b)
+      // Teilweiser Histogramm-Ausgleich, damit alle Helligkeitsstufen genutzt werden
+      const ranked = cells.map((c) => c.v).sort((a, b) => a - b)
       const rank = (v: number) => {
         let lo = 0
         let hi = ranked.length
@@ -161,53 +198,129 @@ export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props
         return lo / Math.max(1, ranked.length - 1)
       }
 
-      for (const { x, y, raw } of cells) {
-        const l = 0.5 * rank(raw) + 0.5 * clamp01((raw - 0.09) / 0.8)
+      const ground = height - Math.max(16, height * 0.03)
+      const band = height * 0.26
+      const cx = left + size / 2
+      storm = {
+        cx,
+        ground,
+        height: ground - top,
+        rBase: size * 0.03,
+        rTop: size * 0.42,
+        size,
+      }
 
-        // Helle Partien als CD, mittlere als Note, dunkle als Platte – wie Graustufen eines Rasterdrucks
-        const final = l > 0.66 ? CD : l > 0.36 ? NOTE : VINYL
-        const rnd = Math.random()
+      const next: Particle[] = []
+      for (const { x, y, v } of cells) {
+        const l = clamp01(0.6 * rank(v) + 0.4 * clamp01((v - 0.08) / 0.85))
+        const final = l < 0.22 ? VINYL : l < 0.47 ? NOTE : l < 0.7 ? TAPE : CD
+        const tx = left + (x + 0.5) * cell
+        const ty = top + (y + 0.5) * cell
+
+        // Liegeplatz am Boden: hinten kleiner, vorne größer, wie auf einer Fläche
+        const depth = Math.random()
+        const gx = Math.random() * width
+        const gy = ground - band * (1 - depth)
+        const dx = gx - cx
+        const dy = (gy - ground) / 0.28
+        const reach = Math.abs(dx) / Math.max(cx, width - cx)
+
         next.push({
-          tx: left + (x + 0.5) * cell,
-          ty: top + (y + 0.5) * cell,
-          ts: cell * (0.3 + 0.85 * l * l),
+          tx,
+          ty,
+          ts: cell * (0.45 + 0.8 * l),
+          ta: 0.5 + 0.5 * l,
           final,
-          swirl: rnd < 0.22 ? TAPE : rnd < 0.45 ? VINYL : rnd < 0.7 ? CD : NOTE,
-          r0: far * (1.05 + Math.random() * 0.5),
-          rv: size * (0.04 + Math.random() * 0.3),
-          a0: Math.random() * Math.PI * 2,
-          turns: (1.6 + Math.random() * 1.6) * Math.PI * 2,
-          s0: 26 + 110 * Math.pow(Math.random(), 3),
-          sv: 6 + Math.random() * 10,
+          // Am Boden und im Sturm gleich verteilt; die Art steht erst am Ziel fest
+          kind: Math.floor(Math.random() * 4),
+          gx,
+          gy,
+          s0: (22 + 38 * Math.pow(Math.random(), 1.8)) * (0.5 + 0.5 * depth),
+          rg: Math.hypot(dx, dy),
+          ag: Math.atan2(dy, dx),
+          hp: (ground - ty) * (0.85 + Math.random() * 0.3),
+          turns: (2 + Math.random() * 1.5) * Math.PI * 2,
           rot0: Math.random() * Math.PI * 2,
-          spin: (Math.random() < 0.5 ? -1 : 1) * (2 + Math.random() * 6),
-          delay: Math.random() * MAX_DELAY,
+          spin: (Math.random() < 0.5 ? -1 : 1) * (3 + Math.random() * 6),
+          pickup: CALM + reach * MAX_PICKUP + Math.random() * 0.3,
         })
       }
 
-      // Große Objekte zuletzt zeichnen, damit sie über den kleinen schweben
-      next.sort((a, b) => a.s0 - b.s0)
+      // Hinten liegende Objekte zuerst zeichnen
+      next.sort((a, b) => a.gy - b.gy)
       particles = next
-      vortexCenter = { x: cx, y: cy }
     }
 
-    let vortexCenter = { x: 0, y: 0 }
-
-    function drawSprite(sprite: HTMLCanvasElement, x: number, y: number, s: number, rot: number, alpha: number) {
-      if (alpha <= 0.01 || s < 0.5) return
+    function drawSprite(sprite: Sprite, x: number, y: number, s: number, rot: number, alpha: number, squash = 1) {
+      if (alpha <= 0.01 || s < 0.6) return
       const cos = Math.cos(rot) * dpr
       const sin = Math.sin(rot) * dpr
       ctx!.globalAlpha = alpha
-      ctx!.setTransform(cos, sin, -sin, cos, x * dpr, y * dpr)
-      ctx!.drawImage(sprite, -s / 2, -s / 2, s, s)
+      ctx!.setTransform(cos, sin * squash, -sin, cos * squash, x * dpr, y * dpr)
+      ctx!.drawImage(s * dpr > 40 ? sprite.big : sprite.small, -s / 2, -s / 2, s, s)
     }
 
     function drawFinal() {
       const { sprites } = assets.current!
       ctx!.setTransform(1, 0, 0, 1, 0, 0)
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height)
-      for (const p of particles) drawSprite(sprites[p.final], p.tx, p.ty, p.ts, 0, 1)
+      for (const p of particles) drawSprite(sprites[p.final], p.tx, p.ty, p.ts, 0, p.ta)
       ctx!.globalAlpha = 1
+    }
+
+    const airSize = (p: Particle) => Math.max(p.ts * 2.2, 13)
+
+    // Radius des Trichters: unten eng, oben weit
+    const funnel = (h: number) => storm.rBase + (storm.rTop - storm.rBase) * Math.pow(clamp01(h / storm.height), 1.4)
+
+    // Die Achse schwankt leicht, oben stärker als unten
+    const axis = (h: number, t: number) =>
+      storm.cx + Math.sin(t * 1.4 + h * 0.008) * storm.size * 0.07 * clamp01(h / storm.height)
+
+    // Durchscheinende Windbänder geben dem Sturm seine Trichterform
+    function drawStorm(t: number, strength: number) {
+      if (strength <= 0.01) return
+      ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
+      ctx!.globalAlpha = 1
+      ctx!.lineCap = 'round'
+      const bands = 70
+      for (let i = 0; i < bands; i++) {
+        const k = i / bands
+        const h = storm.height * k * strength
+        const r = funnel(h) * 1.15
+        const y = storm.ground - h
+        const a0 = -t * (7 - 3 * k) + i * 0.9
+        ctx!.strokeStyle = `rgba(236, 235, 230, ${0.05 + 0.06 * (1 - k)})`
+        ctx!.lineWidth = 1 + 2.5 * (1 - k)
+        ctx!.beginPath()
+        ctx!.ellipse(axis(h, t), y, r, r * 0.28, 0, a0, a0 + 1.4 + k)
+        ctx!.stroke()
+      }
+      // Flache Staubwolke am Fuß, als gestauchter Kreis ohne harte Kanten
+      const r = storm.size * 0.5
+      ctx!.setTransform(dpr, 0, 0, dpr * 0.3, storm.cx * dpr, storm.ground * dpr)
+      const dust = ctx!.createRadialGradient(0, 0, 0, 0, 0, r)
+      dust.addColorStop(0, `rgba(236, 235, 230, ${0.14 * strength})`)
+      dust.addColorStop(1, 'rgba(236, 235, 230, 0)')
+      ctx!.fillStyle = dust
+      ctx!.beginPath()
+      ctx!.arc(0, 0, r, 0, Math.PI * 2)
+      ctx!.fill()
+    }
+
+    // Position eines Objekts im Sturm bei Fortschritt w (0 = am Boden, 1 = Absprung zum Bildpunkt)
+    function inStorm(p: Particle, w: number, t: number) {
+      const angle = p.ag + p.turns * Math.pow(w, 1.3)
+      const lift = smoothstep(clamp01((w - 0.2) / 0.8))
+      const h = p.hp * lift
+      // Erst über den Boden in den Fuß des Trichters gezogen, dann auf dessen Bahn nach oben
+      const r = w < 0.2 ? lerp(p.rg, funnel(0), easeInOutCubic(w / 0.2)) : funnel(h)
+      return {
+        x: axis(h, t) + Math.cos(angle) * r,
+        y: storm.ground - h + Math.sin(angle) * r * 0.28,
+        near: Math.sin(angle),
+        h,
+      }
     }
 
     function frame(now: number) {
@@ -215,42 +328,54 @@ export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props
       if (!start) start = now
       const t = (now - start) / 1000
       const { sprites } = assets.current!
-      const { x: cx, y: cy } = vortexCenter
 
       ctx!.setTransform(1, 0, 0, 1, 0, 0)
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height)
 
-      for (const p of particles) {
-        const u = clamp01((t - p.delay) / DURATION)
-        const angle = p.a0 + p.turns * easeOutCubic(u)
+      // Sturm baut sich nach der Ruhe auf und legt sich, wenn das Gesicht steht
+      const strength = clamp01((t - CALM * 0.6) / 0.8) * clamp01((TOTAL - 0.4 - t) / 1.2)
+      drawStorm(t, strength)
 
-        if (u < SWIRL_END) {
-          // Phase 1: von außen in den Wirbel, dabei immer kleiner
-          const v = u / SWIRL_END
-          const e = easeOutCubic(v)
-          const r = lerp(p.r0, p.rv, e)
-          const s = lerp(p.s0, p.sv, e)
-          drawSprite(sprites[p.swirl], cx + Math.cos(angle) * r, cy + Math.sin(angle) * r, s, p.rot0 + p.spin * u, 1)
+      for (const p of particles) {
+        const u = (t - p.pickup) / DURATION
+
+        if (u <= 0) {
+          // Liegt noch flach am Boden, kurz vor dem Erfassen zittert es im Wind
+          const shake = clamp01(1 + u * 6) * 2
+          drawSprite(sprites[p.kind], p.gx + Math.sin(t * 40 + p.rot0) * shake, p.gy, p.s0, p.rot0, 1, FLAT)
+          continue
+        }
+
+        if (u < STORM_END) {
+          const w = u / STORM_END
+          const pos = inStorm(p, w, t)
+          const depth = 0.8 + 0.2 * pos.near
+          // Im Trichter bleiben die Objekte lange groß genug, um sie als Platte, CD, Kassette oder Note zu erkennen
+          const s = lerp(p.s0, airSize(p), w * w) * depth
+          const squash = lerp(FLAT, 1, clamp01(pos.h / 30))
+          drawSprite(sprites[p.kind], pos.x, pos.y, s, p.rot0 + p.spin * w, 0.55 + 0.45 * depth, squash)
+          continue
+        }
+
+        // Aus dem Sturm an den eigenen Bildpunkt, dabei wird das Objekt zum Pixel des Gesichts
+        const v = Math.min(1, (u - STORM_END) / (1 - STORM_END))
+        const e = easeInOutCubic(v)
+        const pos = inStorm(p, 1, t)
+        const x = lerp(pos.x, p.tx, e)
+        const y = lerp(pos.y, p.ty, e)
+        const s = lerp(airSize(p) * (0.8 + 0.2 * pos.near), p.ts, e)
+        const rot = lerp(p.rot0 + p.spin, 0, e)
+        const alpha = lerp(0.55 + 0.45 * (0.8 + 0.2 * pos.near), p.ta, e)
+        if (p.kind === p.final) {
+          drawSprite(sprites[p.final], x, y, s, rot, alpha)
         } else {
-          // Phase 2: aus dem Wirbel an den eigenen Bildpunkt, das Objekt wird zum Pixel des Gesichts
-          const v = (u - SWIRL_END) / (1 - SWIRL_END)
-          const e = easeInOutCubic(v)
-          const r = p.rv * (1 - 0.4 * v)
-          const x = lerp(cx + Math.cos(angle) * r, p.tx, e)
-          const y = lerp(cy + Math.sin(angle) * r, p.ty, e)
-          const s = lerp(p.sv, p.ts, e)
-          const rot = lerp(p.rot0 + p.spin * u, 0, e)
-          if (p.swirl === p.final) {
-            drawSprite(sprites[p.final], x, y, s, rot, 1)
-          } else {
-            drawSprite(sprites[p.swirl], x, y, s, rot, 1 - e)
-            drawSprite(sprites[p.final], x, y, s, rot, e)
-          }
+          drawSprite(sprites[p.kind], x, y, s, rot, alpha * (1 - e))
+          drawSprite(sprites[p.final], x, y, s, rot, alpha * e)
         }
       }
       ctx!.globalAlpha = 1
 
-      if (t < MAX_DELAY + DURATION) {
+      if (t < TOTAL) {
         raf = requestAnimationFrame(frame)
       } else {
         playing = false
@@ -263,7 +388,7 @@ export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props
     async function init() {
       if (!assets.current) {
         const [face, ...imgs] = await Promise.all([loadImage(FACE), ...SPRITES.map(loadImage)])
-        assets.current = { face, sprites: imgs.map((img) => prerender(img, 128)) }
+        assets.current = { face, sprites: imgs.map((img) => ({ big: prerender(img, 128), small: prerender(img, 40) })) }
       }
       if (cancelled) return
       build()
@@ -279,7 +404,7 @@ export default function FaceVortex({ targetRef, onDone, replayToken = 0 }: Props
 
     init().catch(() => onDone?.())
 
-    // Bei Größenänderung das Raster neu berechnen; ein laufendes Intro fliegt einfach in die neuen Ziele
+    // Bei Größenänderung das Raster neu berechnen; ein laufendes Intro fliegt in die neuen Ziele
     let resizeFrame = 0
     const ro = new ResizeObserver(() => {
       cancelAnimationFrame(resizeFrame)
