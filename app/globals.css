@@ -184,18 +184,6 @@
   transform: none;
 }
 
-/* Hero-Text erscheint erst, wenn sich das Gesicht zusammengesetzt hat */
-.js .hero-copy {
-  transition:
-    opacity 900ms var(--ease-out),
-    transform 900ms var(--ease-out);
-}
-.js [data-intro='playing'] .hero-copy {
-  opacity: 0;
-  transform: translateY(16px);
-  pointer-events: none;
-}
-
 /* Langsamer Zoom auf einem Foto, solange es sichtbar ist */
 @keyframes breathe {
   from {
@@ -217,4 +205,58 @@
   .breathe {
     animation: none;
   }
+}
+
+/* Platten-Intro: nur sichtbar, solange das Script im <head> es für den ersten Besuch angemeldet hat */
+.record-intro-overlay {
+  display: none;
+}
+.record-intro .record-intro-overlay {
+  display: block;
+}
+.record-intro #header-logo {
+  visibility: hidden;
+}
+
+.record {
+  --vinyl: 1;
+  width: min(72vmin, 540px);
+  height: min(72vmin, 540px);
+  transform: translate(-50%, -50%) translateX(75vw);
+  will-change: transform;
+}
+.record-fade {
+  opacity: var(--vinyl);
+}
+.record-shadow {
+  box-shadow:
+    0 40px 90px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(236, 235, 230, 0.08);
+}
+/* Feine Rillen, ein paar breitere Pausen zwischen den Titeln und der matte Auslauf zum Label */
+.record-grooves {
+  background:
+    radial-gradient(circle, transparent 0 21%, #0c0c0d 21% 23.5%, transparent 23.5% 47%, rgba(0, 0, 0, 0.55) 47% 47.6%, transparent 47.6% 49.4%),
+    radial-gradient(circle, transparent 0 34%, rgba(0, 0, 0, 0.55) 34% 34.6%, transparent 34.6% 40%, rgba(0, 0, 0, 0.55) 40% 40.6%, transparent 40.6%),
+    repeating-radial-gradient(circle, #131315 0 1px, #1d1e21 1.4px 2.2px),
+    #141416;
+}
+/* Stehender Lichtreflex: zwei gegenüberliegende Glanzkeile, wie unter einer Lampe */
+.record-shine {
+  background: conic-gradient(
+    from 20deg,
+    transparent 0deg,
+    rgba(236, 235, 230, 0.13) 22deg,
+    transparent 48deg 180deg,
+    rgba(236, 235, 230, 0.09) 202deg,
+    transparent 228deg 360deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 0 21%, #000 22% 49%, transparent 49.6%);
+  mask: radial-gradient(circle, transparent 0 21%, #000 22% 49%, transparent 49.6%);
+  pointer-events: none;
+}
+.tonearm {
+  transform-box: view-box;
+  transform-origin: 104px 6px;
+  transform: rotate(-32deg);
 }

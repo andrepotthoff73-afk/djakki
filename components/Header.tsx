@@ -5,7 +5,7 @@ import { nav } from '@/lib/site'
 
 type Ink = { bg: string; fg: string }
 
-const first: Ink = { bg: 'var(--ink)', fg: 'var(--paper)' }
+const first: Ink = { bg: 'var(--accent-500)', fg: 'var(--paper)' }
 
 // Feste Kopfzeile, die Grund und Schrift des Kapitels darunter annimmt
 export default function Header() {
@@ -50,8 +50,12 @@ export default function Header() {
       }}
     >
       <div className="container-page flex h-header items-center justify-between gap-5">
-        <a href="#top" className="font-display text-xl font-semibold uppercase leading-none">
-          DJ Akki
+        <a href="#top" className="flex items-center gap-3 font-display text-xl font-semibold uppercase leading-none">
+          {/* Das runde Logo ist zugleich das Label der Platte aus dem Intro, die hier landet */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img id="header-logo" src="/logo/dj-akki-friends.png" alt="" width={44} height={44} className="h-[44px] w-[44px] rounded-full bg-paper" />
+          {/* Auf dem Handy reicht das Logo, der Name bleibt für Screenreader erhalten */}
+          <span className="sr-only sm:not-sr-only">DJ Akki</span>
         </a>
         <nav aria-label="Hauptnavigation" className="hidden items-center gap-5 md:flex">
           {nav.map((item) => (
