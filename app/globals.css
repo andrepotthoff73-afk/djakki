@@ -236,5 +236,12 @@
   visibility: hidden;
 }
 .intro-disc {
-  will-change: transform, opacity;
+  /* Drehpunkt oben links: das Script rechnet die Lage selbst; bis zum ersten Bild unsichtbar */
+  transform-origin: 0 0;
+  transform: scale(0);
+  will-change: transform;
+}
+/* Weißer Grund nur unter der ausgestanzten Schrift, nicht als heller Rand um das blaue Label */
+.intro-label {
+  background: radial-gradient(circle closest-side, var(--paper) 0 95%, transparent 96%);
 }
