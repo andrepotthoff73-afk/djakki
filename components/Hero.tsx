@@ -34,11 +34,11 @@ export default function Hero() {
 
         <div className="grid gap-5 md:grid-cols-12 md:items-end">
           <p data-reveal style={{ '--i': 3 } as React.CSSProperties} className="max-w-[22ch] font-display text-3xl font-medium text-paper md:col-span-6">
-            Seit über 30 Jahren am Pult. Hochzeit-Experte mit Tanzausbildung.
+            Seit über 30 Jahren am Pult. DJ Mixing mit Club Feeling.
           </p>
           <div className="flex flex-col gap-4 md:col-span-6 md:items-end">
             <p data-reveal style={{ '--i': 4 } as React.CSSProperties} className="max-w-[34ch] text-lg text-paper md:text-right">
-              Event-DJ für Hochzeiten, Firmenfeiern und private Partys in Duisburg und Umgebung.
+              Event-DJ für Partys, Firmenfeiern und Events in Duisburg und Umgebung.
             </p>
             <div data-reveal style={{ '--i': 5 } as React.CSSProperties} className="flex w-full flex-col items-center gap-4 md:w-auto md:flex-row-reverse">
               <a href="#kontakt" className="btn btn-ink w-full md:w-auto">

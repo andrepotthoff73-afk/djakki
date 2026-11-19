@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import { site } from '@/lib/site'
 
-const occasions = ['Hochzeit', 'Firmenfeier', 'Geburtstag', 'Veranstaltung']
+const occasions = ['Geburtstag', 'Firmenfeier', 'Veranstaltung', 'Hochzeit']
 const article: Record<string, string> = { Geburtstag: 'einen' }
 
 const chip =
@@ -17,7 +17,7 @@ const contactLink = 'link inline-block py-2'
 // Anfrage als Plattenkiste: Anlass und Musik antippen, daraus wird die Nachricht
 export default function Request() {
   const c = site.contact
-  const [occasion, setOccasion] = useState('Hochzeit')
+  const [occasion, setOccasion] = useState('Geburtstag')
   const [genres, setGenres] = useState<string[]>([])
   const [day, setDay] = useState('')
   const [place, setPlace] = useState('')

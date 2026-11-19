@@ -1,7 +1,7 @@
-// Leistungen in einem Kapitel: Hochzeiten als Kernleistung groß, die übrigen drei als Zeilen darunter
-const wedding = {
-  phrase: 'Hochzeiten',
-  text: 'Ein Hochzeitskonzept, individuell geplant und perfekt umgesetzt. Von einem Hochzeit-Experten mit Tanzausbildung.',
+// Leistungen in einem Kapitel: Partys & Events als Kernleistung groß, die übrigen drei als Zeilen darunter
+const featured = {
+  phrase: 'Partys & Events',
+  text: 'Geburtstage, private Feiern und Veranstaltungen in Duisburg und Umgebung. DJ Mixing mit Club Feeling, von Housetunes und R’n’B bis Partyclassics und Schlager.',
 }
 
 const others = [
@@ -10,8 +10,8 @@ const others = [
     text: 'Musik passend zur Firmenkultur, damit für jeden Geschmack etwas dabei ist. Als DJ allein oder mit eigener Ton- und Lichtanlage.',
   },
   {
-    phrase: 'Partys & Events',
-    text: 'Geburtstage, private Feiern und Veranstaltungen in Duisburg und Umgebung. DJ Mixing mit Club Feeling.',
+    phrase: 'Hochzeiten',
+    text: 'Ein Hochzeitskonzept, individuell geplant und umgesetzt, von einem DJ mit Tanzausbildung.',
   },
   {
     phrase: 'Licht & Ton',
@@ -26,8 +26,8 @@ export default function Services() {
         <h2 className="text-4xl">Leistungen</h2>
 
         <div className="mt-8 grid gap-5 md:grid-cols-12 md:items-end">
-          <h3 className="text-title font-semibold uppercase md:col-span-7">{wedding.phrase}</h3>
-          <p className="max-w-[40ch] text-lg md:col-span-4 md:col-start-9">{wedding.text}</p>
+          <h3 className="text-title font-semibold uppercase md:col-span-7">{featured.phrase}</h3>
+          <p className="max-w-[40ch] text-lg md:col-span-4 md:col-start-9">{featured.text}</p>
         </div>
 
         <ul className="mt-9 grid md:grid-cols-3 md:gap-5">
