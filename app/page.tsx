@@ -2,7 +2,10 @@ import Header from '@/components/Header'
 import Hero from '@/components/Hero'
 import Intro from '@/components/Intro'
 import Services from '@/components/Services'
+import Events from '@/components/Events'
+import References from '@/components/References'
 import Voices from '@/components/Voices'
+import Press from '@/components/Press'
 import Steps from '@/components/Steps'
 import FAQ from '@/components/FAQ'
 import Request from '@/components/Request'
@@ -18,7 +21,10 @@ export default function Home() {
         <Hero />
         <Intro />
         <Services />
+        <Events />
+        <References />
         <Voices />
+        <Press />
         <Steps />
         <FAQ />
         <Request />

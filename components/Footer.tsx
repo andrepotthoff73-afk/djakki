@@ -1,4 +1,4 @@
-import { nav, site } from '@/lib/site'
+import { nav, site, ticketShop } from '@/lib/site'
 
 // Der Name als Konstruktion: jeder Buchstabe aus einem eigenen Farbblock ausgespart
 const blocks = [
@@ -40,6 +40,9 @@ export default function Footer() {
             ))}
           </nav>
           <div className="flex flex-col gap-2 md:col-span-2">
+            <a href={ticketShop} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
+              Ticketshop
+            </a>
             <a href={social.instagram} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
               Instagram
             </a>
