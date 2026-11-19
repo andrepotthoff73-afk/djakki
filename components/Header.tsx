@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { nav } from '@/lib/site'
+import SocialLinks from '@/components/SocialLinks'
 
 type Ink = { bg: string; fg: string }
 
@@ -63,13 +64,16 @@ export default function Header() {
             </a>
           ))}
         </nav>
-        <a
-          href="#kontakt"
-          className="btn btn-sm"
-          style={{ backgroundColor: ink.fg, color: ink.bg, transition: 'background-color 200ms ease, color 200ms ease, transform 160ms var(--ease-out)' }}
-        >
-          Termin anfragen
-        </a>
+        <div className="flex items-center gap-2">
+          <SocialLinks />
+          <a
+            href="#kontakt"
+            className="btn btn-sm"
+            style={{ backgroundColor: ink.fg, color: ink.bg, transition: 'background-color 200ms ease, color 200ms ease, transform 160ms var(--ease-out)' }}
+          >
+            Termin anfragen
+          </a>
+        </div>
       </div>
     </header>
   )

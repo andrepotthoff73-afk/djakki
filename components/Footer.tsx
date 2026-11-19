@@ -1,4 +1,5 @@
 import { nav, site, ticketShop } from '@/lib/site'
+import { social } from '@/components/SocialLinks'
 
 // Der Name als Konstruktion: jeder Buchstabe aus einem eigenen Farbblock ausgespart
 const blocks = [
@@ -10,7 +11,7 @@ const blocks = [
 
 export default function Footer() {
   const year = new Date().getFullYear()
-  const { social, address } = site.contact
+  const { address } = site.contact
 
   return (
     <footer data-bg="var(--ink)" data-fg="var(--paper)" className="chapter bg-ink pb-6 pt-9 text-paper">
@@ -43,12 +44,12 @@ export default function Footer() {
             <a href={ticketShop} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
               Ticketshop
             </a>
-            <a href={social.instagram} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
-              Instagram
-            </a>
-            <a href={social.facebook} target="_blank" rel="noreferrer" className="link decoration-transparent hover:decoration-current">
-              Facebook
-            </a>
+            {social.map(({ label, href, Icon }) => (
+              <a key={label} href={href} target="_blank" rel="noreferrer" className="link flex items-center gap-2 decoration-transparent hover:decoration-current">
+                <Icon className="h-[20px] w-[20px] shrink-0" />
+                {label}
+              </a>
+            ))}
             <a href="https://www.djakki.de/8/impressum.html" className="link decoration-transparent hover:decoration-current">
               Impressum
             </a>
