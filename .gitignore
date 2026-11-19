@@ -3,3 +3,6 @@ node_modules
 out
 next-env.d.ts
 *.tsbuildinfo
+# lokaler Ersatzspeicher für Termine und lokale Zugangsdaten
+.data
+.env*.local

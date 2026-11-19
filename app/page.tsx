@@ -12,6 +12,9 @@ import Request from '@/components/Request'
 import Footer from '@/components/Footer'
 import RevealObserver from '@/components/RevealObserver'
 
+// Termine aus dem Adminbereich: nach Änderungen sofort neu, sonst stündlich, damit vergangene verschwinden
+export const revalidate = 3600
+
 // Die Seite als Folge von Farbkapiteln, die ohne Abstand aneinanderstoßen
 export default function Home() {
   return (

@@ -1,11 +1,12 @@
 import Image from 'next/image'
-import { formats, nextEvents, photos, ticketShop } from '@/lib/site'
+import { listUpcoming } from '@/lib/eventStore'
+import { formats, photos, ticketShop } from '@/lib/site'
 
 const day = new Intl.DateTimeFormat('de-DE', { weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' })
 
-// Events: nächste Termine als Flyer mit Weg zum Ticketshop, darunter Akkis eigene Eventformate
-export default function Events() {
-  const upcoming = [...nextEvents].sort((a, b) => a.date.localeCompare(b.date))
+// Events: nächste Termine als Flyer (gepflegt im Adminbereich) mit Weg zum Ticketshop, darunter Akkis eigene Eventformate
+export default async function Events() {
+  const upcoming = await listUpcoming()
 
   return (
     <section id="events" data-bg="var(--paper)" data-fg="var(--ink)" className="chapter bg-paper py-10">
@@ -21,7 +22,7 @@ export default function Events() {
         {upcoming.length > 0 ? (
           <ul className="mt-5 grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-5">
             {upcoming.map((e, i) => (
-              <li key={e.flyer} data-reveal style={{ '--i': i } as React.CSSProperties}>
+              <li key={e.id} data-reveal style={{ '--i': i } as React.CSSProperties}>
                 <a href={e.ticket ?? ticketShop} target="_blank" rel="noreferrer" className="group flex flex-col">
                   <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink">
                     <Image

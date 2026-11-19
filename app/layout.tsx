@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var c=navigator.connection;if(!localStorage.getItem('djakki-video-intro')&&!(c&&c.saveData)&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('site-intro')}catch(e){}",
+              "try{var c=navigator.connection;if(location.pathname.indexOf('/admin')!==0&&!localStorage.getItem('djakki-video-intro')&&!(c&&c.saveData)&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('site-intro')}catch(e){}",
           }}
         />
       </head>

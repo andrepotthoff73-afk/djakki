@@ -8,9 +8,7 @@ const byName = <T,>(key: (item: T) => string) => (a: T, b: T) => key(a).localeCo
 
 export const ticketShop = 'https://djakki.ticket.io/'
 
-// Nächste Events: Flyer als Bild in public/events/ ablegen und hier eintragen (Datum als JJJJ-MM-TT).
-// Vergangene Termine einfach wieder herausnehmen. Ohne Eintrag zeigt die Seite den Weg zum Ticketshop.
-export const nextEvents: { title: string; date: string; flyer: string; ticket?: string }[] = []
+// Die nächsten Events pflegt Akki selbst im Adminbereich unter /admin (siehe lib/eventStore.ts).
 
 // Pressestimmen: Scans der Zeitungsartikel in public/presse/ ablegen und hier eintragen.
 // Ohne Eintrag erscheint der Abschnitt nicht.
