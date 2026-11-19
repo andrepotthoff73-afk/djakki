@@ -2,7 +2,7 @@ import Image from 'next/image'
 import IntroButton from '@/components/IntroButton'
 import { photos } from '@/lib/site'
 
-// Erstes Kapitel: ein rotes Feld, der Name in zwei Tinten, darunter die volle Tanzfläche in Originalfarben
+// Erstes Kapitel: ein rotes Feld, der Name in zwei Tinten, darunter die volle Tanzfläche, als Bild bereits im Seitenrot eingefärbt
 export default function Hero() {
   return (
     <section

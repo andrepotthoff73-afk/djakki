@@ -71,7 +71,8 @@ export const photos = {
   crate: { src: `${base}b117496.png/dj-akki-plastique-revival.png`, alt: 'DJ Akki sucht Platten aus seiner Vinylkiste' },
   phone: { src: `${base}b117493.png/dj-akki-bolero.png`, alt: 'DJ Akki am Telefon hinter dem Pult im Bolero' },
   decks: { src: `${base}b117505.png/hochzeit-dj-akki-old-daddy-axel-weyand.png`, alt: 'DJ Akki von hinten an den Plattenspielern, darüber die Lichttraverse' },
-  crowd: { src: `${base}b117501.png/117501.png`, alt: 'Volle Tanzfläche, vom DJ-Pult aus gesehen' },
+  // Im Seitenrot vorab eingefärbt (public/hero), damit kein Filter im Browser nötig ist
+  crowd: { src: '/hero/tanzflaeche-rot.webp', alt: 'Volle Tanzfläche, vom DJ-Pult aus gesehen' },
   party: { src: `${base}b117489.png/altweiber-bolero-mit-dj-akki.png`, alt: 'Feiernde Gäste an Altweiber im Bolero' },
   plastique: { src: `${base}b117494.png/dj-akki-plastique-revival-1.png`, alt: 'DJ Akki am Pult bei der Club Plastique Revival' },
   rosenmontag: { src: `${base}b117497.png/dj-akki-rosenmontag.png`, alt: 'DJ Akki im roten Sakko an Rosenmontag' },
