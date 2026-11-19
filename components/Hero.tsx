@@ -2,7 +2,7 @@ import Image from 'next/image'
 import IntroButton from '@/components/IntroButton'
 import { photos } from '@/lib/site'
 
-// Erstes Kapitel: ein rotes Feld, der Name in zwei Tinten, darunter die volle Tanzfläche in Rot getönt
+// Erstes Kapitel: ein rotes Feld, der Name in zwei Tinten, darunter die volle Tanzfläche in Originalfarben
 export default function Hero() {
   return (
     <section
@@ -28,7 +28,7 @@ export default function Hero() {
             fill
             priority
             sizes="(min-width: 1280px) 1184px, 100vw"
-            className="object-cover object-[center_40%] mix-blend-multiply grayscale"
+            className="object-cover object-[center_40%]"
           />
         </div>
 
