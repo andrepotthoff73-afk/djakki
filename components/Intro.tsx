@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { photos, site, venues } from '@/lib/site'
 
-// Kachelbrett: Slogan, Auszeichnung, Porträt – darunter der Text über Akki und die Orte, an denen er auflegt
+// Kachelbrett: Slogan, Herkunft aus dem Club Plastique, Porträt – darunter der Text über Akki und die Orte, an denen er auflegt
 export default function Intro() {
   return (
     <section id="ueber" data-bg="var(--paper)" data-fg="var(--ink)" className="chapter bg-paper py-10">
@@ -12,8 +12,8 @@ export default function Intro() {
           </div>
 
           <div className="flex aspect-square flex-col justify-between bg-paper-2 p-4 text-ink md:col-span-4 md:aspect-auto md:p-5">
-            <p className="text-lg">Wedding Award Gewinner</p>
-            <p className="font-display text-title font-semibold">2022</p>
+            <p className="text-lg">Bekannt aus dem legendären</p>
+            <p className="font-display text-4xl font-semibold uppercase">Club Plastique</p>
           </div>
 
           <div className="relative aspect-square overflow-hidden bg-ink md:col-span-4 md:aspect-auto">

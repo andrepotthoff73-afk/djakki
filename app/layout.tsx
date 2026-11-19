@@ -16,7 +16,7 @@ const serif = Cormorant_Garamond({
 export const metadata: Metadata = {
   title: 'DJ Akki & Friends – Event-DJ für Hochzeiten & Firmenfeiern in Duisburg',
   description:
-    'DJ Akki aus Duisburg: seit über 30 Jahren Event-DJ für Hochzeiten, Firmenfeiern und private Partys. Wedding Award Gewinner 2022. Jetzt Wunschtermin anfragen.',
+    'DJ Akki aus Duisburg: seit über 30 Jahren Event-DJ für Hochzeiten, Firmenfeiern und private Partys. Jetzt Wunschtermin anfragen.',
   icons: { icon: 'https://www.djakki.de/assets/icons/favicon-32x32.png' },
 }
 

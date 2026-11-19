@@ -1,7 +1,7 @@
 // Leistungen in einem Kapitel: Hochzeiten als Kernleistung groß, die übrigen drei als Zeilen darunter
 const wedding = {
   phrase: 'Hochzeiten',
-  text: 'Ein Hochzeitskonzept, individuell geplant und perfekt umgesetzt. Von einem Hochzeit-Experten mit Tanzausbildung und Wedding Award Gewinner 2022.',
+  text: 'Ein Hochzeitskonzept, individuell geplant und perfekt umgesetzt. Von einem Hochzeit-Experten mit Tanzausbildung.',
 }
 
 const others = [

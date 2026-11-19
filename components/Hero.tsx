@@ -34,7 +34,7 @@ export default function Hero() {
 
         <div className="grid gap-5 md:grid-cols-12 md:items-end">
           <p data-reveal style={{ '--i': 3 } as React.CSSProperties} className="max-w-[22ch] font-display text-3xl font-medium text-paper md:col-span-6">
-            Seit über 30 Jahren am Pult. Wedding Award Gewinner 2022.
+            Seit über 30 Jahren am Pult. Hochzeit-Experte mit Tanzausbildung.
           </p>
           <div className="flex flex-col gap-4 md:col-span-6 md:items-end">
             <p data-reveal style={{ '--i': 4 } as React.CSSProperties} className="max-w-[34ch] text-lg text-paper md:text-right">
