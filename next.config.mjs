@@ -7,6 +7,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'www.djakki.de', pathname: '/bilder/**' },
       // Flyer aus dem Adminbereich liegen im Vercel-Blob-Speicher
       { protocol: 'https', hostname: '*.public.blob.vercel-storage.com', pathname: '/events/**' },
+      // Vorschaubilder der verlinkten WAZ-Artikel (Pressestimmen)
+      { protocol: 'https', hostname: 'img.sparknews.funkemedien.de' },
     ],
   },
   // Flyer werden im Browser verkleinert, die Grenze ist nur ein Sicherheitsnetz

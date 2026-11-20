@@ -1,7 +1,7 @@
 // Leistungen in einem Kapitel: Partys & Events als Kernleistung groß, die übrigen drei als Zeilen darunter
 const featured = {
   phrase: 'Partys & Events',
-  text: 'Geburtstage, private Feiern und Veranstaltungen in Duisburg und Umgebung. DJ Mixing mit Club Feeling, von Housetunes und R’n’B bis Partyclassics und Schlager.',
+  text: 'Geburtstage, private Feiern und Veranstaltungen in Duisburg und Umgebung. DJ Mixing mit Club Feeling, von Housetunes bis Partyclassics und Schlager.',
 }
 
 const others = [
@@ -11,7 +11,7 @@ const others = [
   },
   {
     phrase: 'Hochzeiten',
-    text: 'Ein Hochzeitskonzept, individuell geplant und umgesetzt, von einem DJ mit Tanzausbildung.',
+    text: 'Ein Hochzeitskonzept, individuell geplant und umgesetzt, damit der schönste Tag im Leben auch musikalisch zu einem besonderen Tag wird.',
   },
   {
     phrase: 'Licht & Ton',

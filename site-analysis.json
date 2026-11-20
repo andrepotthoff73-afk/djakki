@@ -22,8 +22,8 @@
     "Sound & Light mit dem gewissen Etwas",
     "DJ Mixing mit Club Feeling"
   ],
-  "musicGenres": ["House", "R'n'B", "Partyclassics", "70er", "80er", "90er", "Charts", "Schlager"],
-  "about": "Seit über 30 Jahren einer der bekanntesten DJs in Duisburg, bekannt aus dem legendären „Club Plastique“. Mix aus aktuellen Housetunes, R'n'B und Partyclassics.",
+  "musicGenres": ["House", "Partyclassics", "70er", "80er", "90er", "Charts", "Schlager"],
+  "about": "Seit über 30 Jahren einer der bekanntesten DJs in Duisburg, bekannt aus dem legendären „Club Plastique“. Mix aus aktuellen Housetunes und Partyclassics.",
   "referenceLocations": ["Villa Rheinperle", "viersieben", "Summer Night Lounge 2026", "Golf and more", "Gleis drei", "Bolero", "Club Raffelberg", "Coupé 1900", "Feinkost Kersten Catering"],
   "serviceArea": ["Duisburg", "Moers", "Krefeld", "Neukirchen-Vluyn", "Rheinberg"],
   "colors": {
@@ -64,7 +64,7 @@
     "whatsapp": "https://wa.me/491722604182",
     "email": "info@agentur-weyand.de",
     "address": {
-      "street": "Gabelsbergerstr. 5",
+      "street": "Baerler Str. 62",
       "zip": "47441",
       "city": "Moers",
       "country": "DE"

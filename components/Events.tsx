@@ -18,7 +18,7 @@ export default async function Events() {
           </a>
         </div>
 
-        <h3 className="mt-8 uppercase">Next Events</h3>
+        <h3 className="mt-8 uppercase">Nächste öffentliche Veranstaltungen</h3>
         {upcoming.length > 0 ? (
           <ul className="mt-5 grid gap-6 sm:grid-cols-2 md:grid-cols-3 md:gap-5">
             {upcoming.map((e, i) => (

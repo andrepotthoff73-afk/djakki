@@ -18,7 +18,7 @@ const faqs = [
   },
   {
     q: 'Welche Musik spielst du?',
-    a: 'House, R’n’B und Partyclassics, dazu Charts, 70er, 80er, 90er und Schlager. Musikwünsche nehme ich im Vorgespräch auf.',
+    a: 'House (Afro, Vocal, Lounge, Balearic, Electronic) und Partyclassics, dazu Charts, 70er, 80er, 90er und Schlager. Musikwünsche nehme ich im Vorgespräch auf.',
   },
   {
     q: 'Wer steckt hinter DJ Akki & Friends?',

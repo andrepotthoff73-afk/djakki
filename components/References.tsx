@@ -23,7 +23,7 @@ export default function References() {
           </div>
 
           <div className="md:col-span-6 md:col-start-7">
-            <h3 className="uppercase">Firmenevents &amp; DJ Booking</h3>
+            <h3 className="uppercase">Auszug aus Firmenevents &amp; DJ Bookings</h3>
             <ul className="mt-5 sm:columns-2 sm:gap-5">
               {references.companies.map((name) => (
                 <li key={name} className="break-inside-avoid border-t border-ink-2 py-3 text-lg">

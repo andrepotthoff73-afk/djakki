@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { photos, site, venues } from '@/lib/site'
+import { photos, venues } from '@/lib/site'
 
 // Kachelbrett: Slogan, Herkunft aus dem Club Plastique, Porträt – darunter der Text über Akki und die Orte, an denen er auflegt
 export default function Intro() {
@@ -31,10 +31,9 @@ export default function Intro() {
           <h2 className="text-4xl md:col-span-5">Über DJ Akki</h2>
           <p className="text-lg md:col-span-6 md:col-start-7">
             Axel Weyand ist als DJ Akki seit über 30 Jahren einer der bekanntesten DJs in Duisburg, bekannt aus dem
-            legendären Club Plastique. Er mixt aktuelle Housetunes, R’n’B und Partyclassics, dazu Charts, 70er, 80er,
-            90er und Schlager, immer mit einem Ziel: das passende Lied zum passenden Zeitpunkt. Aufgelegt hat er unter
-            anderem in der Villa Rheinperle, im Bolero, im Club Raffelberg, im Coupé 1900 und im Gleis drei. Unterwegs ist
-            er in {site.serviceArea.join(', ').replace(/, ([^,]*)$/, ' und $1')}.
+            legendären Club Plastique. Er mixt aktuelle Housetunes und Partyclassics, dazu Charts, 70er, 80er, 90er und
+            Schlager, immer mit einem Ziel: das passende Lied zum passenden Zeitpunkt. Unterwegs ist er in Duisburg, Moers,
+            Krefeld, auf Anfrage aber auch in ganz Deutschland.
           </p>
         </div>
 

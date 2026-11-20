@@ -54,8 +54,8 @@ export default function Header() {
         <a href="#top" className="flex items-center gap-3 font-display text-xl font-semibold uppercase leading-none">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img id="header-logo" src="/logo/dj-akki-friends.png" alt="" width={44} height={44} className="h-[44px] w-[44px] rounded-full bg-paper" />
-          {/* Auf dem Handy reicht das Logo, der Name bleibt für Screenreader erhalten */}
-          <span className="sr-only sm:not-sr-only">DJ Akki</span>
+          {/* Auf dem Handy und bei mittlerer Breite neben dem Menü reicht das Logo; der Name bleibt für Screenreader erhalten */}
+          <span className="sr-only whitespace-nowrap sm:not-sr-only md:sr-only lg:not-sr-only">DJ Akki</span>
         </a>
         <nav aria-label="Hauptnavigation" className="hidden items-center gap-5 md:flex">
           {nav.map((item) => (
@@ -65,10 +65,11 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-2">
-          <SocialLinks />
+          {/* Bei mittlerer Breite braucht das Menü den Platz; die Links stehen dann im Footer */}
+          <SocialLinks className="md:hidden lg:flex" />
           <a
             href="#kontakt"
-            className="btn btn-sm"
+            className="btn btn-sm whitespace-nowrap"
             style={{ backgroundColor: ink.fg, color: ink.bg, transition: 'background-color 200ms ease, color 200ms ease, transform 160ms var(--ease-out)' }}
           >
             Termin anfragen

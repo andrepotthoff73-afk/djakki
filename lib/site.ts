@@ -10,9 +10,45 @@ export const ticketShop = 'https://djakki.ticket.io/'
 
 // Die nächsten Events pflegt Akki selbst im Adminbereich unter /admin (siehe lib/eventStore.ts).
 
-// Pressestimmen: Scans der Zeitungsartikel in public/presse/ ablegen und hier eintragen.
+// Pressestimmen: Artikel über DJ Akki, verlinkt mit Überschrift und Vorschaubild aus dem Artikel, neueste zuerst.
 // Ohne Eintrag erscheint der Abschnitt nicht.
-export const press: { outlet: string; title: string; date: string; scan: string }[] = []
+export const press: { outlet: string; title: string; date: string; url: string; image: string }[] = [
+  {
+    outlet: 'WAZ Duisburg',
+    title: 'Plastique-Revival-Party im Club viersieben: „Wie nach Hause kommen“',
+    date: '2026-11-15',
+    url: 'https://www.waz.de/lokales/duisburg/article413683721/plastique-revival-party-im-club-viersieben-wie-nach-hause-kommen.html',
+    image: 'https://img.sparknews.funkemedien.de/413683941/413683941_1794747486_v16_9_1600.jpeg',
+  },
+  {
+    outlet: 'WAZ Duisburg',
+    title: 'Bühne im Wasser und Ibiza-Gefühl: Beliebte Duisburger Party an neuer Location',
+    date: '2026-08-25',
+    url: 'https://www.waz.de/lokales/duisburg/article412948649/buehne-im-wasser-und-ibiza-gefuehl-beliebte-duisburger-party-an-neuer-location.html',
+    image: 'https://img.sparknews.funkemedien.de/412966306/412966306_1787728000_v16_9_1600.jpeg',
+  },
+  {
+    outlet: 'WAZ Duisburg',
+    title: 'Daydrinking: Neue Open-Air-Party lockt mit Wein und echtem Beach-Feeling',
+    date: '2026-05-05',
+    url: 'https://www.waz.de/lokales/duisburg/article411892965/daydrinking-neue-open-air-party-lockt-mit-wein-und-echtem-beach-feeling.html',
+    image: 'https://img.sparknews.funkemedien.de/411894270/411894270_1777888952_v16_9_1600.jpeg',
+  },
+  {
+    outlet: 'WAZ Duisburg',
+    title: 'Erinnerungen an wilde Disco-Nächte: „Auf der Fläche war Ekstase“',
+    date: '2025-11-13',
+    url: 'https://www.waz.de/lokales/duisburg/article405217602/samstags-war-plastique-erinnerungen-an-wilde-disco-naechte.html',
+    image: 'https://img.sparknews.funkemedien.de/408751734/408751734_1763037176_v16_9_1600.jpeg',
+  },
+  {
+    outlet: 'WAZ Duisburg',
+    title: 'Duisburgs größte Open-Air-Party kehrt zurück – in neuer Location',
+    date: '2025-06-11',
+    url: 'https://www.waz.de/lokales/duisburg/article409230624/duisburgs-groesste-open-air-party-kehrt-zurueck-in-neuer-location.html',
+    image: 'https://img.sparknews.funkemedien.de/409234729/409234729_1749634178_v16_9_1600.jpeg',
+  },
+]
 
 // Referenzen (Auszug), jeweils alphabetisch
 export const references = {
@@ -57,8 +93,6 @@ export const nav = [
   { href: '#leistungen', label: 'Leistungen' },
   { href: '#events', label: 'Events' },
   { href: '#referenzen', label: 'Referenzen' },
-  { href: '#stimmen', label: 'Stimmen' },
-  ...(press.length ? [{ href: '#presse', label: 'Presse' }] : []),
   { href: '#ablauf', label: 'Ablauf' },
   { href: '#faq', label: 'FAQ' },
 ]

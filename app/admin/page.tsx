@@ -57,7 +57,7 @@ export default async function Admin() {
       <div className="mt-7 grid gap-6 lg:grid-cols-12">
         <section className="bg-paper p-5 lg:col-span-5">
           <h2 className="text-2xl">Neuer Termin</h2>
-          <p className="mt-2 text-sm">Der Flyer erscheint sofort unter „Next Events“ auf der Startseite.</p>
+          <p className="mt-2 text-sm">Der Flyer erscheint sofort unter „Nächste öffentliche Veranstaltungen“ auf der Startseite.</p>
           <EventForm />
         </section>
 
