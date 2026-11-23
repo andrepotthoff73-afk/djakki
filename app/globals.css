@@ -372,3 +372,32 @@
     animation: none;
   }
 }
+
+/* Fotogruppen, die wie das Hero-Foto von rechts hereingleiten: gleiche Dauer und Kurve, je Foto 60 ms später.
+   Das Raster selbst blendet nicht ein (es dient nur als Auslöser), die Fotos starten jenseits des rechten Rands. */
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: none;
+  }
+}
+.js [data-reveal].slide-group {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+.js .slide-group:not(.is-in) .slide-item {
+  transform: translateX(100vw);
+}
+.slide-group.is-in .slide-item {
+  animation: slide-in-from-right 1200ms var(--ease-out) calc(var(--i) * 60ms) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .slide-group:not(.is-in) .slide-item,
+  .slide-group.is-in .slide-item {
+    transform: none;
+    animation: none;
+  }
+}

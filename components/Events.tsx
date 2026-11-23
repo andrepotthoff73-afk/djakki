@@ -9,7 +9,7 @@ export default async function Events() {
   const upcoming = await listUpcoming()
 
   return (
-    <section id="events" data-bg="var(--paper)" data-fg="var(--ink)" className="chapter bg-paper py-10">
+    <section id="events" data-bg="var(--paper)" data-fg="var(--ink)" className="chapter overflow-x-clip bg-paper py-10">
       <div className="container-page">
         <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <h2 className="text-4xl">Events</h2>
@@ -69,13 +69,14 @@ export default async function Events() {
             </ul>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 md:col-span-6 md:col-start-7">
+          {/* Die Fotos gleiten wie das Hero-Foto von rechts herein, kurz nacheinander; ausgelöst vom Raster als Ganzem,
+              weil die Fotos selbst anfangs außerhalb des Bildschirms liegen */}
+          <div data-reveal className="slide-group grid grid-cols-2 gap-3 md:col-span-6 md:col-start-7">
             {[photos.plastique, photos.rosenmontag, photos.summer].map((p, i) => (
               <div
                 key={p.src}
-                data-reveal
                 style={{ '--i': i } as React.CSSProperties}
-                className={`relative overflow-hidden bg-ink ${i === 2 ? 'col-span-2 aspect-[16/7]' : 'aspect-[4/5]'}`}
+                className={`slide-item relative overflow-hidden bg-ink ${i === 2 ? 'col-span-2 aspect-[16/7]' : 'aspect-[4/5]'}`}
               >
                 <Image
                   src={p.src}
