@@ -241,11 +241,6 @@
   transform: scale(0);
   will-change: transform;
 }
-/* Weißer Grund nur unter der ausgestanzten Schrift, nicht als heller Rand um das blaue Label */
-.intro-label {
-  background: radial-gradient(circle closest-side, var(--paper) 0 95%, transparent 96%);
-}
-
 /* Rechtstexte (Impressum, Datenschutz): ruhige Abstände für lange Texte */
 .legal h2 {
   @apply mt-7 text-2xl;
@@ -282,14 +277,9 @@
     animation: none;
   }
 }
-/* Gedämpfte Fassung des Logos fürs Video-Licht; fester Filter, wird nie pro Bild verändert */
-.intro-label-dim {
-  filter: brightness(0.82) saturate(1.1);
-}
 /* Drehung und Überblendungen der Intro-Platte laufen auf eigenen Grafikebenen */
-.intro-disc > div,
-.intro-disc img {
-  will-change: transform, opacity;
+.intro-disc > div {
+  will-change: transform;
 }
 
 /* Kaskade „30 Jahre am Pult“: Kopien fallen gestaffelt von oben und verblassen beim Aufsetzen, der eigentliche
