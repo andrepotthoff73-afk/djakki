@@ -1,3 +1,5 @@
+import WaveText from '@/components/WaveText'
+
 // Leistungen in einem Kapitel: Partys & Events als Kernleistung groß, die übrigen drei als Zeilen darunter
 const featured = {
   phrase: 'Partys & Events',
@@ -26,7 +28,7 @@ export default function Services() {
         <h2 className="text-4xl">Leistungen</h2>
 
         <div className="mt-8 grid gap-5 md:grid-cols-12 md:items-end">
-          <h3 className="text-title font-semibold uppercase md:col-span-7">{featured.phrase}</h3>
+          <WaveText text={featured.phrase} className="text-title font-semibold uppercase md:col-span-7" />
           <p className="max-w-[40ch] text-lg md:col-span-4 md:col-start-9">{featured.text}</p>
         </div>
 

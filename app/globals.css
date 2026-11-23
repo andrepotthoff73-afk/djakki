@@ -337,3 +337,48 @@
     display: none;
   }
 }
+
+/* Wellen-Schriftzug: Buchstaben tauchen nacheinander auf und richten sich auf, danach läuft eine sehr langsame,
+   flache Welle durch den Schriftzug. Nur transform und opacity, damit es auch bei großer Schrift flüssig bleibt. */
+@keyframes wave-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em) rotate(8deg);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes wave-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.05em);
+  }
+}
+.wave-letter {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+.js .wave:not(.is-in) .wave-letter {
+  opacity: 0;
+}
+.wave.is-in .wave-letter {
+  animation:
+    wave-in 1000ms var(--ease-out) calc(var(--i) * 55ms) both,
+    wave-idle 6s ease-in-out calc(1400ms + var(--i) * 140ms) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .wave:not(.is-in) .wave-letter {
+    opacity: 1;
+  }
+  .wave.is-in .wave-letter {
+    animation: none;
+  }
+}
