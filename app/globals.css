@@ -291,3 +291,49 @@
 .intro-disc img {
   will-change: transform, opacity;
 }
+
+/* Kaskade „30 Jahre am Pult“: Kopien fallen gestaffelt von oben und verblassen beim Aufsetzen, der eigentliche
+   Schriftzug fällt zuletzt und bleibt stehen. Gesamtdauer 1200 ms wie beim Hero-Foto (Abstand 80 ms × 6 + 720 ms). */
+@keyframes cascade-lead {
+  from {
+    transform: translateY(calc(-1 * var(--fall, 100%)));
+  }
+  to {
+    transform: none;
+  }
+}
+@keyframes cascade-ghost {
+  0% {
+    transform: translateY(calc(-1 * var(--fall, 100%)));
+    opacity: var(--o);
+  }
+  80% {
+    opacity: var(--o);
+  }
+  100% {
+    transform: none;
+    opacity: 0;
+  }
+}
+.cascade-ghost {
+  opacity: 0;
+}
+.js .cascade:not(.is-falling) .cascade-copy {
+  transform: translateY(calc(-1 * var(--fall, 100%)));
+}
+.cascade.is-falling .cascade-lead {
+  animation: cascade-lead 720ms var(--ease-out) calc(var(--n) * 80ms) both;
+}
+.cascade.is-falling .cascade-ghost {
+  animation: cascade-ghost 720ms var(--ease-out) calc(var(--n) * 80ms) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .cascade:not(.is-falling) .cascade-copy,
+  .cascade.is-falling .cascade-lead {
+    transform: none;
+    animation: none;
+  }
+  .cascade-ghost {
+    display: none;
+  }
+}

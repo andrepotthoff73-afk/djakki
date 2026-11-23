@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import CascadeTitle from '@/components/CascadeTitle'
 import { photos, venues } from '@/lib/site'
 
 // Kachelbrett: Slogan, Herkunft aus dem Club Plastique, Porträt – darunter der Text über Akki und die Orte, an denen er auflegt
@@ -7,13 +8,14 @@ export default function Intro() {
     <section id="ueber" data-bg="var(--paper)" data-fg="var(--ink)" className="chapter bg-paper py-10">
       <div className="container-page">
         <div className="grid grid-cols-2 gap-2 md:grid-cols-12 md:grid-rows-[38svh_38svh]">
-          <div className="col-span-2 flex min-h-[46svh] items-end bg-ink p-4 text-paper md:col-span-8 md:row-span-2 md:min-h-0 md:p-5">
-            <p className="font-display text-title font-semibold uppercase">30 Jahre am Pult</p>
-          </div>
+          <CascadeTitle
+            text="30 Jahre am Pult"
+            className="col-span-2 flex min-h-[46svh] items-end bg-ink p-4 text-paper md:col-span-8 md:row-span-2 md:min-h-0 md:p-5"
+          />
 
           <div className="flex aspect-square flex-col justify-between bg-paper-2 p-4 text-ink md:col-span-4 md:aspect-auto md:p-5">
             <p className="text-lg">Bekannt aus dem legendären</p>
-            <p className="font-display text-4xl font-semibold uppercase">Club Plastique</p>
+            <p className="font-display text-xl font-semibold uppercase sm:text-2xl md:text-3xl lg:text-4xl">Club Plastique</p>
           </div>
 
           <div className="relative aspect-square overflow-hidden bg-ink md:col-span-4 md:aspect-auto">
