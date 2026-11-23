@@ -9,7 +9,7 @@ export default function Hero() {
       id="top"
       data-bg="var(--accent-500)"
       data-fg="var(--paper)"
-      className="chapter flex min-h-svh flex-col bg-accent-500"
+      className="chapter flex min-h-svh flex-col overflow-x-clip bg-accent-500"
     >
       <div className="container-page flex flex-1 flex-col gap-5 pb-6 pt-9 md:pb-7 md:pt-10">
         <h1 className="text-display font-semibold">
@@ -21,7 +21,8 @@ export default function Hero() {
           </span>
         </h1>
 
-        <div data-reveal style={{ '--i': 2 } as React.CSSProperties} className="relative min-h-[34svh] flex-1 overflow-hidden">
+        {/* Das Foto gleitet von rechts an seinen Platz; die Abschnittskante schneidet den Teil außerhalb ab */}
+        <div className="hero-slide relative min-h-[34svh] flex-1 overflow-hidden">
           <Image
             src={photos.crowd.src}
             alt={photos.crowd.alt}

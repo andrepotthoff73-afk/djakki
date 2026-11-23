@@ -260,3 +260,25 @@
 .legal ul {
   @apply list-disc pl-5;
 }
+
+/* Hero-Foto gleitet beim Laden von rechts an seinen Platz. Läuft das Video-Intro, wartet die Bewegung,
+   bis das Intro vorbei ist (die Klasse site-intro verschwindet dann vom <html>). */
+@keyframes hero-slide-in {
+  from {
+    transform: translateX(110%);
+  }
+  to {
+    transform: none;
+  }
+}
+.js .hero-slide {
+  animation: hero-slide-in 1200ms var(--ease-out) 150ms both;
+}
+.site-intro .hero-slide {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .hero-slide {
+    animation: none;
+  }
+}
