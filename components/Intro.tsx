@@ -32,10 +32,9 @@ export default function Intro() {
         <div className="mt-9 grid gap-5 md:grid-cols-12">
           <h2 className="text-4xl md:col-span-5">Über DJ Akki</h2>
           <p className="text-lg md:col-span-6 md:col-start-7">
-            Axel Weyand ist als DJ Akki seit über 30 Jahren einer der bekanntesten DJs in Duisburg, bekannt aus dem
-            legendären Club Plastique. Er mixt aktuelle Housetunes und Partyclassics, dazu Charts, 70er, 80er, 90er und
-            Schlager, immer mit einem Ziel: das passende Lied zum passenden Zeitpunkt. Unterwegs ist er in Duisburg, Moers,
-            Krefeld, auf Anfrage aber auch in ganz Deutschland.
+            DJ Akki zählt seit mehr als 30 Jahren zu den wohl bekanntesten DJs Duisburgs. Eine echte Legende an den Decks.
+            Seit Jahrzehnten prägt er den elektronischen Sound und bringt mit seinen Sets Generationen zum Tanzen. Zeitlos
+            &amp; unverwechselbar.
           </p>
         </div>
 
