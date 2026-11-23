@@ -223,11 +223,24 @@ export default function Datenschutz() {
       <h2>4. Datenerfassung auf dieser Website</h2>
       <h3>Cookies und Speicher im Browser</h3>
       <p>
-        Für Besucherinnen und Besucher setzt diese Website keine Cookies. Nach dem ersten Besuch speichert die Website im
-        lokalen Speicher Ihres Browsers (Local Storage) lediglich den Eintrag „djakki-video-intro“, damit das Video-Intro nicht
-        bei jedem Besuch erneut abgespielt wird. Der Eintrag enthält keine personenbezogenen Daten, wird nicht an uns
-        übertragen und lässt sich jederzeit über die Einstellungen Ihres Browsers löschen. Rechtsgrundlage ist § 25 Abs. 2
-        Nr. 2 TDDDG.
+        Für Besucherinnen und Besucher setzt diese Website keine Cookies und keine Tracking- oder Werbetechnologien ein. Im
+        lokalen Speicher Ihres Browsers (Local Storage) legt sie höchstens zwei Einträge ab, die keine personenbezogenen Daten
+        enthalten und nicht an uns übertragen werden:
+      </p>
+      <ul>
+        <li>
+          „djakki-consent“ (notwendig): speichert Ihre Auswahl in der Privatsphäre-Einblendung, damit diese nicht bei jedem
+          Besuch erneut erscheint. Rechtsgrundlage ist § 25 Abs. 2 Nr. 2 TDDDG.
+        </li>
+        <li>
+          „djakki-video-intro“ (Komfort, nur mit Ihrer Einwilligung): merkt sich, dass Sie das Video-Intro gesehen haben,
+          damit es nicht bei jedem Besuch erneut startet. Rechtsgrundlage ist Ihre Einwilligung nach § 25 Abs. 1 TDDDG und
+          Art. 6 Abs. 1 lit. a DSGVO.
+        </li>
+      </ul>
+      <p>
+        Ihre Auswahl können Sie jederzeit über „Privatsphäre-Einstellungen“ im Seitenfuß ändern oder widerrufen; ein Widerruf
+        löscht den Komfort-Eintrag. Beide Einträge lassen sich außerdem über die Einstellungen Ihres Browsers löschen.
       </p>
       <p>
         Lediglich im passwortgeschützten Verwaltungsbereich der Website wird für den Betreiber ein technisch notwendiges

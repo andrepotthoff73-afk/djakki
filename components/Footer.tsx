@@ -1,5 +1,6 @@
 import { nav, site, ticketShop } from '@/lib/site'
 import { social } from '@/components/SocialLinks'
+import PrivacySettingsButton from '@/components/PrivacySettingsButton'
 
 // Der Name als Konstruktion: jeder Buchstabe aus einem eigenen Farbblock ausgespart
 const blocks = [
@@ -56,6 +57,7 @@ export default function Footer() {
             <a href="/datenschutz" className="link decoration-transparent hover:decoration-current">
               Datenschutz
             </a>
+            <PrivacySettingsButton className="link self-start text-left decoration-transparent hover:decoration-current" />
           </div>
           <address className="col-span-2 flex flex-col gap-2 not-italic md:col-span-4 md:col-start-9">
             <span>{site.legalEntity}</span>

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Cormorant_Garamond, Inter } from 'next/font/google'
+import ConsentBanner from '@/components/ConsentBanner'
 import VideoIntro from '@/components/VideoIntro'
 import './globals.css'
 
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <VideoIntro />
+        <ConsentBanner />
       </body>
     </html>
   )

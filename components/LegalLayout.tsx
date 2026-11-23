@@ -1,3 +1,5 @@
+import PrivacySettingsButton from '@/components/PrivacySettingsButton'
+
 // Gemeinsamer Rahmen für Impressum und Datenschutz: schlichte Kopfzeile mit Weg zurück, Text in Lesebreite
 export default function LegalLayout({ title, children }: { title: string; children: React.ReactNode }) {
   return (
@@ -25,6 +27,7 @@ export default function LegalLayout({ title, children }: { title: string; childr
         <a href="/datenschutz" className="link">
           Datenschutz
         </a>
+        <PrivacySettingsButton className="link" />
       </footer>
     </main>
   )

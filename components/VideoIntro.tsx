@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { INTRO_SEEN_KEY, comfortAllowed } from '@/lib/consent'
 import { TRACK_FPS, track } from '@/lib/introTrack'
 
 // Video-Intro: Blick über Akkis Schulter, die Kamera fährt auf die Platte, bis das Logo das Bild fast füllt.
@@ -9,7 +10,6 @@ import { TRACK_FPS, track } from '@/lib/introTrack'
 // Am Ende dreht die Platte schneller, wird kleiner, das Video verschwindet und nur das Logo fliegt
 // drehend an seinen Platz in der Kopfzeile. Läuft beim ersten Besuch von selbst, sonst über „Intro ansehen“.
 
-const SEEN_KEY = 'djakki-video-intro'
 export const REPLAY_EVENT = 'djakki:intro'
 
 const LABEL = 0.36 // Anteil des Labels am Durchmesser der Platte (Foto vinyl.webp)
@@ -18,8 +18,9 @@ const COVER = 1.04 // Logo minimal größer als das Video-Label, damit dessen Ra
 const RPM_DEG = 200 // 33⅓ Umdrehungen pro Minute in Grad pro Sekunde
 const LOAD_TIMEOUT = 4000 // spätestens dann startet das Video, auch wenn es noch lädt
 
-// Das Video-Label ist dunkler beleuchtet als die Logo-Datei; im Flug kehrt die echte Farbe zurück
-const VIDEO_LIGHT = { brightness: 0.82, saturate: 1.1 }
+// Das Video-Label ist dunkler beleuchtet als die Logo-Datei: Eine gedämpfte Fassung (CSS-Klasse intro-label-dim)
+// liegt im Video auf dem Label, im Flug blendet die echte Fassung darüber. Nur Deckkraft ändert sich pro Bild,
+// das schafft die Grafikkarte auch bei der riesigen Platte ohne Ruckeln.
 
 // Auf schmalen Bildschirmen zeigt der Ausschnitt anfangs die Schulter rechts und wandert zum Label
 const NARROW_START_X = 0.64
@@ -51,13 +52,15 @@ function labelAt(t: number) {
   return { x: lerp(ax, bx, k), y: lerp(ay, by, k), a: lerp(aa, ba, k), b: lerp(ab, bb, k), angle: lerp(ag, bg, k) }
 }
 
+const labelBox = { inset: `${((1 - LABEL) / 2) * 100}%`, width: `${LABEL * 100}%`, height: `${LABEL * 100}%` }
+
 export default function VideoIntro() {
   const video = useRef<HTMLVideoElement>(null)
   const stage = useRef<HTMLDivElement>(null)
   const disc = useRef<HTMLDivElement>(null)
   const spinner = useRef<HTMLDivElement>(null)
   const vinyl = useRef<HTMLImageElement>(null)
-  const label = useRef<HTMLImageElement>(null)
+  const labelTrue = useRef<HTMLImageElement>(null)
   const [skipping, setSkipping] = useState(false)
 
   useEffect(() => {
@@ -106,9 +109,7 @@ export default function VideoIntro() {
     }
 
     function setLight(k: number) {
-      const b = lerp(VIDEO_LIGHT.brightness, 1, k)
-      const s = lerp(VIDEO_LIGHT.saturate, 1, k)
-      label.current!.style.filter = `brightness(${b}) saturate(${s})`
+      labelTrue.current!.style.opacity = String(k)
     }
 
     function finish() {
@@ -117,8 +118,9 @@ export default function VideoIntro() {
       cancelAnimationFrame(raf)
       window.clearTimeout(skipTimer)
       window.clearTimeout(loadTimer)
+      // Merken, dass das Intro gesehen wurde, nur mit Einwilligung in „Komfort“
       try {
-        localStorage.setItem(SEEN_KEY, '1')
+        if (comfortAllowed()) localStorage.setItem(INTRO_SEEN_KEY, '1')
       } catch {
         // ohne Speicher läuft das Intro eben beim nächsten Besuch wieder
       }
@@ -297,13 +299,9 @@ export default function VideoIntro() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img ref={vinyl} src="/intro/vinyl.webp" alt="" className="absolute inset-0 h-full w-full" style={{ opacity: 0 }} />
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            ref={label}
-            src="/logo/dj-akki-friends.png"
-            alt=""
-            className="intro-label absolute rounded-full"
-            style={{ inset: `${((1 - LABEL) / 2) * 100}%`, width: `${LABEL * 100}%`, height: `${LABEL * 100}%` }}
-          />
+          <img src="/logo/dj-akki-friends.png" alt="" className="intro-label intro-label-dim absolute rounded-full" style={labelBox} />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img ref={labelTrue} src="/logo/dj-akki-friends.png" alt="" className="intro-label absolute rounded-full" style={{ ...labelBox, opacity: 0 }} />
         </div>
       </div>
     </div>

@@ -282,3 +282,12 @@
     animation: none;
   }
 }
+/* Gedämpfte Fassung des Logos fürs Video-Licht; fester Filter, wird nie pro Bild verändert */
+.intro-label-dim {
+  filter: brightness(0.82) saturate(1.1);
+}
+/* Drehung und Überblendungen der Intro-Platte laufen auf eigenen Grafikebenen */
+.intro-disc > div,
+.intro-disc img {
+  will-change: transform, opacity;
+}
