@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   title: 'DJ Akki & Friends – Event-DJ für Partys, Events & Firmenfeiern in Duisburg',
   description:
     'DJ Akki aus Duisburg: seit über 30 Jahren Event-DJ für Partys, Firmenfeiern, Events und Hochzeiten. Jetzt Wunschtermin anfragen.',
-  icons: { icon: 'https://www.djakki.de/assets/icons/favicon-32x32.png' },
 }
 
 export const viewport: Viewport = { themeColor: '#c42021' }

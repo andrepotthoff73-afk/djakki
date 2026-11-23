@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import LegalLayout from '@/components/LegalLayout'
 import { site } from '@/lib/site'
 
 export const metadata: Metadata = {
@@ -22,53 +23,35 @@ export default function Impressum() {
   )
 
   return (
-    <main className="min-h-svh bg-paper text-ink">
-      <header className="container-page flex h-header items-center justify-between gap-5">
-        <a href="/" className="flex items-center gap-3 font-display text-xl font-semibold uppercase leading-none">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo/dj-akki-friends.png" alt="" width={44} height={44} className="h-[44px] w-[44px] rounded-full bg-paper" />
-          DJ Akki
+    <LegalLayout title="Impressum">
+      <h2>Angaben gemäß § 5 DDG</h2>
+      <p>{postal}</p>
+
+      <h2>Kontakt</h2>
+      <p>
+        Telefon:{' '}
+        <a href={phoneHref} className="link">
+          {phone}
         </a>
-        <a href="/" className="link">
-          Zur Startseite
+        <br />
+        E-Mail:{' '}
+        <a href={`mailto:${email}`} className="link">
+          {email}
         </a>
-      </header>
+      </p>
 
-      <article className="container-page max-w-measure py-9">
-        <h1 className="text-4xl">Impressum</h1>
+      <h2>Umsatzsteuer-ID</h2>
+      <p>
+        Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
+        <br />
+        {VAT_ID}
+      </p>
 
-        <h2 className="mt-7 text-2xl">Angaben gemäß § 5 DDG</h2>
-        <p className="mt-3">{postal}</p>
+      <h2>Redaktionell verantwortlich</h2>
+      <p>{postal}</p>
 
-        <h2 className="mt-7 text-2xl">Kontakt</h2>
-        <p className="mt-3">
-          Telefon:{' '}
-          <a href={phoneHref} className="link">
-            {phone}
-          </a>
-          <br />
-          E-Mail:{' '}
-          <a href={`mailto:${email}`} className="link">
-            {email}
-          </a>
-        </p>
-
-        <h2 className="mt-7 text-2xl">Umsatzsteuer-ID</h2>
-        <p className="mt-3">
-          Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:
-          <br />
-          {VAT_ID}
-        </p>
-
-        <h2 className="mt-7 text-2xl">Redaktionell verantwortlich</h2>
-        <p className="mt-3">{postal}</p>
-
-        <h2 className="mt-7 text-2xl">Verbraucherstreitbeilegung / Universalschlichtungsstelle</h2>
-        <p className="mt-3">
-          Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle
-          teilzunehmen.
-        </p>
-      </article>
-    </main>
+      <h2>Verbraucherstreitbeilegung / Universalschlichtungsstelle</h2>
+      <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    </LegalLayout>
   )
 }

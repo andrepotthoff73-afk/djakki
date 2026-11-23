@@ -245,3 +245,18 @@
 .intro-label {
   background: radial-gradient(circle closest-side, var(--paper) 0 95%, transparent 96%);
 }
+
+/* Rechtstexte (Impressum, Datenschutz): ruhige Abstände für lange Texte */
+.legal h2 {
+  @apply mt-7 text-2xl;
+}
+.legal h3 {
+  @apply mt-5 text-xl;
+}
+.legal p,
+.legal ul {
+  @apply mt-3;
+}
+.legal ul {
+  @apply list-disc pl-5;
+}

@@ -53,7 +53,7 @@ export default function Footer() {
             <a href="/impressum" className="link decoration-transparent hover:decoration-current">
               Impressum
             </a>
-            <a href="https://www.djakki.de/7/datenschutz.html" className="link decoration-transparent hover:decoration-current">
+            <a href="/datenschutz" className="link decoration-transparent hover:decoration-current">
               Datenschutz
             </a>
           </div>
