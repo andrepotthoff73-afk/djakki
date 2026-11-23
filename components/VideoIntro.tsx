@@ -72,9 +72,11 @@ export default function VideoIntro() {
     let skipTimer = 0
     let loadTimer = 0
     let prevOverflow = ''
-    // Zeitbezug des zuletzt angezeigten Videobilds, für eine ruckelfreie Zeit zwischen den Bildern
-    let frameMedia = 0
-    let frameAt = 0
+    // Eigene, gleichmäßig laufende Uhr fürs Video: Browser melden die Abspielzeit unterschiedlich genau
+    // (Firefox rundet und meldet unregelmäßig). Die Uhr startet mit dem Video und wird nur sanft angeglichen.
+    let clockStart = 0
+    let lastT = 0
+    let phiEnd = 0
     let endedAt = 0
 
     const narrow = () => window.innerWidth < 768
@@ -97,10 +99,21 @@ export default function VideoIntro() {
       return { ox: (W - w) * objectX(t), oy: (H - h) * 0.5, w, h }
     }
 
-    // Zeit zwischen zwei Videobildern fortschreiben, aber nie weiter als ein Bild voraus
     function videoTime(now: number) {
-      if (el!.paused || !frameAt) return el!.currentTime
-      return Math.min(el!.duration || Infinity, frameMedia + Math.min(1 / 30, (now - frameAt) / 1000))
+      if (!clockStart) return Math.max(lastT, el!.currentTime)
+      let t = (now - clockStart) / 1000
+      const drift = el!.currentTime - t
+      if (Math.abs(drift) > 0.25) {
+        // deutlich daneben (z. B. nach einem Stocker): neu ansetzen
+        clockStart = now - el!.currentTime * 1000
+        t = el!.currentTime
+      } else {
+        // kleine Abweichungen unmerklich ausgleichen statt springen
+        clockStart -= drift * 1000 * 0.03
+      }
+      // nie rückwärts, nie über das Ende hinaus
+      lastT = Math.min(el!.duration || Infinity, Math.max(lastT, t))
+      return lastT
     }
 
     function setDisc(x: number, y: number, sx: number, sy: number, angle: number) {
@@ -156,8 +169,8 @@ export default function VideoIntro() {
       const sx0 = (2 * lab.a * h * COVER) / (LABEL * BASE)
       const sy0 = (2 * lab.b * h * COVER) / (LABEL * BASE)
 
-      // Drehung: 33 U/min im Video, in der Übergabe schneller und dann sanft bis zum aufrechten Logo
-      const phi0 = RPM_DEG * duration
+      // Drehung: 33 U/min nach der gleichmäßigen Uhr, in der Übergabe schneller und dann sanft bis zum aufrechten Logo
+      const phi0 = phiEnd
       let phi = RPM_DEG * t
       if (ended) {
         const A = 360 * Math.ceil((phi0 + EXTRA_SPIN) / 360) - phi0
@@ -191,14 +204,18 @@ export default function VideoIntro() {
       raf = requestAnimationFrame(frame)
     }
 
-    function onVideoFrame(now: number, meta: { mediaTime: number }) {
-      frameMedia = meta.mediaTime
-      frameAt = now
-      if (running && !endedAt) el!.requestVideoFrameCallback(onVideoFrame)
+    // Uhr starten, sobald das Video wirklich läuft; bei einem Stocker oder Pause anhalten
+    function onPlaying() {
+      clockStart = performance.now() - el!.currentTime * 1000
+    }
+    function onWaiting() {
+      clockStart = 0
     }
 
     function onEnded() {
-      if (running && !endedAt) endedAt = performance.now()
+      if (!running || endedAt) return
+      phiEnd = RPM_DEG * lastT
+      endedAt = performance.now()
     }
 
     function start() {
@@ -207,14 +224,15 @@ export default function VideoIntro() {
       el!.removeEventListener('canplaythrough', start)
       // Blockiert der Browser das Abspielen, geht es ohne Intro direkt zur Seite
       el!.play().catch(finish)
-      if ('requestVideoFrameCallback' in el!) el!.requestVideoFrameCallback(onVideoFrame)
     }
 
     function play() {
       if (running) return
       running = true
       endedAt = 0
-      frameAt = 0
+      clockStart = 0
+      lastT = 0
+      phiEnd = 0
       // Das Logo landet in der Kopfzeile über dem Hero, daher immer vom Seitenanfang aus
       window.scrollTo(0, 0)
       root.classList.add('site-intro')
@@ -245,6 +263,9 @@ export default function VideoIntro() {
 
     el.addEventListener('ended', onEnded)
     el.addEventListener('error', finish)
+    el.addEventListener('playing', onPlaying)
+    el.addEventListener('waiting', onWaiting)
+    el.addEventListener('pause', onWaiting)
 
     // Erster Besuch: das Script im <head> hat das Intro bereits angemeldet
     if (root.classList.contains('site-intro')) play()
@@ -259,6 +280,9 @@ export default function VideoIntro() {
       window.removeEventListener(REPLAY_EVENT, replay)
       el.removeEventListener('ended', onEnded)
       el.removeEventListener('error', finish)
+      el.removeEventListener('playing', onPlaying)
+      el.removeEventListener('waiting', onWaiting)
+      el.removeEventListener('pause', onWaiting)
       el.removeEventListener('canplaythrough', start)
       // Aufräumen stoppt nur; als gesehen gilt das Intro erst, wenn es gelaufen oder übersprungen ist
       if (running) {
